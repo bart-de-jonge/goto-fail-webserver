@@ -15,18 +15,24 @@
 
     // Scripts
     <script>
-        'use strict';
-        Polymer({
-            is: 'our-button',
-            properties: {
+    (function() {
+    'use strict';
+    class ourButton {
+        beforeRegister() {
+            this.is = 'our-button';
+
+            this.properties = {
                 text: String
-            },
-            attached: function() {
-                console.log("Martijn is een hoer");
-            },
-            click: function() {
-                console.log("Martijn is genomen");
-            }
-        });
+            };
+        }
+        attached() {
+            console.log('the page is loaded');
+        }
+        click() {
+            console.log('the button is clicked');
+        }
+    }
+    Polymer(ourButton);
+    })();
     </script>
 </dom-module>
