@@ -6,3 +6,7 @@ before_script:
     - 'npm install -g gulp'
     - 'bower install'
 script: gulp
+cache:
+    directories:
+        - node_modules
+        - bower_components
