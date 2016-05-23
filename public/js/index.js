@@ -1,3 +1,1 @@
-"use strict";
-
-var socket = io();
+// var socket = io();
