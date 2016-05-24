@@ -64,6 +64,22 @@ const getMaxAndMinCount = function getMaxAndMinCount(flattenedCameraTimelines) {
     return [minCount, maxCount];
 };
 
+router.get("/timeline-data", (req, res) => {
+    getTimelines((timelines, err) => {
+        if (err) {
+            res.json({succes:false, message:"Please Upload A Project File Before Editing!"});
+        } else {
+            const cameraTimelines = timelines[0];
+            const counts = getMaxAndMinCount(timelines[1]);
+            const minCount = counts[0];
+            const maxCount = counts[1];
+            res.json({cameraTimelines: cameraTimelines,
+                    minCount: minCount,
+                    maxCount: maxCount});
+        }
+    });
+});
+
 
 /* GET home page. */
 router.get("/", (req, res) => {
@@ -71,17 +87,10 @@ router.get("/", (req, res) => {
     getTimelines((timelines, err) => {
         if (err) {
             res.send("Please Upload A Project File Before Editing!");
+        } else {
+            // Render the timeline.ejs file with the correct variables
+            res.render("timeline");
         }
-        const cameraTimelines = timelines[0];
-        const counts = getMaxAndMinCount(timelines[1]);
-        const minCount = counts[0];
-        const maxCount = counts[1];
-
-        // Render the timeline.ejs file with the correct variables
-        res.render("timeline", {
-            cameraTimelines,
-            minCount,
-            maxCount });
     });
 });
 
