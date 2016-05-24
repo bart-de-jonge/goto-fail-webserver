@@ -15,11 +15,11 @@
                 auto
                 url="/timeline/timeline-data"
                 handle-as="json"
-                last-response="{{timelinesData}}"
+                on-response="handleResponse"
                 id="ajax-timeline-data"></iron-ajax>
 
         <div class="layout horizontal">
-            <template is="dom-repeat" items="{{timelinesData.cameraTimelines}}">
+            <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
                 <timeline-element timeline_data="{{item}}" class="flex"></timeline-element>
             </template>
         </div>
@@ -35,8 +35,21 @@
             this.is = 'timeline-grid';
 
             this.properties = {
-                name: String
+                name: String,
+                timeline_data: Object
             };
+        }
+        handleResponse(event, response) {
+            let response_data = event.detail.response;
+
+            response_data.cameraTimelines.forEach(function (timeline) {
+                timeline.name = "menno is een hoeradf";
+                timeline.cameraShots.forEach(function (shot) {
+
+                });
+            });
+
+            this.timeline_data = response_data;
         }
     }
     Polymer(timelineGrid);

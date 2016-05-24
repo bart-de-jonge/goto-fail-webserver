@@ -11,6 +11,8 @@
         <paper-material elevation="2">
             <p>{{timeline_data.name}}</p>
             <p>{{timeline_data.description}}</p>
+
+            <table><tbody></tbody></table>
             <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
                 <timeline-block block_data="{{item}}"></timeline-block>
             </template>
