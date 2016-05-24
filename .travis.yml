@@ -6,6 +6,9 @@ before_script:
     - 'npm install -g gulp'
     - 'bower install'
 script: gulp travisBuild
+notifications:
+    slack: gotofail:RPKX6AZBeUvMjVQPEdoCn1Vq
+    email: false
 cache:
     directories:
         - node_modules
