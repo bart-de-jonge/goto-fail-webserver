@@ -1,0 +1,45 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="timeline-element.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="timeline-grid">
+    // Template
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            timeline-element:nth-of-type(n+2) {
+                margin-left: 20px;
+            }
+        </style>
+        <iron-ajax
+                auto
+                url="/timeline/timeline-data"
+                handle-as="json"
+                last-response="{{timelinesData}}"
+                id="ajax-timeline-data"></iron-ajax>
+
+        <div class="layout horizontal">
+            <template is="dom-repeat" items="{{timelinesData.cameraTimelines}}">
+                <timeline-element timeline_data="{{item}}" class="flex"></timeline-element>
+            </template>
+        </div>
+
+    </template>
+
+    // Scripts
+    <script>
+    (function() {
+    'use strict';
+    class timelineGrid {
+        beforeRegister() {
+            this.is = 'timeline-grid';
+
+            this.properties = {
+                name: String
+            };
+        }
+    }
+    Polymer(timelineGrid);
+    })();
+    </script>
+</dom-module>

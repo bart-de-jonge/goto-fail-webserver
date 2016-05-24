@@ -1,0 +1,34 @@
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="timeline-block.html">
+<dom-module id="timeline-element">
+    <template>
+        <style>
+            paper-material {
+                padding: 10px;
+            }
+        </style>
+
+        <paper-material elevation="2">
+            <p>{{timeline_data.name}}</p>
+            <p>{{timeline_data.description}}</p>
+            <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
+                <timeline-block block_data="{{item}}"></timeline-block>
+            </template>
+        </paper-material>
+    </template>
+    <script>
+    (function() {
+    'use strict';
+    class timelineClass {
+        beforeRegister() {
+            this.is = 'timeline-element';
+
+            this.properties = {
+                timeline_data: Object
+            };
+        }
+    }
+    Polymer(timelineClass);
+    })();
+    </script>
+</dom-module>
