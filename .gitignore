@@ -6,4 +6,4 @@ project-scp-files/
 *.swp
 .tern-project
 public/js/
-coverage.html
+coverage/
