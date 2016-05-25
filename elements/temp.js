@@ -22,15 +22,14 @@ const getMaxCount = function (cameraTimelines) {
     return maxCount;
 };
 
-(function() {
-    'use strict';
+(function () {
     class timelineGrid {
         beforeRegister() {
-            this.is = 'timeline-grid';
+            this.is = "timeline-grid";
 
             this.properties = {
                 name: String,
-                timeline_data: Object
+                timeline_data: Object,
             };
         }
         handleResponse(event) {
@@ -58,37 +57,37 @@ const getMaxCount = function (cameraTimelines) {
                 newData.cameraTimelines[index] = newTimeline;
 
                 // Only do following if at least one block is present
-                if(timeline.cameraShots.length > 0) {
+                if (timeline.cameraShots.length > 0) {
                     // Add padding before the first block
-                    if (timeline.cameraShots[0].beginCount != 0) {
-                        var newShot = {
+                    if (timeline.cameraShots[0].beginCount !== 0) {
+                        const newShot = {
                             beginCount: "0",
                             endCount: timeline.cameraShots[0].beginCount,
-                            visible: "hidden"
+                            visible: "hidden",
                         };
                         newTimeline.cameraShots.push(newShot);
                     }
 
                     // Add padding after each consecutive block:
-                    timeline.cameraShots.forEach(function (shot, i) {
+                    timeline.cameraShots.forEach((shot, i) => {
                         newTimeline.cameraShots.push(shot);
                         if (i < timeline.cameraShots.length - 1) {
                             // Not the last block
-                            var endCount = (timeline.cameraShots[i + 1].beginCount * 4 ) / 4;
-                            var newShot = {
+                            const endCount = (timeline.cameraShots[i + 1].beginCount * 4) / 4;
+                            const newShot = {
                                 beginCount: shot.endCount,
-                                endCount: endCount,
-                                visible: "hidden"
+                                endCount,
+                                visible: "hidden",
                             };
                             newTimeline.cameraShots.push(newShot);
                         } else {
                             // The last block
-                            if (parseFloat(shot.endCount) != maxCount) {
+                            if (parseFloat(shot.endCount) !== maxCount) {
                                 // There is room leeft in timeline
-                                var newShot = {
+                                const newShot = {
                                     beginCount: shot.endCount,
                                     endCount: maxCount,
-                                    visible: "hidden"
+                                    visible: "hidden",
                                 };
                                 newTimeline.cameraShots.push(newShot);
                             }
@@ -96,16 +95,16 @@ const getMaxCount = function (cameraTimelines) {
                     });
                 } else {
                     // Add one block to fill the timeline
-                    var newShot = {
+                    const newShot = {
                         beginCount: 0,
                         endCount: maxCount,
-                        visible: "hidden"
+                        visible: "hidden",
                     };
                     newTimeline.cameraShots.push(newShot);
                 }
 
                 // Set length of blocks
-                newTimeline.cameraShots.forEach(function (shot) {
+                newTimeline.cameraShots.forEach((shot) => {
                     // 4 = number of blocks per count, 10 is height per block
                     shot.pixelLength = (shot.endCount - shot.beginCount) * 4 * 10;
                 });
