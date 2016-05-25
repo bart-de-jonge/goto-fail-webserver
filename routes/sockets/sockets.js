@@ -16,6 +16,10 @@ const listen = (server) => {
         socket.on("disconnect", () => {
             logger.info("user disconnected.");
         });
+
+        socket.emit("next count", {
+            newCount: 1,
+        });
     });
 };
 
