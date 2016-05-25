@@ -3,8 +3,27 @@ import CameraShot from "../objects/CameraShot";
 import CameraTimeline from "../objects/CameraTimeline";
 import xml2js from "xml2js";
 import fs from "fs";
+import Camera from "../objects/Camera";
+import CameraType from "../objects/CameraType";
 const router = new express.Router();
 const parser = new xml2js.Parser();
+
+const getCameraType = function getCameraType(XMLObject) {
+    return new CameraType(
+        XMLObject.name[0],
+        XMLObject.description[0],
+        XMLObject.movementMargin[0]
+    );
+};
+
+const getCamera = function getCamera(XMLObject) {
+    return new Camera(
+        XMLObject.name[0],
+        XMLObject.description[0],
+        XMLObject.movementMargin[0],
+        getCameraType(XMLObject.cameraType[0])
+    );
+};
 
 // Get timelines from xml
 const getTimelines = function getTimelines(callback) {
@@ -19,7 +38,6 @@ const getTimelines = function getTimelines(callback) {
                 // Read timelines from xml
                 const cameraTimelinesXML =
                     result.scriptingProject["camera-centerarea"][0].cameraTimeline;
-                console.log(cameraTimelinesXML);
 
                 const cameraTimelines = [];
                 const flattenedCameraTimelines = [];
@@ -27,6 +45,9 @@ const getTimelines = function getTimelines(callback) {
                 // Insert shots in timeline which is pushed to timelinesarray
                 // and push to flattenedArray
                 cameraTimelinesXML.forEach(timeline => {
+                    const camera = getCamera(timeline.camera[0]);
+                    console.log(camera);
+
                     const cameraTimeline = new CameraTimeline("dummy", "dymmy");
                     if (typeof timeline.shotList[0].shot !== "undefined") {
                         timeline.shotList[0].shot.forEach(shot => {
