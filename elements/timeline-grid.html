@@ -42,18 +42,24 @@
         handleResponse(event, response) {
             let response_data = event.detail.response;
 
+            // Get the maxCount of the entire grid
             var maxCount = 0;
             response_data.cameraTimelines.forEach(function (timeline) {
                 var curEndCount = parseFloat(timeline.cameraShots[timeline.cameraShots.length - 1].endCount);
                 if(curEndCount > maxCount) {
                     maxCount = curEndCount;
                 }
+
+                // Set visible property of existing blocks
+                timeline.cameraShots.forEach(function(shot) {
+                    shot.visible = "visible";
+                });
             });
-            console.log(maxCount);
-            console.log(typeof maxCount);
+
+            console.log("maxCount + " + maxCount);
 
 
-
+            // Loop over all counts and pad with non-visible blocks where necessary
             response_data.cameraTimelines.forEach(function (timeline) {
 
                 // Setup lists for timelines
@@ -63,34 +69,47 @@
                 var blockActive = false;
                 var curNumber = 0;
                 var paddingDone = false;
-//                for(var i = 0; i <= shots[shots.length - 1].endCount * 4; i++) {
                 for(var i = 0; i <= maxCount * 4; i++) {
-                    if(!blockActive && curNumber != null && shots[curNumber].beginCount*4 == i) {
+                    if(!blockActive && curNumber >= 0) {
+//                        console.log(i);
+                    }
+
+                    if(!blockActive && curNumber >= 0 && shots[curNumber].beginCount*4 == i) {
                         blockActive = true;
                         paddingDone = false;
                     } else if(blockActive && shots[curNumber].endCount*4 == i) {
                         if(curNumber < shots.length - 1) {
                             curNumber++;
+                            paddingDone = true;
+                            var endCount = (shots[curNumber].beginCount*4 ) / 4;
+                            timeline.cameraShots.splice(curNumber, 0, {beginCount: (i/4).toString(), endCount: endCount.toString(), visible:"hidden"});
+                            curNumber++;
                         } else {
-                            curNumber = null;
+                            curNumber = -1;
+                            timeline.cameraShots.splice(timeline.cameraShots.length, 0, {
+                                beginCount: (i / 4).toString(),
+                                endCount: maxCount.toString(),
+                                visible: "hidden"
+                            });
+                            curNumber++;
+                            paddingDone = true;
                         }
                         blockActive = false;
-                    } else if(curNumber != null && !blockActive && !paddingDone) {
-                        var endCount = (shots[curNumber].beginCount*4 - 1) / 4;
-                        timeline.cameraShots.splice(i, 0, {beginCount: (i/4).toString(), endCount: endCount.toString()});
-                        paddingDone = true;
-                    } else if(curNumber == null && !blockActive && !paddingDone) {
-                        timeline.cameraShots.splice(i, 0, {beginCount: (i/4).toString(), endCount: maxCount.toString()});
+                    } else if(curNumber >= 0 && !blockActive && !paddingDone) {
+                        var endCount = (shots[curNumber].beginCount*4) / 4;
+                        timeline.cameraShots.splice(curNumber, 0, {beginCount: (i/4).toString(), endCount: endCount.toString(), visible:"hidden"});
+                        curNumber++;
                         paddingDone = true;
                     }
                 }
                 timeline.cameraShots.forEach(function (shot) {
                     // 4 = number of blocks per count, 10 is height per block
-                    shot.pixelLength = (shot.endCount - shot.beginCount) * 4 * 5;
+                    shot.pixelLength = (shot.endCount - shot.beginCount) * 4 * 10;
                 });
             });
 
             this.timeline_data = response_data;
+            console.log(this.timeline_data);
         }
     }
     Polymer(timelineGrid);

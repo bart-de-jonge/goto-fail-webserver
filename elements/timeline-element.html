@@ -12,13 +12,21 @@
                 width: 100%;
             }
 
-            td {
+            paper-material > div {
                 border: 2px solid black;
                 box-sizing: border-box;
+                overflow: hidden;
             }
 
             timeline-block {
                 height: 100%;
+            }
+
+            .timeline-seperator {
+                height: 10px;
+                width: 100%;
+                background-color: black;
+                margin-bottom: 10px;
             }
         </style>
 
@@ -26,13 +34,13 @@
             <p>{{timeline_data.name}}</p>
             <p>{{timeline_data.description}}</p>
 
-            <table>
+            <div class="timeline-seperator"></div>
+
             <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
-                <tr><td style="height:{{item.pixelLength}}px;">
+                <div style="height:{{item.pixelLength}}px;">
                     <timeline-block block_data="{{item}}"></timeline-block>
-                </td></tr>
+                    </div>
             </template>
-            </table>
         </paper-material>
     </template>
     <script>
