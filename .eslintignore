@@ -1,5 +1,4 @@
 # /node_modules/* ignored by default
-blanketInstrument.js
 /public/*
 /coverage/**
 /test/**
