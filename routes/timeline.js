@@ -19,6 +19,7 @@ const getTimelines = function getTimelines(callback) {
                 // Read timelines from xml
                 const cameraTimelinesXML =
                     result.scriptingProject["camera-centerarea"][0].cameraTimeline;
+                console.log(cameraTimelinesXML);
 
                 const cameraTimelines = [];
                 const flattenedCameraTimelines = [];
