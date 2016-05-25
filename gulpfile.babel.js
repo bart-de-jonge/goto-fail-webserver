@@ -4,7 +4,8 @@ import childProcess from "child_process";
 import "babel-core/register";
 import mocha from "gulp-mocha";
 import babel from "gulp-babel";
-import blanket from "gulp-blanket-mocha";
+import injectModules from "gulp-inject-modules";
+import istanbul from "gulp-babel-istanbul";
 import eslint from "gulp-eslint";
 
 const paths = {
@@ -55,15 +56,21 @@ gulp.task("test", () =>
     gulp.src("test/**/*.js")
         .pipe(mocha()));
 
+gulp.task("preTravisBuild", () =>
+         gulp.src(["client_app/**/*.js", "elements/**/*.js", "objects/**/*.js",
+                  "routes/**/*.js", "server.js", "app.js"])
+             .pipe(istanbul())
+            // Force require to return covered files
+             .pipe(istanbul.hookRequire()));
+
 // THIS RUNS WHEN TRAVIS BUILDS
-gulp.task("travisBuild", () => {
+gulp.task("travisBuild", ["preTravisBuild"], (cb) => {
     gulp.src("test/**/*.js")
+        .pipe(babel())
+        .pipe(injectModules())
         .pipe(mocha())
-        .pipe(blanket({
-            instrument: "blanketInstrument.js",
-            captureFile: "coverage.html",
-            reporter: "html-cov",
-        }));
+        .pipe(istanbul.writeReports())
+        .on("end", cb);
 });
 
 gulp.task("default", ["lint", "compile", "test"], () => {
