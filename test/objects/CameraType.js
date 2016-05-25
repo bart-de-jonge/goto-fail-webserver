@@ -7,4 +7,17 @@ describe("CameraType", () => {
         expect(type).to.not.be.null;
         done();
     });
+
+    it("Should Create CameraType Object from valid XML", done => {
+        const xml = {
+            name: ["70D"],
+            description: ["Canon"],
+            movementMargin: [2],
+        };
+
+        const cameraType = CameraType.fromXML(xml);
+        expect(cameraType).to.not.be.null;
+        expect(cameraType.name).to.equal("70D");
+        done();
+    })
 });
