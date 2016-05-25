@@ -45,10 +45,14 @@ const getTimelines = function getTimelines(callback) {
                 // Insert shots in timeline which is pushed to timelinesarray
                 // and push to flattenedArray
                 cameraTimelinesXML.forEach(timeline => {
+                    // Get camera
                     const camera = getCamera(timeline.camera[0]);
-                    console.log(camera);
 
-                    const cameraTimeline = new CameraTimeline("dummy", "dymmy");
+                    // Make cameraTimeline
+                    const cameraTimeline = new CameraTimeline(
+                        camera.name, camera.description, camera);
+
+                    // Parse and add shots
                     if (typeof timeline.shotList[0].shot !== "undefined") {
                         timeline.shotList[0].shot.forEach(shot => {
                             const cameraShot = new CameraShot(shot.beginCount[0],
@@ -89,15 +93,19 @@ const getMaxAndMinCount = function getMaxAndMinCount(flattenedCameraTimelines) {
 router.get("/timeline-data", (req, res) => {
     getTimelines((timelines, err) => {
         if (err) {
-            res.json({succes:false, message:"Please Upload A Project File Before Editing!"});
+            res.json({
+                succes: false,
+                message: "Please Upload A Project File Before Editing!",
+            });
         } else {
             const cameraTimelines = timelines[0];
             const counts = getMaxAndMinCount(timelines[1]);
             const minCount = counts[0];
             const maxCount = counts[1];
-            res.json({cameraTimelines: cameraTimelines,
-                    minCount: minCount,
-                    maxCount: maxCount});
+            res.json({
+                cameraTimelines,
+                minCount,
+                maxCount });
         }
     });
 });
@@ -116,9 +124,10 @@ router.get("/", (req, res) => {
             const maxCount = counts[1];
             // Render the timeline.ejs file with the correct variables
             res.render("timeline", {
-                    cameraTimelines,
-                    minCount,
-                    maxCount});
+                cameraTimelines,
+                minCount,
+                maxCount,
+            });
         }
     });
 });
