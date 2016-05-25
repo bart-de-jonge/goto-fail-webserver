@@ -42,10 +42,51 @@
         handleResponse(event, response) {
             let response_data = event.detail.response;
 
+            var maxCount = 0;
             response_data.cameraTimelines.forEach(function (timeline) {
-                timeline.name = "menno is een hoeradf";
-                timeline.cameraShots.forEach(function (shot) {
+                var curEndCount = parseFloat(timeline.cameraShots[timeline.cameraShots.length - 1].endCount);
+                if(curEndCount > maxCount) {
+                    maxCount = curEndCount;
+                }
+            });
+            console.log(maxCount);
+            console.log(typeof maxCount);
 
+
+
+            response_data.cameraTimelines.forEach(function (timeline) {
+
+                // Setup lists for timelines
+                // TODO: find a way to correctly execute this in timeline-element
+
+                var shots = timeline.cameraShots;
+                var blockActive = false;
+                var curNumber = 0;
+                var paddingDone = false;
+//                for(var i = 0; i <= shots[shots.length - 1].endCount * 4; i++) {
+                for(var i = 0; i <= maxCount * 4; i++) {
+                    if(!blockActive && curNumber != null && shots[curNumber].beginCount*4 == i) {
+                        blockActive = true;
+                        paddingDone = false;
+                    } else if(blockActive && shots[curNumber].endCount*4 == i) {
+                        if(curNumber < shots.length - 1) {
+                            curNumber++;
+                        } else {
+                            curNumber = null;
+                        }
+                        blockActive = false;
+                    } else if(curNumber != null && !blockActive && !paddingDone) {
+                        var endCount = (shots[curNumber].beginCount*4 - 1) / 4;
+                        timeline.cameraShots.splice(i, 0, {beginCount: (i/4).toString(), endCount: endCount.toString()});
+                        paddingDone = true;
+                    } else if(curNumber == null && !blockActive && !paddingDone) {
+                        timeline.cameraShots.splice(i, 0, {beginCount: (i/4).toString(), endCount: maxCount.toString()});
+                        paddingDone = true;
+                    }
+                }
+                timeline.cameraShots.forEach(function (shot) {
+                    // 4 = number of blocks per count, 10 is height per block
+                    shot.pixelLength = (shot.endCount - shot.beginCount) * 4 * 5;
                 });
             });
 

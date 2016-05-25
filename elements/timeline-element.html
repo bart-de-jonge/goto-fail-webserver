@@ -6,16 +6,33 @@
             paper-material {
                 padding: 10px;
             }
+
+            table, tr {
+                height: 100%;
+                width: 100%;
+            }
+
+            td {
+                border: 2px solid black;
+                box-sizing: border-box;
+            }
+
+            timeline-block {
+                height: 100%;
+            }
         </style>
 
         <paper-material elevation="2">
             <p>{{timeline_data.name}}</p>
             <p>{{timeline_data.description}}</p>
 
-            <table><tbody></tbody></table>
+            <table>
             <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
-                <timeline-block block_data="{{item}}"></timeline-block>
+                <tr><td style="height:{{item.pixelLength}}px;">
+                    <timeline-block block_data="{{item}}"></timeline-block>
+                </td></tr>
             </template>
+            </table>
         </paper-material>
     </template>
     <script>

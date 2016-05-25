@@ -4,16 +4,22 @@
         <style>
             paper-material {
                 background-color: #00b0ff;
-                padding: 10px;
+                padding: 0px;
+                height: 100%;
+                box-sizing: border-box;
+            }
+
+            :host {
+                height: 100%;
             }
 
         </style>
 
-        <paper-material elevation="3">
-            <p>{{block_data.name}}</p>
-            <p>{{block_data.description}}</p>
+        <!--<paper-material elevation="3">-->
+            <!--<p>{{block_data.name}}</p>-->
+            <!--<p>{{block_data.description}}</p>-->
             <p>{{block_data.beginCount}} - {{block_data.endCount}}</p>
-        </paper-material>
+        <!--</paper-material>-->
 
     </template>
     <script>
