@@ -17,7 +17,7 @@ gulp.task("develop", () => {
     nodemon({
         script: "server.js",
         execMap: {
-            js: "./node_modules/babel-cli/bin/babel-node.js",
+            js: "node node_modules/babel-cli/bin/babel-node.js",
         },
         ignore: [
             "node_modules/",

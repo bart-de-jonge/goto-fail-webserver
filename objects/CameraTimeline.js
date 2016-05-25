@@ -2,10 +2,11 @@
  * Class for storing a CameraTimeline
  */
 class CameraTimeline {
-    constructor(name, description) {
+    constructor(name, description, camera) {
         this.name = name;
         this.description = description;
         this.cameraShots = [];
+        this.camera = camera;
     }
 
     // Add a camerashot to this timeline
