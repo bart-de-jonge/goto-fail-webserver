@@ -8,11 +8,6 @@ class CameraShot {
         this.name = name;
         this.description = description;
     }
-
-    // Returns the length of this cameraShot in counts
-    getLength() {
-        return this.endCount - this.beginCount;
-    }
 }
 
 export default CameraShot;
