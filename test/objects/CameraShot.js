@@ -9,9 +9,4 @@ describe("CameraShot", () => {
         expect(shot).to.not.be.null;
         done();
     });
-    it("Can calculate the shot length", done => {
-        const shot = new CameraShot(0, 1, "My Shot", "Better Be Good");
-        expect(shot.getLength()).to.equal(1);
-        done();
-    })
 });
