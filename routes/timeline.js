@@ -2,7 +2,6 @@ import express from "express";
 import XMLHelper from "../objects/XMLHelper";
 const router = new express.Router();
 
-
 // Get timelines from xml
 const getTimelines = function getTimelines(pickedTimelines, filtered, callback) {
     // Dummyfile Todo: replace with dyn0amic
@@ -11,7 +10,12 @@ const getTimelines = function getTimelines(pickedTimelines, filtered, callback) 
         if (!xmlHelper.initialized) {
             setTimeout(waitForXML, 10);
         } else {
-            callback(xmlHelper.data);
+            const data = xmlHelper.data;
+            if (filtered && typeof pickedTimelines !== "undefined") {
+                callback(xmlHelper.filterTimelines(pickedTimelines, data));
+            } else {
+                callback(xmlHelper.data);
+            }
         }
     }
     waitForXML();

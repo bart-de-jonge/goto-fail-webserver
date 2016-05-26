@@ -47,8 +47,8 @@ class XMLHelper {
             });
         }
 
-        return {minCount, maxCount};
-    };
+        return { minCount, maxCount };
+    }
 
     parseXML() {
         fs.readFile(`${__dirname}/../project-scp-files/project.scp`, (err, data) => {
@@ -90,17 +90,35 @@ class XMLHelper {
                     const minMaxCount = this.getMaxAndMinCount(flattenedTimelines);
                     this.data = { cameraTimelines,
                         minCount: minMaxCount.minCount,
-                        maxCount: minMaxCount.maxCount};
+                        maxCount: minMaxCount.maxCount };
                     this.initialized = true;
                 });
             }
         });
     }
 
+    filterTimelines(pickedTimelines, data) {
+        const flattenedTimelines = [];
+        const resultingData = {};
+        resultingData.cameraTimelines = [];
+
+        data.cameraTimelines.forEach((timeline, index) => {
+            if (pickedTimelines.indexOf(index.toString()) >= 0) {
+                flattenedTimelines.concat(timeline.getCameraShots);
+                resultingData.cameraTimelines.push(timeline);
+            }
+        });
+
+        const minMaxCount = this.getMaxAndMinCount(flattenedTimelines);
+        resultingData.minCount = minMaxCount.minCount;
+        resultingData.maxCount = minMaxCount.maxCount;
+        return resultingData;
+    }
+
     constructor() {
         console.log(this.data);
         this.initialized = false;
-        if (typeof this.data == "undefined") {
+        if (typeof this.data === "undefined") {
             console.log("alksdfjklasdjfklasdjfasdklfjakldjfasd");
             this.parseXML();
         } else {

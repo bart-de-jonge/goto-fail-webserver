@@ -8,9 +8,8 @@ class timelinePicker {
     }
 
     buttonClicked() {
-        console.log("button clicked");
         const toggles = document.querySelectorAll("paper-toggle-button");
-        let checkedToggles = [];
+        const checkedToggles = [];
 
         for (let i = 0; i < toggles.length; i++) {
             if (toggles[i].checked) {
@@ -23,14 +22,10 @@ class timelinePicker {
             if (data.success) {
                 window.location.href = "/timeline";
             }
-            console.log(data);
         });
     }
 
     handleResponse(event) {
-        // Setup lists for timelines
-        // TODO: find a way to correctly execute this in timeline-element
-
         // Get data from ajax response
         this.timelines = event.detail.response.cameraTimelines;
     }
