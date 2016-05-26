@@ -44,7 +44,7 @@ const getTimelines = function getTimelines(callback) {
 
                 // Insert shots in timeline which is pushed to timelinesarray
                 // and push to flattenedArray
-                cameraTimelinesXML.forEach(timeline => {
+                cameraTimelinesXML.forEach((timeline) => {
                     // Get camera
                     const camera = getCamera(timeline.camera[0]);
 

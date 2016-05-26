@@ -1,0 +1,61 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+
+<dom-module id="timeline-picker">
+    // Template
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            paper-material {
+                background-color: #00B7FF;
+                width: 550px;
+                padding: 20px;
+                margin: 100px auto;
+                font-weight: bolder;
+                font-size: 1.5em;
+            }
+
+            paper-material > p {
+                margin: 20px auto;
+                text-align: center;
+            }
+
+            paper-toggle-button {
+                margin-top: 20px;
+            }
+
+            paper-button {
+                margin: 30px auto;
+                display: block;
+                width: 200px;
+                background-color: #cb4b16;
+                border-radius: 25px;
+            }
+
+        </style>
+        <iron-ajax
+                auto
+                url="/timeline/timeline-data"
+                handle-as="json"
+                on-response="handleResponse"
+                id="ajax-timeline-data"></iron-ajax>
+
+        <paper-material elevation="2">
+            <p>Please specify which timelines you want to control:</p>
+
+            <template is="dom-repeat" items="{{timelines}}">
+                <paper-toggle-button value="{{index}}">{{item.name}}</paper-toggle-button>
+            </template>
+
+            <paper-button on-click="buttonClicked">Continue</paper-button>
+        </paper-material>
+
+    </template>
+
+    // Scripts
+    <script src="timeline-picker.js"></script>
+</dom-module>
