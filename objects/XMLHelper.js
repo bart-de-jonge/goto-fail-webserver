@@ -52,7 +52,6 @@ class XMLHelper {
 
     parseXML() {
         fs.readFile(`${__dirname}/../project-scp-files/project.scp`, (err, data) => {
-            console.log("laskdfjaskldfj");
             if (err) {
                 // TODO something with the errorf
                 this.data = null;
@@ -116,10 +115,8 @@ class XMLHelper {
     }
 
     constructor() {
-        console.log(this.data);
         this.initialized = false;
         if (typeof this.data === "undefined") {
-            console.log("alksdfjklasdjfklasdjfasdklfjakldjfasd");
             this.parseXML();
         } else {
             this.initialized = true;
