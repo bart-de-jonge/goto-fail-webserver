@@ -15,8 +15,8 @@ class Camera {
         return new Camera(
             XMLObject.name[0],
             XMLObject.description[0],
-            XMLObject.movementMargin[0],
-            CameraType.fromXML(XMLObject.cameraType[0])
+            CameraType.fromXML(XMLObject.cameraType[0]),
+            XMLObject.movementMargin[0]
         );
     }
 }

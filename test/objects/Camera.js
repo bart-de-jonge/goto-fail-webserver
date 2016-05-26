@@ -27,6 +27,9 @@ describe("Camera", () => {
         const camera = Camera.fromXML(xml);
         expect(camera).to.not.be.null;
         expect(camera.name).to.equal("Left of Center");
+        expect(camera.description).to.equal("Used for panning shots");
+        expect(camera.movementMargin).to.equal(1);
+        expect(camera.cameraType).to.be.instanceOf(CameraType);
         done();
     })
 });

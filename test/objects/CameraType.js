@@ -18,6 +18,8 @@ describe("CameraType", () => {
         const cameraType = CameraType.fromXML(xml);
         expect(cameraType).to.not.be.null;
         expect(cameraType.name).to.equal("70D");
+        expect(cameraType.description).to.equal("Canon");
+        expect(cameraType.movementMargin).to.equal(2);
         done();
     })
 });
