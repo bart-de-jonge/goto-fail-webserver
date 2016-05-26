@@ -7,19 +7,30 @@
             }
         </style>
 
-        <paper-button active="{{active::change}}" toggles raised on-tap="handleTap">Play</paper-button>
+        <paper-button active="{{active::change}}" toggles raised>{{ text }}</paper-button>
     </template>
     <script>
         (function() {
             class timelinePlayButton {
                 beforeRegister() {
                     this.is = "timeline-play-button";
+
                     this.properties = {
-                        active: Boolean
-                    }
+                        active: {
+                            type: Boolean,
+                            observer: "_activeChanged"
+                        },
+                        text: {
+                            type: String,
+                            compute: "computeText(active)",
+                            value: "Play"
+                        }
+                    };
                 }
 
-                handleTap(e) {
+                _activeChanged(newActive, oldActive) {
+                    this.text = newActive ? "Pause" : "Play";
+                    console.log("Text should be set?");
                     const toggleEvent = new CustomEvent("toggle-play", { "detail": this.active });
                     document.dispatchEvent(toggleEvent);
                 }
