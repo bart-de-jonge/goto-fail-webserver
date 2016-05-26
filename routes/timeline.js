@@ -1,75 +1,20 @@
 import express from "express";
-import CameraShot from "../objects/CameraShot";
-import CameraTimeline from "../objects/CameraTimeline";
-import xml2js from "xml2js";
-import fs from "fs";
-import Camera from "../objects/Camera";
-import CameraType from "../objects/CameraType";
+import XMLHelper from "../objects/XMLHelper";
 const router = new express.Router();
-const parser = new xml2js.Parser();
 
-const getCameraType = function getCameraType(XMLObject) {
-    return new CameraType(
-        XMLObject.name[0],
-        XMLObject.description[0],
-        XMLObject.movementMargin[0]
-    );
-};
-
-const getCamera = function getCamera(XMLObject) {
-    return new Camera(
-        XMLObject.name[0],
-        XMLObject.description[0],
-        XMLObject.movementMargin[0],
-        getCameraType(XMLObject.cameraType[0])
-    );
-};
 
 // Get timelines from xml
 const getTimelines = function getTimelines(pickedTimelines, filtered, callback) {
-    // Dummyfile Todo: replace with dynamic
-    fs.readFile(`${__dirname}/../project-scp-files/project.scp`, (err, data) => {
-        if (err) {
-            callback(null, {
-                message: "Project File Does Not Exist",
-            });
+    // Dummyfile Todo: replace with dyn0amic
+    const xmlHelper = new XMLHelper();
+    function waitForXML() {
+        if (!xmlHelper.initialized) {
+            setTimeout(waitForXML, 10);
         } else {
-            parser.parseString(data, (err, result) => {
-                // Read timelines from xml
-                const cameraTimelinesXML =
-                    result.scriptingProject["camera-centerarea"][0].cameraTimeline;
-
-                const cameraTimelines = [];
-                const flattenedCameraTimelines = [];
-
-                // Insert shots in timeline which is pushed to timelinesarray
-                // and push to flattenedArray
-                cameraTimelinesXML.forEach((timeline, index) => {
-                    console.log(filtered);
-                    if (!filtered || typeof pickedTimelines === "undefined" || pickedTimelines.indexOf(index.toString()) >= 0) {
-                        // Get camera
-                        const camera = getCamera(timeline.camera[0]);
-
-                        // Make cameraTimeline
-                        const cameraTimeline = new CameraTimeline(
-                            camera.name, camera.description, camera);
-
-                        // Parse and add shots
-                        if (typeof timeline.shotList[0].shot !== "undefined") {
-                            timeline.shotList[0].shot.forEach(shot => {
-                                const cameraShot = new CameraShot(shot.beginCount[0],
-                                    shot.endCount[0], shot.name[0], shot.description[0]);
-                                cameraTimeline.addCameraShot(cameraShot);
-                                flattenedCameraTimelines.push(cameraShot);
-                            });
-                        }
-                        cameraTimelines.push(cameraTimeline);
-                    }
-                });
-                callback([cameraTimelines, flattenedCameraTimelines]);
-            });
+            callback([xmlHelper.data.cameraTimelines, xmlHelper.data.flattenedCameraTimelines]);
         }
-    });
+    }
+    waitForXML();
 };
 
 // Get max and mincount of an array of shots
