@@ -10,6 +10,7 @@ const logger = log4js.getLogger();
 const listen = (server) => {
     const io = socketio.listen(server);
 
+    // TODO: Replace Dummy Value With Timeline Information
     const maxCount = 12;
     let currentCount = 0;
     let counterInterval = null;

@@ -80,7 +80,7 @@ class timelineGrid {
             },
         };
 
-        this.countsRemaining = 0;
+        this.prevTop = 62;
     }
 
     handleResponse(event) {
@@ -134,38 +134,35 @@ class timelineGrid {
         this.timeline_data = newData;
     }
 
-    _countChanged(newCount, oldCount) {
-        this.countsRemaining = this.countsRemaining + 1;
-        if (newCount === 1) {
+    _countChanged(newCount) {
+        if (newCount > 0) {
+            // eslint-disable-next-line no-undef
             const timeDiv = Polymer.dom(this.root).querySelector("div.timeline-grid");
+            // eslint-disable-next-line no-undef
             const scrollLine = Polymer.dom(timeDiv).querySelector("#scrolling-box");
-            this.scrollDown(scrollLine);
-            // scrollLine.style.transform = `translateY(${scrollLine.style.top + 40})`;
+
+            const newTop = 40 * newCount + this.prevTop;
+            this.scrollDown(scrollLine, newTop);
         }
     }
 
-    scrollDown(scrollLine) {
-        if (this.countsRemaining > 1) {
-            const prevTop = getComputedStyle(scrollLine).top;
-            const newTop = parseInt(prevTop) + 40;
-            this.countsRemaining = this.countsRemaining - 1;
-            Velocity(scrollLine, {
-                    top: newTop,
-                }, 
-                {
-                    duration: 1000,
-                    complete: (els) => {
-                        this.scrollDown(els[0]);
-                    },
-                });
-            Velocity(scrollLine, 
-                "scroll",
-                { 
-                    offset: -200,
-                    queue: false,
-                    duration: 1000
-                });
-        }
+    scrollDown(scrollLine, newTop) {
+        // eslint-disable-next-line no-undef
+        Velocity(scrollLine, { // eslint-disable-line new-cap
+            top: newTop,
+        },
+            {
+                duration: 1000,
+            });
+        // eslint-disable-next-line no-undef
+        Velocity(scrollLine, // eslint-disable-line new-cap
+            "scroll",
+            {
+                offset: -200,
+                queue: false,
+                duration: 1000,
+            });
+    // }
     }
 }
 // eslint-disable-next-line
