@@ -20,6 +20,9 @@ class timelinePicker {
 
         // eslint-disable-next-line
         $.post("/timeline/picked-timelines", {"pickedTimelines": checkedToggles}, (data) => {
+            if (data.success) {
+                window.location.href = "/timeline";
+            }
             console.log(data);
         });
     }
