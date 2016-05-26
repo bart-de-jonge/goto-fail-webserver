@@ -132,8 +132,8 @@ class timelineGrid {
         this.timeline_data = newData;
     }
 
-    _countChanged(newCount, oldCount) {
-        console.log(`Received new count event, old: ${oldCount} new: ${newCount}`);
+    _countChanged(newCount) {
+        console.log(`The new count in timelineGrid is: ${newCount}`);
     }
 }
 // eslint-disable-next-line

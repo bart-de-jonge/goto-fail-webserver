@@ -16,10 +16,10 @@ const listen = (server) => {
 
     const sendCounts = (socket) => {
         if (currentCount < maxCount) {
-            currentCount = currentCount + 1;
             socket.emit("next count", {
                 newCount: currentCount,
             });
+            currentCount = currentCount + 1;
         } else {
             clearInterval(counterInterval);
         }

@@ -10,6 +10,18 @@
             timeline-element:nth-of-type(n+2) {
                 margin-left: 20px;
             }
+
+            #scrolling-box {
+                background: red;
+                width: 100%;
+                height: 3px;
+                position: absolute;
+                z-index: 2;
+            }
+
+            .scrolling-transition {
+                /* TODO: Add a transition to move count */
+            }
         </style>
         <iron-ajax
                 auto
@@ -19,6 +31,7 @@
                 id="ajax-timeline-data"></iron-ajax>
 
         <div class="layout horizontal">
+            <span id="scrolling-box"></span>
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
                 <timeline-element timeline_data="{{item}}" class="flex"></timeline-element>
             </template>
