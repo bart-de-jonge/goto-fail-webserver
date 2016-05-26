@@ -11,69 +11,42 @@ const getTimelines = function getTimelines(pickedTimelines, filtered, callback) 
         if (!xmlHelper.initialized) {
             setTimeout(waitForXML, 10);
         } else {
-            callback([xmlHelper.data.cameraTimelines, xmlHelper.data.flattenedCameraTimelines]);
+            callback(xmlHelper.data);
         }
     }
     waitForXML();
 };
 
-// Get max and mincount of an array of shots
-const getMaxAndMinCount = function getMaxAndMinCount(flattenedCameraTimelines) {
-    // Calculate minimum and maximum counts
-    let minCount = 0;
-    let maxCount = 0;
-    if (flattenedCameraTimelines.length > 0) {
-        minCount = Number(flattenedCameraTimelines[0].beginCount);
-        maxCount = Number(flattenedCameraTimelines[0].endCount);
-        flattenedCameraTimelines.forEach(shot => {
-            if (shot.beginCount < minCount) {
-                minCount = Number(shot.beginCount);
-            }
-            if (shot.endCount > maxCount) {
-                maxCount = Number(shot.endCount);
-            }
-        });
-    }
-
-    return [minCount, maxCount];
-};
-
 router.get("/timeline-data", (req, res) => {
-    getTimelines(req.session.pickedTimelines, false, (timelines, err) => {
+    getTimelines(req.session.pickedTimelines, false, (data, err) => {
         if (err) {
             res.json({
                 succes: false,
                 message: "Please Upload A Project File Before Editing!",
             });
         } else {
-            const cameraTimelines = timelines[0];
-            const counts = getMaxAndMinCount(timelines[1]);
-            const minCount = counts[0];
-            const maxCount = counts[1];
             res.json({
-                cameraTimelines,
-                minCount,
-                maxCount });
+                cameraTimelines: data.cameraTimelines,
+                minCount: data.minCount,
+                maxCount: data.maxCount,
+            });
         }
     });
 });
 
 router.get("/timeline-filtered-data", (req, res) => {
-    getTimelines(req.session.pickedTimelines, true, (timelines, err) => {
+    getTimelines(req.session.pickedTimelines, true, (data, err) => {
         if (err) {
             res.json({
                 succes: false,
                 message: "Please Upload A Project File Before Editing!",
             });
         } else {
-            const cameraTimelines = timelines[0];
-            const counts = getMaxAndMinCount(timelines[1]);
-            const minCount = counts[0];
-            const maxCount = counts[1];
             res.json({
-                cameraTimelines,
-                minCount,
-                maxCount });
+                cameraTimelines: data.cameraTimelines,
+                minCount: data.minCount,
+                maxCount: data.maxCount,
+            });
         }
     });
 });

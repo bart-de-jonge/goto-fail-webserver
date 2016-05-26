@@ -29,6 +29,27 @@ class XMLHelper {
         );
     }
 
+    // Get max and mincount of an array of shots
+    getMaxAndMinCount(flattenedCameraTimelines) {
+        // Calculate minimum and maximum counts
+        let minCount = 0;
+        let maxCount = 0;
+        if (flattenedCameraTimelines.length > 0) {
+            minCount = Number(flattenedCameraTimelines[0].beginCount);
+            maxCount = Number(flattenedCameraTimelines[0].endCount);
+            flattenedCameraTimelines.forEach(shot => {
+                if (shot.beginCount < minCount) {
+                    minCount = Number(shot.beginCount);
+                }
+                if (shot.endCount > maxCount) {
+                    maxCount = Number(shot.endCount);
+                }
+            });
+        }
+
+        return {minCount, maxCount};
+    };
+
     parseXML() {
         fs.readFile(`${__dirname}/../project-scp-files/project.scp`, (err, data) => {
             console.log("laskdfjaskldfj");
@@ -43,7 +64,7 @@ class XMLHelper {
                         result.scriptingProject["camera-centerarea"][0].cameraTimeline;
 
                     const cameraTimelines = [];
-                    const flattenedCameraTimelines = [];
+                    const flattenedTimelines = [];
 
                     // Insert shots in timeline which is pushed to timelinesarray
                     // and push to flattenedArray
@@ -61,12 +82,15 @@ class XMLHelper {
                                 const cameraShot = new CameraShot(shot.beginCount[0],
                                     shot.endCount[0], shot.name[0], shot.description[0]);
                                 cameraTimeline.addCameraShot(cameraShot);
-                                flattenedCameraTimelines.push(cameraShot);
+                                flattenedTimelines.push(cameraShot);
                             });
                         }
                         cameraTimelines.push(cameraTimeline);
                     });
-                    this.data = { cameraTimelines, flattenedCameraTimelines };
+                    const minMaxCount = this.getMaxAndMinCount(flattenedTimelines);
+                    this.data = { cameraTimelines,
+                        minCount: minMaxCount.minCount,
+                        maxCount: minMaxCount.maxCount};
                     this.initialized = true;
                 });
             }
