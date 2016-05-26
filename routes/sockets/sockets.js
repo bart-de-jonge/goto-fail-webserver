@@ -10,12 +10,12 @@ const logger = log4js.getLogger();
 const listen = (server) => {
     const io = socketio.listen(server);
 
-    const maxCount = 23;
+    const maxCount = 12;
     let currentCount = 0;
     let counterInterval = null;
 
     const sendCounts = (socket) => {
-        if (currentCount < maxCount) {
+        if (currentCount <= maxCount) {
             socket.emit("next count", {
                 newCount: currentCount,
             });

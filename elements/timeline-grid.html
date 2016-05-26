@@ -11,16 +11,18 @@
                 margin-left: 20px;
             }
 
+            .timeline-grid {
+                position: relative;
+                --top-movement: 102px;
+            }
+
             #scrolling-box {
                 background: red;
                 width: 100%;
                 height: 3px;
                 position: absolute;
+                top: 62px;
                 z-index: 2;
-            }
-
-            .scrolling-transition {
-                /* TODO: Add a transition to move count */
             }
         </style>
         <iron-ajax
@@ -40,5 +42,6 @@
     </template>
 
     // Scripts
+    <script src="../bower_components/velocity/velocity.js"></script>
     <script src="timeline-grid.js"></script>
 </dom-module>

@@ -79,6 +79,8 @@ class timelineGrid {
                 observer: "_countChanged",
             },
         };
+
+        this.countsRemaining = 0;
     }
 
     handleResponse(event) {
@@ -132,8 +134,38 @@ class timelineGrid {
         this.timeline_data = newData;
     }
 
-    _countChanged(newCount) {
-        console.log(`The new count in timelineGrid is: ${newCount}`);
+    _countChanged(newCount, oldCount) {
+        this.countsRemaining = this.countsRemaining + 1;
+        if (newCount === 1) {
+            const timeDiv = Polymer.dom(this.root).querySelector("div.timeline-grid");
+            const scrollLine = Polymer.dom(timeDiv).querySelector("#scrolling-box");
+            this.scrollDown(scrollLine);
+            // scrollLine.style.transform = `translateY(${scrollLine.style.top + 40})`;
+        }
+    }
+
+    scrollDown(scrollLine) {
+        if (this.countsRemaining > 1) {
+            const prevTop = getComputedStyle(scrollLine).top;
+            const newTop = parseInt(prevTop) + 40;
+            this.countsRemaining = this.countsRemaining - 1;
+            Velocity(scrollLine, {
+                    top: newTop,
+                }, 
+                {
+                    duration: 1000,
+                    complete: (els) => {
+                        this.scrollDown(els[0]);
+                    },
+                });
+            Velocity(scrollLine, 
+                "scroll",
+                { 
+                    offset: -200,
+                    queue: false,
+                    duration: 1000
+                });
+        }
     }
 }
 // eslint-disable-next-line
