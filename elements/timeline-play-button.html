@@ -1,0 +1,31 @@
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<dom-module id="timeline-play-button">
+    <template>
+        <style>
+            paper-button {
+                background-color: blue;
+            }
+        </style>
+
+        <paper-button active="{{active::change}}" toggles raised on-tap="handleTap">Play</paper-button>
+    </template>
+    <script>
+        (function() {
+            class timelinePlayButton {
+                beforeRegister() {
+                    this.is = "timeline-play-button";
+                    this.properties = {
+                        active: Boolean
+                    }
+                }
+
+                handleTap(e) {
+                    const toggleEvent = new CustomEvent("toggle-play", { "detail": this.active });
+                    document.dispatchEvent(toggleEvent);
+                }
+            }
+
+            Polymer(timelinePlayButton);
+        })();
+    </script>
+</dom-module>
