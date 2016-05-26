@@ -132,4 +132,9 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/picked-timelines", (req, res) => {
+    console.log(req.body);
+    res.json({message: "succes"});
+});
+
 module.exports = router;

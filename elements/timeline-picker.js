@@ -14,12 +14,14 @@ class timelinePicker {
 
         for (let i = 0; i < toggles.length; i++) {
             if (toggles[i].checked) {
-                checkedToggles.push(toggles[i]);
-                console.log(toggles[i].value);
+                checkedToggles.push(toggles[i].value);
             }
         }
 
-        console.log(checkedToggles);
+        // eslint-disable-next-line
+        $.get("/timeline/picked-timelines", {pickedTimelines: checkedToggles}, (data) => {
+            console.log(data);
+        });
     }
 
     handleResponse(event) {
