@@ -110,7 +110,6 @@ router.get("/timeline-data", (req, res) => {
     });
 });
 
-
 /* GET home page. */
 router.get("/", (req, res) => {
     // Get the timelines
@@ -132,8 +131,8 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/picked-timelines", (req, res) => {
-    console.log(req.body);
+router.post("/picked-timelines", (req, res) => {
+    console.log(req.body.pickedTimelines);
     res.json({message: "succes"});
 });
 

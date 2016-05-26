@@ -19,7 +19,7 @@ class timelinePicker {
         }
 
         // eslint-disable-next-line
-        $.get("/timeline/picked-timelines", {pickedTimelines: checkedToggles}, (data) => {
+        $.post("/timeline/picked-timelines", {"pickedTimelines": checkedToggles}, (data) => {
             console.log(data);
         });
     }
