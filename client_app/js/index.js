@@ -1,6 +1,13 @@
 // eslint-disable-next-line no-undef
-$(document).ready(() => {
+document.addEventListener("DOMContentLoaded", () => {
     // Socket io boilerplate/temporary code
     const socket = io(); // eslint-disable-line no-undef
-    console.log(socket.toString());
+
+    socket.on("next count", (countData) => {
+        const header = document.getElementsByTagName("header")[0];
+        const dialog = document.createElement("paper-dialog");
+        dialog.innerHTML = `The Incoming Count is: ${countData.newCount}`;
+        header.appendChild(dialog);
+        // TODO: Add Data Manipulation Here
+    });
 });
