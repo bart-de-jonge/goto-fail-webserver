@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // TODO: Add Data Manipulation Here
         const newDialog = document.getElementById("cur-count");
         newDialog.innerHTML = `The Current Count is ${countData.newCount}`;
+
+        document.getElementsByTagName("timeline-grid")[0].setAttribute("current-count", countData.newCount);
     });
 
     document.addEventListener("toggle-play", (event) => {

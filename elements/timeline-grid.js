@@ -72,6 +72,12 @@ class timelineGrid {
         this.properties = {
             name: String,
             timeline_data: Object,
+            currentCount: {
+                type: Number,
+                value: 0,
+                notify: true,
+                observer: "_countChanged",
+            },
         };
     }
 
@@ -124,6 +130,10 @@ class timelineGrid {
 
         // Set data to property
         this.timeline_data = newData;
+    }
+
+    _countChanged(newCount, oldCount) {
+        console.log(`Received new count event, old: ${oldCount} new: ${newCount}`);
     }
 }
 // eslint-disable-next-line
