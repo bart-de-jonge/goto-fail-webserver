@@ -3,3 +3,9 @@ node_modules/
 npm-debug.log
 bower_components/
 project-scp-files/
+*.swp
+.tern-project
+public/js/
+coverage/
+*.sublime-project
+*.sublime-workspace

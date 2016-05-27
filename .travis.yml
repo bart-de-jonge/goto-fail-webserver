@@ -1,11 +1,14 @@
 language: node_js
 node_js:
-    - '4.0'
+    - '6.2.0'
 before_script:
     - 'npm install -g bower'
     - 'npm install -g gulp'
     - 'bower install'
-script: gulp
+script: gulp travisBuild
+notifications:
+    slack: gotofail:RPKX6AZBeUvMjVQPEdoCn1Vq
+    email: false
 cache:
     directories:
         - node_modules

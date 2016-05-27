@@ -1,6 +1,11 @@
 import gulp from "gulp";
 import nodemon from "gulp-nodemon";
+import childProcess from "child_process";
+import "babel-core/register";
+import mocha from "gulp-mocha";
 import babel from "gulp-babel";
+import injectModules from "gulp-inject-modules";
+import istanbul from "gulp-babel-istanbul";
 import eslint from "gulp-eslint";
 
 const paths = {
@@ -12,13 +17,13 @@ gulp.task("develop", () => {
     nodemon({
         script: "server.js",
         execMap: {
-            js: "./node_modules/babel-cli/bin/babel-node.js",
+            js: "node node_modules/babel-cli/bin/babel-node.js",
         },
         ignore: [
             "node_modules/",
             "public/",
         ],
-        tasks: ["compile"],
+        tasks: ["lint", "compile"],
     });
 });
 
@@ -35,7 +40,8 @@ gulp.task("lint", () =>
     // So, it's best to have gulp ignore the directory as well.
     // Also, Be sure to return the stream from the task;
     // Otherwise, the task may end before the stream has finished.
-    gulp.src(["**/*.js", "!node_modules/**", "!bbower_components/**"])
+    gulp.src(["**/*.js", "!node_modules/**", "!bower_components/**",
+             "!blanketInstrument.js", "!public/js/**"])
     // eslint() attaches the lint output to the "eslint" property
     // of the file object so it can be used by other modules.
         .pipe(eslint())
@@ -46,6 +52,27 @@ gulp.task("lint", () =>
         // lint error, return the stream and pipe to failAfterError last.
         .pipe(eslint.failAfterError()));
 
-gulp.task("default", ["lint"], () => {
-    // This will only run if the lint task is successful...
+gulp.task("test", () =>
+    gulp.src("test/**/*.js")
+        .pipe(mocha()));
+
+gulp.task("preTravisBuild", () =>
+         gulp.src(["client_app/**/*.js", "elements/**/*.js", "objects/**/*.js",
+                  "routes/**/*.js", "server.js", "app.js"])
+             .pipe(istanbul())
+            // Force require to return covered files
+             .pipe(istanbul.hookRequire()));
+
+// THIS RUNS WHEN TRAVIS BUILDS
+gulp.task("travisBuild", ["preTravisBuild"], (cb) => {
+    gulp.src("test/**/*.js")
+        .pipe(babel())
+        .pipe(injectModules())
+        .pipe(mocha())
+        .pipe(istanbul.writeReports())
+        .on("end", cb);
+});
+
+gulp.task("default", ["lint", "compile", "test"], () => {
+    childProcess.exec("./node_modules/babel-cli/bin/babel-node.js server.js");
 });
