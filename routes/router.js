@@ -4,9 +4,11 @@
 import index from "./index";
 import timeline from "./timeline";
 import uploadScp from "./upload-scp";
+import camera from "./camera";
 
 module.exports.addRoutes = (app) => {
     app.use("/", index);
     app.use("/timeline", timeline);
     app.use("/upload-scp", uploadScp);
+    app.use("/camera", camera);
 };
