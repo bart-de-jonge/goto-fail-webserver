@@ -72,7 +72,15 @@ class timelineGrid {
         this.properties = {
             name: String,
             timeline_data: Object,
+            currentCount: {
+                type: Number,
+                value: 0,
+                notify: true,
+                observer: "_countChanged",
+            },
         };
+
+        this.prevTop = 62;
     }
 
     handleResponse(event) {
@@ -124,6 +132,37 @@ class timelineGrid {
 
         // Set data to property
         this.timeline_data = newData;
+    }
+
+    _countChanged(newCount) {
+        if (newCount > 0) {
+            // eslint-disable-next-line no-undef
+            const timeDiv = Polymer.dom(this.root).querySelector("div.timeline-grid");
+            // eslint-disable-next-line no-undef
+            const scrollLine = Polymer.dom(timeDiv).querySelector("#scrolling-box");
+
+            const newTop = 40 * newCount + this.prevTop;
+            this.scrollDown(scrollLine, newTop);
+        }
+    }
+
+    scrollDown(scrollLine, newTop) {
+        // eslint-disable-next-line no-undef
+        Velocity(scrollLine, { // eslint-disable-line new-cap
+            top: newTop,
+        },
+            {
+                duration: 1000,
+            });
+        // eslint-disable-next-line no-undef
+        Velocity(scrollLine, // eslint-disable-line new-cap
+            "scroll",
+            {
+                offset: -200,
+                queue: false,
+                duration: 1000,
+            });
+    // }
     }
 }
 // eslint-disable-next-line
