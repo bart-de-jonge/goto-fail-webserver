@@ -2,8 +2,8 @@ import express from "express";
 const router = new express.Router();
 import http from "http";
 
-router.get("/save/:id(\\d\\d?)/", (req, res) => {
-    let id = req.params.id;
+router.post("/save", (req, res) => {
+    let id = req.body.preset;
     if (id.length === 1) {
         id = `0${id}`;
     }
@@ -12,15 +12,20 @@ router.get("/save/:id(\\d\\d?)/", (req, res) => {
         path: `/cgi-bin/aw_ptz?cmd=%23M${id}&res=1`,
     }, (response) => {
         if (response.statusCode === 200) {
-            res.status(200).json({ success: true, message: `Saved preset ${id}.` });
+            res.status(200).json({
+                succeeded: true,
+                message: `Saved preset ${id}.`,
+            });
         } else {
-            res.status(504).json({ success: false, message: `Unable to save preset ${id}.` });
+            res.status(504).json({
+                message: `Unable to save preset ${id}.`,
+            });
         }
     });
 });
 
-router.get("/recall/:id(\\d\\d?)/", (req, res) => {
-    let id = req.params.id;
+router.post("/recall", (req, res) => {
+    let id = req.body.preset;
     if (id.length === 1) {
         id = `0${id}`;
     }
@@ -29,9 +34,14 @@ router.get("/recall/:id(\\d\\d?)/", (req, res) => {
         path: `/cgi-bin/aw_ptz?cmd=%23R${id}&res=1`,
     }, (response) => {
         if (response.statusCode === 200) {
-            res.status(200).json({ success: true, message: `Recalled preset ${id}.` });
+            res.status(200).json({
+                succeeded: true,
+                message: `Recalled preset ${id}.`,
+            });
         } else {
-            res.status(504).json({ success: false, message: `Unable to recall preset ${id}.` });
+            res.status(504).json({
+                message: `Unable to recall preset ${id}.`,
+            });
         }
     });
 });
@@ -42,9 +52,14 @@ router.get("/stop", (req, res) => {
         path: "/cgi-bin/aw_ptz?cmd=%23PTS5050&res=1",
     }, (response) => {
         if (response.statusCode === 200) {
-            res.status(200).json({ success: true, message: "Stopped camera." });
+            res.status(200).json({
+                succeeded: true,
+                message: "Stopped camera.",
+            });
         } else {
-            res.status(504).json({ success: false, message: "Unable to stop camera." });
+            res.status(504).json({
+                message: "Unable to stop camera.",
+            });
         }
     });
 });
@@ -52,18 +67,20 @@ router.get("/stop", (req, res) => {
 router.post("/pan", (req, res) => {
     const body = req.body;
     if (!body.direction || !body.speed) {
-        res.status(400).json({ success: false,
+        res.status(400).json({
             message: "Request has to contain: direction, speed." });
         return;
     }
     if (body.direction.toLowerCase() !== "left" && body.direction.toLowerCase() !== "right") {
-        res.status(400).json({ success: false,
-            message: `Direction has to be left or right! ${body.direction} is not allowed!` });
+        res.status(400).json({
+            message: `Direction has to be left or right! ${body.direction} is not allowed!`,
+        });
         return;
     }
     if (body.speed > 49 || body.speed < 1) {
-        res.status(400).json({ success: false,
-            message: `Speed has to be between 1 and 49. ${body.speed} is not allowed!` });
+        res.status(400).json({
+            message: `Speed has to be between 1 and 49. ${body.speed} is not allowed!`,
+        });
         return;
     }
 
@@ -73,10 +90,14 @@ router.post("/pan", (req, res) => {
         path: `/cgi-bin/aw_ptz?cmd=%23P${speed}&res=1`,
     }, (response) => {
         if (response.statusCode === 200) {
-            res.status(200).json({ success: true,
-                message: `Camera moving ${body.direction} at speed ${body.speed}.` });
+            res.status(200).json({
+                succeeded: true,
+                message: `Camera moving ${body.direction} at speed ${body.speed}.`,
+            });
         } else {
-            res.status(504).json({ success: false, message: "Unable to move camera." });
+            res.status(504).json({
+                message: "Unable to move camera.",
+            });
         }
     });
 });
@@ -85,18 +106,21 @@ router.post("/pan", (req, res) => {
 router.post("/tilt", (req, res) => {
     const body = req.body;
     if (!body.direction || !body.speed) {
-        res.status(400).json({ success: false,
-            message: "Request has to contain: direction, speed." });
+        res.status(400).json({
+            message: "Request has to contain: direction, speed.",
+        });
         return;
     }
     if (body.direction.toLowerCase() !== "up" && body.direction.toLowerCase() !== "down") {
-        res.status(400).json({ success: false,
-            message: `Direction has to be up or down! ${body.direction} is not allowed!` });
+        res.status(400).json({
+            message: `Direction has to be up or down! ${body.direction} is not allowed!`,
+        });
         return;
     }
     if (body.speed > 49 || body.speed < 1) {
-        res.status(400).json({ success: false,
-            message: `Speed has to be between 1 and 49. ${body.speed} is not allowed!` });
+        res.status(400).json({
+            message: `Speed has to be between 1 and 49. ${body.speed} is not allowed!`,
+        });
         return;
     }
 
@@ -106,10 +130,14 @@ router.post("/tilt", (req, res) => {
         path: `/cgi-bin/aw_ptz?cmd=%23T${speed}&res=1`,
     }, (response) => {
         if (response.statusCode === 200) {
-            res.status(200).json({ success: true,
-                message: `Camera moving ${body.direction} at speed ${body.speed}.` });
+            res.status(200).json({
+                succeeded: true,
+                message: `Camera moving ${body.direction} at speed ${body.speed}.`,
+            });
         } else {
-            res.status(504).json({ success: false, message: "Unable to move camera." });
+            res.status(504).json({
+                message: "Unable to move camera.",
+            });
         }
     });
 });
