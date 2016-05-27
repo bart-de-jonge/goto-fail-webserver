@@ -1,3 +1,6 @@
+## Other repository
+This repository contains the webserver of the project, the scripting-project part can be found at `https://github.com/bartdejonge1996/goto-fail`.
+
 # Prerequisites:
 Make sure you have installed node and updated it to the latest version (`v6.2.0`)
 
