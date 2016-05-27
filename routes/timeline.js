@@ -63,9 +63,6 @@ router.get("/", (req, res) => {
 });
 
 router.post("/picked-timelines", (req, res) => {
-
-    console.log(req.body.pickedTimelines);
-
     // eslint-disable-next-line
     req.session.pickedTimelines = req.body.pickedTimelines;
 
