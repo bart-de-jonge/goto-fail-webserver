@@ -2,7 +2,6 @@ import fs from "fs";
 import CameraShot from "../objects/CameraShot";
 import CameraTimeline from "../objects/CameraTimeline";
 import xml2js from "xml2js";
-import CameraType from "./CameraType";
 import Camera from "./Camera";
 
 const parser = new xml2js.Parser();
@@ -11,23 +10,6 @@ const parser = new xml2js.Parser();
  * Class for storing a CameraTimeline
  */
 class XMLHelper {
-
-    getCameraType(XMLObject) {
-        return new CameraType(
-            XMLObject.name[0],
-            XMLObject.description[0],
-            XMLObject.movementMargin[0]
-        );
-    }
-
-    getCamera(XMLObject) {
-        return new Camera(
-            XMLObject.name[0],
-            XMLObject.description[0],
-            XMLObject.movementMargin[0],
-            this.getCameraType(XMLObject.cameraType[0])
-        );
-    }
 
     // Get max and mincount of an array of shots
     getMaxAndMinCount(flattenedCameraTimelines) {
@@ -69,7 +51,7 @@ class XMLHelper {
                     // and push to flattenedArray
                     cameraTimelinesXML.forEach((timeline) => {
                         // Get camera
-                        const camera = this.getCamera(timeline.camera[0]);
+                        const camera = Camera.fromXML(timeline.camera[0]);
 
                         // Make cameraTimeline
                         const cameraTimeline = new CameraTimeline(
@@ -102,7 +84,7 @@ class XMLHelper {
         resultingData.cameraTimelines = [];
 
         data.cameraTimelines.forEach((timeline, index) => {
-            if (pickedTimelines.indexOf(index.toString()) >= 0) {
+            if (pickedTimelines.indexOf(index) >= 0) {
                 flattenedTimelines.concat(timeline.getCameraShots);
                 resultingData.cameraTimelines.push(timeline);
             }

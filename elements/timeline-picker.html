@@ -12,7 +12,6 @@
         <style>
             paper-card {
                 background-color: #00B7FF;
-                /*width: 550px;*/
                 padding: 20px;
                 font-weight: bolder;
                 font-size: 1.5em;
@@ -42,6 +41,14 @@
                 handle-as="json"
                 on-response="handleResponse"
                 id="ajax-timeline-data"></iron-ajax>
+
+        <iron-ajax
+            id="pickedTimelinesPost"
+            url="/timeline/picked-timelines"
+            handle-as="json"
+            method = "POST"
+            content-type="application/json"
+            on-response="handlePickedTimelinesResponse"></iron-ajax>
 
         <paper-card heading="Please specify which timelines you want to control" elevation="5">
             <div class="card-content">

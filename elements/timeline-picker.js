@@ -17,17 +17,19 @@ class timelinePicker {
             }
         }
 
-        // eslint-disable-next-line
-        $.post("/timeline/picked-timelines", {"pickedTimelines": checkedToggles}, (data) => {
-            if (data.success) {
-                window.location.href = "/timeline";
-            }
-        });
+        document.querySelector("#pickedTimelinesPost").body = { pickedTimelines: checkedToggles };
+        document.querySelector("#pickedTimelinesPost").generateRequest();
     }
 
     handleResponse(event) {
         // Get data from ajax response
         this.timelines = event.detail.response.cameraTimelines;
+    }
+
+    handlePickedTimelinesResponse(event) {
+        if (event.detail.response.success) {
+            window.location.href = "/timeline";
+        }
     }
 }
 // eslint-disable-next-line
