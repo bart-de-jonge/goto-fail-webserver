@@ -1,0 +1,69 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+
+<dom-module id="timeline-picker">
+    // Template
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            paper-card {
+                background-color: #00B7FF;
+                padding: 20px;
+                font-weight: bolder;
+                font-size: 1.5em;
+            }
+
+            paper-material > p {
+                margin: 20px auto;
+                text-align: center;
+            }
+
+            paper-toggle-button {
+                margin-top: 20px;
+            }
+
+            paper-button {
+                margin: 30px auto;
+                display: block;
+                width: 200px;
+                background-color: #cb4b16;
+                border-radius: 25px;
+            }
+
+        </style>
+        <iron-ajax
+                auto
+                url="/timeline/timeline-data"
+                handle-as="json"
+                on-response="handleResponse"
+                id="ajax-timeline-data"></iron-ajax>
+
+        <iron-ajax
+            id="pickedTimelinesPost"
+            url="/timeline/picked-timelines"
+            handle-as="json"
+            method = "POST"
+            content-type="application/json"
+            on-response="handlePickedTimelinesResponse"></iron-ajax>
+
+        <paper-card heading="Please specify which timelines you want to control" elevation="5">
+            <div class="card-content">
+                <template is="dom-repeat" items="{{timelines}}">
+                    <div>
+                    <paper-toggle-button value="{{index}}">{{item.name}}</paper-toggle-button>
+                        </div>
+                </template>
+            </div>
+
+            <paper-button on-click="buttonClicked">Continue</paper-button>
+        </paper-card>
+
+    </template>
+
+    // Scripts
+    <script src="timeline-picker.js"></script>
+</dom-module>

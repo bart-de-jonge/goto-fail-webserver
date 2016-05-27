@@ -4,6 +4,7 @@ import favicon from "serve-favicon";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import session from "express-session";
 
 const app = express();
 
@@ -15,8 +16,9 @@ app.set("view engine", "ejs");
 app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(logger("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(session({ secret: "averyrandomkeyfromgotofail" }));
 app.use(require("node-sass-middleware")({
     src: path.join(__dirname, "public"),
     dest: path.join(__dirname, "public"),
