@@ -7,3 +7,5 @@ project-scp-files/
 .tern-project
 public/js/
 coverage/
+*.sublime-project
+*.sublime-workspace
