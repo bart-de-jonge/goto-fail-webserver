@@ -6,17 +6,33 @@ import socketio from "socket.io";
 import log4js from "log4js";
 import CameraOperatorSocket from "./CameraOperatorSocket";
 import ShotCallerSocket from "./ShotCallerSocket";
+import ProjectManager from "../../objects/ProjectManager.js";
 
 const logger = log4js.getLogger();
 
+// Get timelines from xml
+const getTimelines = function getTimelines(callback) {
+    // Dummyfile Todo: replace with dyn0amic
+    const projectManager = new ProjectManager();
+    function waitForXML() {
+        if (!projectManager.initialized) {
+            setTimeout(waitForXML, 10);
+        } else {
+            callback(projectManager.data.cameraTimelines.maxCount);
+        }
+    }
+    waitForXML();
+};
 
 const listen = (server) => {
     const io = socketio.listen(server);
 
-
-    // TODO: Replace Dummy Value With Timeline Information
-    const maxCount = 12;
+    let maxCount = 12;
     let currentCount = 0;
+
+    getTimelines(newMaxCount => {
+        maxCount = newMaxCount;
+    });
 
     const namespaces = [];
 
