@@ -27,7 +27,7 @@ const listen = (server) => {
     };
 
     // Set up different socket namespaces
-    const operatorSocket = new CameraOperatorSocket(io, sendCounts);
+    const operatorSocket = new CameraOperatorSocket(io, currentCount, sendCounts);
     namespaces.push(operatorSocket);
 
     logger.debug("Initialized socket.io connection.");
