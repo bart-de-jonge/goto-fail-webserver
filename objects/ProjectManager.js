@@ -1,6 +1,8 @@
 import fs from "fs";
 import CameraShot from "../objects/CameraShot";
 import CameraTimeline from "../objects/CameraTimeline";
+import DirectorTimeline from "../objects/DirectorTimeline.js";
+import DirectorShot from "../objects/DirectorShot.js";
 import xml2js from "xml2js";
 import Camera from "./Camera";
 
@@ -53,11 +55,25 @@ class ProjectManager {
     parseXML() {
         fs.readFile(`${__dirname}/../project-scp-files/project.scp`, (err, data) => {
             if (err) {
-                // TODO something with the errorf
+                // TODO something with the error
                 this.data = null;
                 this.initialized = true;
             } else {
                 parser.parseString(data, (err, result) => {
+                    this.data = {};
+
+                    // Read director timeline from xml
+                    const directorTimelineXML = result.scriptingProject.directorTimeline[0];
+                    const directorTimeline = new DirectorTimeline(
+                        directorTimelineXML.description[0]);
+
+                    directorTimelineXML.shotList[0].shot.forEach(shot => {
+                        const directorShot = DirectorShot.fromXML(shot);
+                        directorTimeline.addDirectorShot(directorShot);
+                    });
+
+                    this.data.directorTimeline = directorTimeline;
+
                     // Read timelines from xml
                     const cameraTimelinesXML =
                         result.scriptingProject["camera-centerarea"][0].cameraTimeline;
@@ -87,7 +103,8 @@ class ProjectManager {
                         cameraTimelines.push(cameraTimeline);
                     });
                     const minMaxCount = this.getMaxAndMinCount(flattenedTimelines);
-                    this.data = { cameraTimelines,
+                    // Add timelines to data object
+                    this.data.cameraTimelines = { cameraTimelines,
                         minCount: minMaxCount.minCount,
                         maxCount: minMaxCount.maxCount };
                     this.initialized = true;

@@ -12,9 +12,9 @@ const getTimelines = function getTimelines(pickedTimelines, filtered, callback) 
         } else {
             const data = projectManager.data;
             if (filtered && typeof pickedTimelines !== "undefined") {
-                callback(projectManager.filterTimelines(pickedTimelines, data));
+                callback(projectManager.filterTimelines(pickedTimelines, data.cameraTimelines));
             } else {
-                callback(projectManager.data);
+                callback(projectManager.data.cameraTimelines);
             }
         }
     }
