@@ -1,0 +1,34 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="shot-caller-display">
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            paper-button {
+                background-color: blue;
+                color: white;
+            }
+        </style>
+
+        <paper-button on-tap="handleAdvanceTap">Advance Count</paper-button>
+    </template>
+
+    <script>
+        (function () {
+            class shotCallerDisplay {
+                beforeRegister() {
+                    this.is = "shot-caller-display";
+                }
+
+                handleAdvanceTap() {
+                    alert("Advance Count Button Was Tapped");
+                    const advanceCountEvent = new Event("advanceCount");
+                    document.dispatchEvent(advanceCountEvent);
+                }
+            }
+
+            Polymer(shotCallerDisplay);
+        })();
+    </script>
+</dom-module>
