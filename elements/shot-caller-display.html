@@ -1,17 +1,36 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 
 <dom-module id="shot-caller-display">
     <template>
         <style include="iron-flex"></style>
         <style>
             paper-button {
-                background-color: blue;
+                background-color: gray;
                 color: white;
+            }
+            paper-card {
+                @apply(--layout-horizontal);
+            }
+
+            paper-card .card-content {
+                @apply(--layout-flex);
+                float: left;
+            }
+            paper-card .card-header {
+                @apply(--paper-font-headline);
             }
         </style>
 
-        <paper-button on-tap="handleAdvanceTap">Advance Count</paper-button>
+        <paper-card>
+            <div class="card-content">
+                <div class="card-header">{{ currentCount }}</div>
+                <div class="card-actions">
+                    <paper-button on-tap="handleAdvanceTap">Advance Count</paper-button>
+                </div>
+            </div>
+        </paper-card>
     </template>
 
     <script>
@@ -19,12 +38,24 @@
             class shotCallerDisplay {
                 beforeRegister() {
                     this.is = "shot-caller-display";
+
+                    this.properties = {
+                        currentCount: {
+                            type: Number,
+                            value: 0,
+                            notify: true,
+                            observer: "_countChanged",
+                        }
+                    }
                 }
 
                 handleAdvanceTap() {
-                    alert("Advance Count Button Was Tapped");
                     const advanceCountEvent = new Event("advanceCount");
                     document.dispatchEvent(advanceCountEvent);
+                }
+
+                _countChanged() {
+
                 }
             }
 
