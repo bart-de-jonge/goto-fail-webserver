@@ -23,7 +23,7 @@ class CameraOperatorSocket {
     }
 
     sendNextCount(newCount) {
-        logger.info("Sending New Count");
+        logger.info("Sending Camera Operator New Count");
         this.currentCount = newCount;
         this.namespace.emit("next count", {
             newCount,

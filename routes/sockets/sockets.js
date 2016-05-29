@@ -4,7 +4,8 @@
  */
 import socketio from "socket.io";
 import log4js from "log4js";
-import CameraOperatorSocket from "./CameraOperatorSocket.js";
+import CameraOperatorSocket from "./CameraOperatorSocket";
+import ShotCallerSocket from "./ShotCallerSocket";
 
 const logger = log4js.getLogger();
 
@@ -29,6 +30,9 @@ const listen = (server) => {
     // Set up different socket namespaces
     const operatorSocket = new CameraOperatorSocket(io, currentCount, sendCounts);
     namespaces.push(operatorSocket);
+
+    const shotCallerSocket = new ShotCallerSocket(io, currentCount, sendCounts);
+    namespaces.push(shotCallerSocket);
 
     logger.debug("Initialized socket.io connection.");
 };
