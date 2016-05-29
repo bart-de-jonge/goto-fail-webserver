@@ -6,10 +6,28 @@ import Camera from "./Camera";
 
 const parser = new xml2js.Parser();
 
+// Singleton Object
+let projectManagerInstance = null;
+
 /*
- * Class for storing a CameraTimeline
+ * Class for storing a Project
  */
-class XMLHelper {
+class ProjectManager {
+
+    constructor() {
+        if (!projectManagerInstance) {
+            projectManagerInstance = this;
+
+            this.initialized = false;
+            if (typeof this.data === "undefined") {
+                this.parseXML();
+            } else {
+                this.initialized = true;
+            }
+        }
+
+        return projectManagerInstance;
+    }
 
     // Get max and mincount of an array of shots
     getMaxAndMinCount(flattenedCameraTimelines) {
@@ -95,15 +113,6 @@ class XMLHelper {
         resultingData.maxCount = minMaxCount.maxCount;
         return resultingData;
     }
-
-    constructor() {
-        this.initialized = false;
-        if (typeof this.data === "undefined") {
-            this.parseXML();
-        } else {
-            this.initialized = true;
-        }
-    }
 }
 
-export default XMLHelper;
+export default ProjectManager;

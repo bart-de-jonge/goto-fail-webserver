@@ -1,20 +1,20 @@
 import express from "express";
-import XMLHelper from "../objects/XMLHelper";
+import ProjectManager from "../objects/ProjectManager";
 const router = new express.Router();
 
 // Get timelines from xml
 const getTimelines = function getTimelines(pickedTimelines, filtered, callback) {
     // Dummyfile Todo: replace with dyn0amic
-    const xmlHelper = new XMLHelper();
+    const projectManager = new ProjectManager();
     function waitForXML() {
-        if (!xmlHelper.initialized) {
+        if (!projectManager.initialized) {
             setTimeout(waitForXML, 10);
         } else {
-            const data = xmlHelper.data;
+            const data = projectManager.data;
             if (filtered && typeof pickedTimelines !== "undefined") {
-                callback(xmlHelper.filterTimelines(pickedTimelines, data));
+                callback(projectManager.filterTimelines(pickedTimelines, data));
             } else {
-                callback(xmlHelper.data);
+                callback(projectManager.data);
             }
         }
     }
