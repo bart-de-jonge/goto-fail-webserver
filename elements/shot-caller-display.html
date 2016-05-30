@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="./shot-caller-shot-card.html">
 
 <dom-module id="shot-caller-display">
     <template>
@@ -31,6 +32,8 @@
                 </div>
             </div>
         </paper-card>
+        <shot-caller-shot-card shot-type="Current" shot="{{ currentShot }}"></shot-caller-shot-card>
+        <shot-caller-shot-card shot-type="Next" shot="{{ nextShot }}"></shot-caller-shot-card>
     </template>
 
     <script>
@@ -45,7 +48,9 @@
                             value: 0,
                             notify: true,
                             observer: "_countChanged",
-                        }
+                        },
+                        currentShot: Object,
+                        nextShot: Object,
                     }
                 }
 
@@ -55,7 +60,17 @@
                 }
 
                 _countChanged() {
-
+                    if (this.currentShot) {
+                        if (this.currentCount >= this.currentShot.endCount) {
+                            const fetchNewShotsEvent = new Event("fetchNewShots");
+                            document.dispatchEvent(fetchNewShotsEvent);
+                        }
+                    } else if (this.nextShot) {
+                        if (this.currentCount >= this.nextShot.beginCount) {
+                            const fetchNewShotsEvent = new Event("fetchNewShots");
+                            document.dispatchEvent(fetchNewShotsEvent);
+                        }
+                    }
                 }
             }
 

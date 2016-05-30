@@ -29,16 +29,17 @@ class ShotCallerSocket {
         this.namespace.on("connection", (socket) => {
             logger.info("New Shot Caller Connection");
             // Initialize with Current Server Count
-            this.sendNextCount(currentCount);
+            this.sendNextCount(this.currentCount);
+
             socket.on("advance count", () => {
                 this.advanceCountCallBack();
             });
 
             socket.on("get current shot", () => {
                 getDirectorTimeline((directorTimeline) => {
-                    logger.info("Sending Current DirectorShot");
-
                     const currentShot = this.findCurrentShot(directorTimeline);
+
+                    logger.info("Sending Current DirectorShot");
                     socket.emit("current director shot", {
                         currentShot,
                     });
@@ -79,14 +80,12 @@ class ShotCallerSocket {
 
     // Find the next DirectorShot
     findNextShot(directorTimeline) {
-        const currentItem = this.findCurrentShot(directorTimeline);
-        if (currentItem !== null) {
-            const numberOfShots = directorTimeline.getDirectorShots().length;
-            const currentIndex = directorTimeline.getDirectorShots()
-                .indexOf(currentItem);
-            if (currentIndex !== numberOfShots - 1) {
-                return currentIndex + 1;
-            }
+        const nextShots = directorTimeline.getDirectorShots()
+            .filter((shot) =>
+                shot.beginCount > this.currentCount
+           );
+        if (nextShots.length !== 0) {
+            return nextShots[0];
         }
         return null;
     }
