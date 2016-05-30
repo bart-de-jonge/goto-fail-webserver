@@ -152,7 +152,8 @@ class timelineGrid {
             top: newTop,
         },
             {
-                duration: 1000,
+                duration: 0,
+                easing: "linear",
             });
         // eslint-disable-next-line no-undef
         Velocity(scrollLine, // eslint-disable-line new-cap
@@ -160,7 +161,8 @@ class timelineGrid {
             {
                 offset: -200,
                 queue: false,
-                duration: 1000,
+                duration: 0,
+                easing: "linear",
             });
     // }
     }
