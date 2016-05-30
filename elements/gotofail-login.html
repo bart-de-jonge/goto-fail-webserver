@@ -72,6 +72,12 @@
             beforeRegister() {
                 this.is = "gotofail-login";
 
+                this.users = [
+                    new User(0, "Jan", []),
+                    new User(1, "Klaas", []),
+                    new User(2, "Piet", [])
+                ];
+
                 this.properties = {
                     users: Object
                 };
@@ -81,6 +87,7 @@
                 console.log(e.target.id);
                 document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id};
                 document.querySelector("#pickedUserPost").generateRequest();
+                console.log(this.users);
             }
 
             handlePickedUserResponse(event) {
