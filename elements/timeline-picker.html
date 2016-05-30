@@ -42,17 +42,17 @@
                 on-response="handleResponse"
                 id="ajax-timeline-data"></iron-ajax>
 
-        <iron-ajax
-            id="pickedTimelinesPost"
-            url="/timeline/picked-timelines"
-            handle-as="json"
-            method = "POST"
-            content-type="application/json"
-            on-response="handlePickedTimelinesResponse"></iron-ajax>
+        <!--<iron-ajax-->
+            <!--id="pickedTimelinesPost"-->
+            <!--url="/timeline/picked-timelines"-->
+            <!--handle-as="json"-->
+            <!--method = "POST"-->
+            <!--content-type="application/json"-->
+            <!--on-response="handlePickedTimelinesResponse"></iron-ajax>-->
 
-                <template is="dom-repeat" items="{{timelines}}">
+                <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat">
                     <div>
-                    <paper-toggle-button value="{{index}}">{{item.name}}</paper-toggle-button>
+                    <paper-toggle-button value="{{index}}" checked="{{computeChecked(index)}}" observe="hack">{{item.name}}</paper-toggle-button>
                         </div>
                 </template>
 
