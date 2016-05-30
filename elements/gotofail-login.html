@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+
+<dom-module id="gotofail-login">
+    // Template
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            paper-card {
+                background-color: #00B7FF;
+                padding: 20px;
+                font-weight: bolder;
+                font-size: 1.5em;
+            }
+
+            paper-material > p {
+                margin: 20px auto;
+                text-align: center;
+            }
+
+            paper-item {
+                --paper-item-focused: {
+                    background-color: #cb4b16;
+                }
+            }
+
+            paper-item:hover {
+                background-color: white;
+                cursor: pointer;
+            }
+
+        </style>
+        <iron-ajax
+                id="pickedUserPost"
+                url="/picked-user"
+                handle-as="json"
+                method = "POST"
+                content-type="application/json"
+                on-response="handlePickedUserResponse"></iron-ajax>
+
+        <paper-card heading="Please select your account" elevation="5">
+            <div class="card-content">
+                <paper-listbox>
+                    <paper-item id="0" on-click="onListItemTab">Jan</paper-item>
+                    <paper-item id="1" on-click="onListItemTab">Piet</paper-item>
+                    <paper-item id="2" on-click="onListItemTab">Klaas</paper-item>
+                </paper-listbox>
+            </div>
+        </paper-card>
+
+    </template>
+
+    // Scripts
+    <script src="gotofail-login.js"></script>
+</dom-module>
