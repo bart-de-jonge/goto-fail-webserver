@@ -7,6 +7,7 @@ import ProjectManager from "../../objects/ProjectManager";
 
 const logger = log4js.getLogger();
 
+// Fetch the Project's DirectorTimeline
 const getDirectorTimeline = callback => {
     ProjectManager.waitForXML((projectManager) => {
         const directorTimeline = projectManager.data.directorTimeline;

@@ -131,6 +131,10 @@ class ProjectManager {
         return resultingData;
     }
 
+    /*
+     * Helper method for ensuring that XML has been parsed before 
+     * reading ProjectManager data
+     */
     static waitForXML(callback) {
         const projectManager = new ProjectManager();
         function xmlWait() {
