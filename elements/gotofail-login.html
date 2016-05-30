@@ -3,32 +3,46 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../elements/timeline-picker.html">
 
 <dom-module id="gotofail-login">
     // Template
     <template>
         <style include="iron-flex"></style>
         <style>
+            :host {
+                display: block;
+            }
+
             paper-card {
                 background-color: #00B7FF;
                 padding: 20px;
                 font-weight: bolder;
                 font-size: 1.5em;
+                width: 100%;
+                max-width: 1000px;
             }
 
-            paper-material > p {
-                margin: 20px auto;
-                text-align: center;
+            paper-listbox {
+                margin-right: 50px;
+            }
+
+            paper-listbox {
+                border-radius: 10px;
+                overflow: hidden;
+                background-color: white;
             }
 
             paper-item {
                 --paper-item-focused: {
                     background-color: #cb4b16;
-                }
+                };
+                background-color: lightgrey;
+                border: 1px solid darkgrey;
             }
 
             paper-item:hover {
-                background-color: white;
+                background-color: darkgrey;
                 cursor: pointer;
             }
 
@@ -42,17 +56,41 @@
                 on-response="handlePickedUserResponse"></iron-ajax>
 
         <paper-card heading="Please select your account" elevation="5">
-            <div class="card-content">
-                <paper-listbox>
+            <div class="card-content layout horizontal">
+                <paper-listbox class="flex">
                     <paper-item id="0" on-click="onListItemTab">Jan</paper-item>
                     <paper-item id="1" on-click="onListItemTab">Piet</paper-item>
                     <paper-item id="2" on-click="onListItemTab">Klaas</paper-item>
                 </paper-listbox>
+                <timeline-picker class="flex"></timeline-picker>
             </div>
         </paper-card>
 
     </template>
+    <script>
+        class gotofailLogin {
+            beforeRegister() {
+                this.is = "gotofail-login";
 
-    // Scripts
-    <script src="gotofail-login.js"></script>
+                this.properties = {
+                    users: Object
+                };
+            }
+
+            onListItemTab(e) {
+                console.log(e.target.id);
+                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id};
+                document.querySelector("#pickedUserPost").generateRequest();
+            }
+
+            handlePickedUserResponse(event) {
+                if (event.detail.response.success) {
+                    window.location.href = "/timeline";
+                }
+            }
+        }
+        // eslint-disable-next-line
+        Polymer(gotofailLogin);
+    </script>
+
 </dom-module>

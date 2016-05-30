@@ -50,17 +50,13 @@
             content-type="application/json"
             on-response="handlePickedTimelinesResponse"></iron-ajax>
 
-        <paper-card heading="Please specify which timelines you want to control" elevation="5">
-            <div class="card-content">
                 <template is="dom-repeat" items="{{timelines}}">
                     <div>
                     <paper-toggle-button value="{{index}}">{{item.name}}</paper-toggle-button>
                         </div>
                 </template>
-            </div>
 
-            <paper-button on-click="buttonClicked">Continue</paper-button>
-        </paper-card>
+        <paper-button on-click="buttonClicked">Continue</paper-button>
 
     </template>
 

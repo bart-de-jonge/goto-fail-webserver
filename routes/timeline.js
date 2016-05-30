@@ -57,6 +57,7 @@ router.get("/timeline-filtered-data", (req, res) => {
 
 /* GET home page. */
 router.get("/", (req, res) => {
+    console.log(req.session.pickedUser);
     // Get the timelines
     // Render the timeline.ejs file with the correct variables
     res.render("timeline");

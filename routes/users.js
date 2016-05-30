@@ -1,9 +1,11 @@
 import express from "express";
 const router = express.Router(); // eslint-disable-line new-cap
 
-/* GET home page. */
-router.get("/", (req, res) => {
-    res.render("index");
+router.post("/picked-user", (req, res) => {
+    // eslint-disable-next-line
+    req.session.pickedUser = req.body.pickedUser;
+
+    res.json({ success: true });
 });
 
 module.exports = router;
