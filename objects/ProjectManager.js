@@ -130,6 +130,18 @@ class ProjectManager {
         resultingData.maxCount = minMaxCount.maxCount;
         return resultingData;
     }
+
+    static waitForXML(callback) {
+        const projectManager = new ProjectManager();
+        function xmlWait() {
+            if (!projectManager.initialized) {
+                setTimeout(xmlWait, 10);
+            } else {
+                callback(projectManager);
+            }
+        }
+        xmlWait();
+    }
 }
 
 export default ProjectManager;

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dialog.innerHTML = "";
     header.appendChild(dialog);
 
-    socket.on("next count", (countData) => {
+    socket.on("next_count", (countData) => {
         // TODO: Add Data Manipulation Here
         const newDialog = document.getElementById("cur-count");
         newDialog.innerHTML = `The Current Count is ${countData.newCount}`;
@@ -18,6 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     document.addEventListener("advanceCount", () => {
-        socket.emit("advance count", {});
+        socket.emit("advance_count", {});
     });
 });

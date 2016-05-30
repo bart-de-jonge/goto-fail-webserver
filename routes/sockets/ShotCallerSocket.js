@@ -8,19 +8,22 @@ import ProjectManager from "../../objects/ProjectManager";
 const logger = log4js.getLogger();
 
 const getDirectorTimeline = callback => {
-    const projectManager = new ProjectManager();
-    function waitForXML() {
-        if (!projectManager.initialized) {
-            setTimeout(waitForXML, 10);
-        } else {
-            const directorTimeline = projectManager.data.directorTimeline;
-            callback(directorTimeline);
-        }
-    }
-    waitForXML();
+    ProjectManager.waitForXML((projectManager) => {
+        const directorTimeline = projectManager.data.directorTimeline;
+        callback(directorTimeline);
+    });
 };
 
+/**
+ * Class instantiated to handle shot caller events.
+ */
 class ShotCallerSocket {
+    /**
+     * Constructor that accepts:
+     * io: Socket.io object
+     * currentCount: Current Count
+     * advanceCountCallBack: Handle For Count Update
+     */
     constructor(io, currentCount, advanceCountCallBack) {
         this.namespace = io.of("/shotCallers");
         this.advanceCountCallBack = advanceCountCallBack;
@@ -31,26 +34,26 @@ class ShotCallerSocket {
             // Initialize with Current Server Count
             this.sendNextCount(this.currentCount);
 
-            socket.on("advance count", () => {
+            socket.on("advance_count", () => {
                 this.advanceCountCallBack();
             });
 
-            socket.on("get current shot", () => {
+            socket.on("get_current_shot", () => {
                 getDirectorTimeline((directorTimeline) => {
                     const currentShot = this.findCurrentShot(directorTimeline);
 
                     logger.info("Sending Current DirectorShot");
-                    socket.emit("current director shot", {
+                    socket.emit("current_director_shot", {
                         currentShot,
                     });
                 });
             });
 
-            socket.on("get next shot", () => {
+            socket.on("get_next_shot", () => {
                 getDirectorTimeline((directorTimeline) => {
                     logger.info("Sending Next Director Shot");
                     const nextShot = this.findNextShot(directorTimeline);
-                    socket.emit("next director shot", {
+                    socket.emit("next_director_shot", {
                         nextShot,
                     });
                 });
@@ -58,10 +61,11 @@ class ShotCallerSocket {
         });
     }
 
+    // Set the count and then send updated version to client
     sendNextCount(newCount) {
         logger.info("Sending Shot Caller New Count");
         this.currentCount = newCount;
-        this.namespace.emit("next count", {
+        this.namespace.emit("next_count", {
             newCount,
         });
     }

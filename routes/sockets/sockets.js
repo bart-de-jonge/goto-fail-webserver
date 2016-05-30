@@ -11,17 +11,10 @@ import ProjectManager from "../../objects/ProjectManager.js";
 const logger = log4js.getLogger();
 
 // Get timelines from xml
-const getTimelines = function getTimelines(callback) {
-    // Dummyfile Todo: replace with dyn0amic
-    const projectManager = new ProjectManager();
-    function waitForXML() {
-        if (!projectManager.initialized) {
-            setTimeout(waitForXML, 10);
-        } else {
-            callback(projectManager.data.cameraTimelines.maxCount);
-        }
-    }
-    waitForXML();
+const getMaxCount = callback => {
+    ProjectManager.waitForXML((projectManager) => {
+        callback(projectManager.data.cameraTimelines.maxCount);
+    });
 };
 
 const listen = (server) => {
@@ -30,7 +23,7 @@ const listen = (server) => {
     let maxCount = 12;
     let currentCount = 0;
 
-    getTimelines(newMaxCount => {
+    getMaxCount(newMaxCount => {
         maxCount = newMaxCount;
     });
 

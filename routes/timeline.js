@@ -4,21 +4,14 @@ const router = new express.Router();
 
 // Get timelines from xml
 const getTimelines = function getTimelines(pickedTimelines, filtered, callback) {
-    // Dummyfile Todo: replace with dyn0amic
-    const projectManager = new ProjectManager();
-    function waitForXML() {
-        if (!projectManager.initialized) {
-            setTimeout(waitForXML, 10);
+    ProjectManager.waitForXML((projectManager) => {
+        const data = projectManager.data;
+        if (filtered && typeof pickedTimelines !== "undefined") {
+            callback(projectManager.filterTimelines(pickedTimelines, data.cameraTimelines));
         } else {
-            const data = projectManager.data;
-            if (filtered && typeof pickedTimelines !== "undefined") {
-                callback(projectManager.filterTimelines(pickedTimelines, data.cameraTimelines));
-            } else {
-                callback(projectManager.data.cameraTimelines);
-            }
+            callback(projectManager.data.cameraTimelines);
         }
-    }
-    waitForXML();
+    });
 };
 
 router.get("/timeline-data", (req, res) => {
