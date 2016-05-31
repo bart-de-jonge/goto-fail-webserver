@@ -67,10 +67,12 @@ class ProjectManager {
                     const directorTimeline = new DirectorTimeline(
                         directorTimelineXML.description[0]);
 
-                    directorTimelineXML.shotList[0].shot.forEach(shot => {
-                        const directorShot = DirectorShot.fromXML(shot);
-                        directorTimeline.addDirectorShot(directorShot);
-                    });
+                    if (directorTimeline.shotList) {
+                        directorTimelineXML.shotList[0].shot.forEach(shot => {
+                            const directorShot = DirectorShot.fromXML(shot);
+                            directorTimeline.addDirectorShot(directorShot);
+                        });
+                    }
 
                     this.data.directorTimeline = directorTimeline;
 
@@ -132,7 +134,7 @@ class ProjectManager {
     }
 
     /*
-     * Helper method for ensuring that XML has been parsed before 
+     * Helper method for ensuring that XML has been parsed before
      * reading ProjectManager data
      */
     static waitForXML(callback) {

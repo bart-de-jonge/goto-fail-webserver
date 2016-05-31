@@ -6,10 +6,14 @@ const router = new express.Router();
 const getTimelines = function getTimelines(pickedTimelines, filtered, callback) {
     ProjectManager.waitForXML((projectManager) => {
         const data = projectManager.data;
-        if (filtered && typeof pickedTimelines !== "undefined") {
-            callback(projectManager.filterTimelines(pickedTimelines, data.cameraTimelines));
+        if (data) {
+            if (filtered && typeof pickedTimelines !== "undefined") {
+                callback(projectManager.filterTimelines(pickedTimelines, data.cameraTimelines));
+            } else {
+                callback(projectManager.data.cameraTimelines);
+            }
         } else {
-            callback(projectManager.data.cameraTimelines);
+            callback(null, true);
         }
     });
 };
