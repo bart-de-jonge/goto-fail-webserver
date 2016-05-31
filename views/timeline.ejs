@@ -5,30 +5,33 @@
     <link rel="stylesheet" href="/stylesheets/timeline.css">
     <link rel="import" href="../bower_components/polymer/polymer.html">
     <link rel="import" href="../elements/timeline-grid.html">
+    <link rel="import" href="../elements/gotofail-header.html">
+    <link rel="import" href="../elements/timeline-footer.html">
     <link rel="import" href="../elements/timeline-play-button.html">
+    <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+    <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 </head>
 
-<body>
-    <div class="page-wrap">
-        <header>
-            <div class="content">
-                <h1>Goto fail; web-based timeline</h1>
-                <timeline-play-button></timeline-play-button>
-            </div>
-        </header>
-
-        <main>
-            <div class="content">
-                <timeline-grid></timeline-grid>
-            </div>
-        </main>
-    </div>
-
-    <footer>
-        <div class="content">
-            <p>Goto fail; All rights reserved</p>
+<body class ="fit vertical layout">
+    <paper-header-panel mode="waterfall">
+        <gotofail-header class="paper-header"></gotofail-header>
+        <timeline-header></timeline-header>
+        <div class="content fit">
+            <main>
+                <div class="content">
+                    <timeline-grid></timeline-grid>
+                </div>
+            </main>
         </div>
-    </footer>
+    </paper-header-panel>
+
+    <timeline-footer></timeline-footer>
+
+    <!--<footer style="position: fixed; bottom: 0; width: 100%;">-->
+        <!--<div class="content">-->
+            <!--<p>Goto fail; All rights reserved</p>-->
+        <!--</div>-->
+    <!--</footer>-->
 
     <script src="/js/timeline.js"></script>
 </body>

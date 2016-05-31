@@ -1,0 +1,53 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="timeline-footer">
+    // Template
+    <template>
+        <style>
+            :host {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                z-index: 3;
+            }
+            paper-toolbar {
+                background-color: lightgrey;
+
+            }
+            paper-tabs {
+                background-color: lightgrey;
+                color: white;
+            }
+        </style>
+
+        <paper-toolbar>
+            <div class="content">
+                <timeline-play-button></timeline-play-button>
+            </div>
+        </paper-toolbar>
+
+    </template>
+
+    // Scripts
+    <script>
+        (function() {
+            'use strict';
+            class timelineFooter {
+                beforeRegister() {
+                    this.is = 'timeline-footer';
+
+                    this.properties = {
+                    };
+                }
+            }
+            Polymer(timelineFooter);
+        })();
+    </script>
+</dom-module>

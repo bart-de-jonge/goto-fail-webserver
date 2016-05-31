@@ -8,37 +8,37 @@ html, body {
     width: 100%;
 }
 
-header, main, footer {
+main {
+    margin-top: 70px;
+    margin-bottom: 140px;
+}
+
+main, footer {
     padding: 20px;
 }
 
-.page-wrap {
-    min-height: 100%;
-    /* footer height */
-    margin-bottom: -70px;
-}
+/*.page-wrap {*/
+    /*min-height: 100%;*/
+    /*!* footer height *!*/
+/*}*/
 
-.page-wrap:after {
-    content: "";
-    display: block;
-}
+/*.page-wrap:after {*/
+    /*content: "";*/
+    /*display: block;*/
+/*}*/
 
 footer, .page-wrap:after {
     height: 70px;
 }
 
-header {
-    height: 70px;
-    background-color: rgb(255, 172, 70);
-    color: white;
+gotofail-header {
+    padding: 0px;
+    width: 100%;
+    top: 0px;
+    z-index: 3;
 }
 
-header > .content > p {
-    margin: 0;
-    padding-top: 20px;
-}
-
-footer {
-    background-color: rgb(255, 102, 70);
-    color: white;
-}
+/*footer {*/
+    /*background-color: rgb(255, 102, 70);*/
+    /*color: white;*/
+/*}*/
