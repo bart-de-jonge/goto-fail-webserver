@@ -1,15 +1,35 @@
 import fs from "fs";
 import CameraShot from "../objects/CameraShot";
 import CameraTimeline from "../objects/CameraTimeline";
+import DirectorTimeline from "../objects/DirectorTimeline.js";
+import DirectorShot from "../objects/DirectorShot.js";
 import xml2js from "xml2js";
 import Camera from "./Camera";
 
 const parser = new xml2js.Parser();
 
+// Singleton Object
+let projectManagerInstance = null;
+
 /*
- * Class for storing a CameraTimeline
+ * Class for storing a Project
  */
-class XMLHelper {
+class ProjectManager {
+
+    constructor() {
+        if (!projectManagerInstance) {
+            projectManagerInstance = this;
+
+            this.initialized = false;
+            if (typeof this.data === "undefined") {
+                this.parseXML();
+            } else {
+                this.initialized = true;
+            }
+        }
+
+        return projectManagerInstance;
+    }
 
     // Get max and mincount of an array of shots
     getMaxAndMinCount(flattenedCameraTimelines) {
@@ -35,11 +55,25 @@ class XMLHelper {
     parseXML() {
         fs.readFile(`${__dirname}/../project-scp-files/project.scp`, (err, data) => {
             if (err) {
-                // TODO something with the errorf
+                // TODO something with the error
                 this.data = null;
                 this.initialized = true;
             } else {
                 parser.parseString(data, (err, result) => {
+                    this.data = {};
+
+                    // Read director timeline from xml
+                    const directorTimelineXML = result.scriptingProject.directorTimeline[0];
+                    const directorTimeline = new DirectorTimeline(
+                        directorTimelineXML.description[0]);
+
+                    directorTimelineXML.shotList[0].shot.forEach(shot => {
+                        const directorShot = DirectorShot.fromXML(shot);
+                        directorTimeline.addDirectorShot(directorShot);
+                    });
+
+                    this.data.directorTimeline = directorTimeline;
+
                     // Read timelines from xml
                     const cameraTimelinesXML =
                         result.scriptingProject["camera-centerarea"][0].cameraTimeline;
@@ -69,7 +103,8 @@ class XMLHelper {
                         cameraTimelines.push(cameraTimeline);
                     });
                     const minMaxCount = this.getMaxAndMinCount(flattenedTimelines);
-                    this.data = { cameraTimelines,
+                    // Add timelines to data object
+                    this.data.cameraTimelines = { cameraTimelines,
                         minCount: minMaxCount.minCount,
                         maxCount: minMaxCount.maxCount };
                     this.initialized = true;
@@ -96,14 +131,21 @@ class XMLHelper {
         return resultingData;
     }
 
-    constructor() {
-        this.initialized = false;
-        if (typeof this.data === "undefined") {
-            this.parseXML();
-        } else {
-            this.initialized = true;
+    /*
+     * Helper method for ensuring that XML has been parsed before 
+     * reading ProjectManager data
+     */
+    static waitForXML(callback) {
+        const projectManager = new ProjectManager();
+        function xmlWait() {
+            if (!projectManager.initialized) {
+                setTimeout(xmlWait, 10);
+            } else {
+                callback(projectManager);
+            }
         }
+        xmlWait();
     }
 }
 
-export default XMLHelper;
+export default ProjectManager;

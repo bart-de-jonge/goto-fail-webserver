@@ -1,0 +1,28 @@
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<dom-module id="timeline-advance-count-button">
+    <template>
+        <style>
+            paper-button {
+                background-color: blue;
+            }
+        </style>
+
+        <paper-button on-tap="handleTap" raised>Advance Count</paper-button>
+    </template>
+    <script>
+        (function() {
+            class timelinePlayButton {
+                beforeRegister() {
+                    this.is = "timeline-advance-count-button";
+                }
+
+                handleTap() {
+                    const advanceCountEvent = new Event("advanceCount");
+                    document.dispatchEvent(advanceCountEvent);
+                }
+            }
+
+            Polymer(timelinePlayButton);
+        })();
+    </script>
+</dom-module>
