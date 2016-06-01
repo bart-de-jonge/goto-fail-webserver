@@ -2,11 +2,12 @@
 /*
  * Class for storing a CameraOperator
  */
-class CameraOperator {
-    constructor(id, name, pickedTimelines) {
+class User {
+    constructor(id, name, pickedTimelines, jobType) {
         this.id = id;
         this.name = name;
         this.pickedTimelines = pickedTimelines;
+        this.jobType = jobType;
     }
 
     // static fromXML(XMLObject) {
@@ -14,4 +15,4 @@ class CameraOperator {
     // }
 }
 
-export default CameraOperator;
+export default User;

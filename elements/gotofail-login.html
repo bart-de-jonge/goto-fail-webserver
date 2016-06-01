@@ -84,18 +84,13 @@
                 };
             }
 
-            getRandomArray() {
-                return [2];
-            }
-
             onListItemTab(e) {
 //                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id}
 //                document.querySelector("#pickedUserPost").generateRequest();
             }
 
             onListItemHover(e) {
-                console.log(e.target.id);
-                this.$.picker.setPickedTimelines(this.users[Number(e.target.id)].pickedTimelines);
+                this.$.picker.setUser(this.users[Number(e.target.id)]);
             }
 
             handleUsersResponse(event) {
@@ -104,9 +99,10 @@
 
             listboxMouseOut() {
                 if(document.querySelector("paper-item:focus") === null) {
-                    this.$.picker.setPickedTimelines([]);
+                    this.$.picker.setUser({id: 0, name:"", pickedTimelines:[], jobType:0});
                 } else {
-                    this.$.picker.setPickedTimelines(this.users[Number(document.querySelector("paper-item:focus").id)].pickedTimelines);
+                    this.$.picker.setUser(this.users[Number(document.querySelector("paper-item:focus").id)]);
+                    console.log(this.users[Number(document.querySelector("paper-item:focus").id)]);
                 }
             }
 
