@@ -6,9 +6,12 @@ class timelinePicker {
             timelines: Object,
             pickedTimelines: {
                 type: Array,
-                value: [1, 2],
             },
         };
+    }
+
+    ready() {
+        this.setPickedTimelines([]);
     }
 
     setPickedTimelines(pickedTimelines) {
