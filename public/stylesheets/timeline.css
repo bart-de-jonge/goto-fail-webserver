@@ -8,13 +8,6 @@ html, body {
     width: 100%;
 }
 
-gotofail-header {
-    padding: 0px;
-    width: 100%;
-    top: 0px;
-    z-index: 3;
-}
-
 paper-toolbar {
     background-color: black !important;
     color: white !important;
