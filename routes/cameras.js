@@ -1,22 +1,21 @@
 import express from "express";
 const router = new express.Router();
-import XMLHelper from "../objects/XMLHelper";
+import ProjectManager from "../objects/ProjectManager";
 import http from "http";
 
 const CAMERA_IP = "192.168.10.101";
 
 // Get cameras from xml
-const getCameras = function getCameras(callback) {
-    // Dummyfile Todo: replace with dyn0amic
-    const xmlHelper = new XMLHelper();
-    function waitForXML() {
-        if (!xmlHelper.initialized) {
-            setTimeout(waitForXML, 10);
+// Get timelines from xml
+const getCameras = function getTimelines(callback) {
+    ProjectManager.waitForXML((projectManager) => {
+        const data = projectManager.data;
+        if (data) {
+            callback(projectManager.data.cameraTimelines.cameraTimelines.map(timeline => timeline.camera));
         } else {
-            callback(xmlHelper.data.cameraTimelines.map(timeline => timeline.camera));
+            callback(null, true);
         }
-    }
-    waitForXML();
+    });
 };
 
 router.get("/", (req, res) => {
