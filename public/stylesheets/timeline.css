@@ -8,37 +8,27 @@ html, body {
     width: 100%;
 }
 
-header, main, footer {
-    padding: 20px;
+paper-toolbar {
+    background-color: black !important;
+    color: white !important;
 }
 
-.page-wrap {
-    min-height: 100%;
-    /* footer height */
-    margin-bottom: -70px;
+#drawer {
+    z-index: 4;
 }
 
-.page-wrap:after {
-    content: "";
-    display: block;
+#scrim {
+    z-index: 4 !important;
 }
 
-footer, .page-wrap:after {
-    height: 70px;
-}
-
-header {
-    height: 70px;
-    background-color: rgb(255, 172, 70);
+#bottom-indicator {
+    background-color: black;
+    text-align: center;
+    vertical-align: middle;
+    font-size: large;
     color: white;
-}
-
-header > .content > p {
-    margin: 0;
-    padding-top: 20px;
-}
-
-footer {
-    background-color: rgb(255, 102, 70);
-    color: white;
+    line-height: 60px;
+    height: 60px;
+    width: 100%;
+    margin: auto;
 }

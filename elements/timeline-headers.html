@@ -1,0 +1,59 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="timeline-element.html">
+<link rel="import" href="timeline-header.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="timeline-headers">
+    // Template
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            :host {
+                display: block;
+                position: fixed;
+                width: 100%;
+                z-index: 4;
+            }
+
+            .timelines {
+                margin: 0 28px;
+            }
+        </style>
+
+        <iron-ajax
+                auto
+                id="ajaxTimelineData"
+                url="/timeline/timeline-filtered-data"
+                handle-as="json"
+                on-response="handleResponse">
+        </iron-ajax>
+
+        <div class="layout horizontal timelines">
+            <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
+                <timeline-header timeline_data="{{item}}" class="flex"></timeline-header>
+            </template>
+        </div>
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+            class timelineHeaders {
+                beforeRegister() {
+                    this.is = 'timeline-headers';
+
+                    this.properties = {
+                        name: String,
+                        timeline_data: Object
+                    };
+                }
+
+                handleResponse(event) {
+                    this.timeline_data = event.detail.response;
+                }
+            }
+            Polymer(timelineHeaders);
+        })();
+    </script>
+
+</dom-module>
