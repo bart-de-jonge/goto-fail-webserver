@@ -1,0 +1,76 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="timeline-element.html">
+<link rel="import" href="timeline-header.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="timeline-headers">
+    // Template
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            :host {
+                display: block;
+                --top-movement: 102px;
+                position: relative;
+            }
+
+            .timelines {
+                position: fixed;
+                width: 100%;
+                margin-right: 590px;
+            }
+        </style>
+
+        <iron-ajax
+                auto
+                url="/timeline/timeline-filtered-data"
+                handle-as="json"
+                on-response="handleResponse"
+                id="ajax-timeline-data">
+        </iron-ajax>
+
+        <div class="layout horizontal timelines">
+            <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
+                <timeline-header timeline_data="{{item}}" class="flex"></timeline-header>
+            </template>
+        </div>
+    </template>
+
+    // Scripts
+    <script>
+        (function() {
+            'use strict';
+            class timelineHeaders {
+                beforeRegister() {
+                    this.is = 'timeline-headers';
+
+                    this.properties = {
+                        name: String,
+                        timeline_data: Object
+                    };
+                }
+
+                handleResponse(event) {
+                    // Get data from ajax response
+                    const responseData = event.detail.response;
+
+                    // Setup new data
+                    const newData = {};
+                    newData.cameraTimelines = [];
+
+                    responseData.cameraTimelines.forEach((timeline, index) => {
+                        // Setup timeline
+                        const newTimeline = {};
+                        newTimeline.name = timeline.name;
+                        newTimeline.description = timeline.description;
+
+                    });
+
+                    this.timeline_data = newData;
+                }
+            }
+            Polymer(timelineHeaders);
+        })();
+    </script>
+
+</dom-module>

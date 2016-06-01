@@ -1,11 +1,10 @@
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
 <link rel="import" href="timeline-block.html">
-<dom-module id="timeline-element">
+<dom-module id="timeline-header">
     <template>
         <style>
             :host {
-                margin-left: 1px;
-                margin-right: 1px;
+                margin: 0 1px;
             }
 
             paper-material {
@@ -17,32 +16,31 @@
                 width: 100%;
             }
 
-            paper-material > div {
-                /*border: 2px solid black;*/
-                box-sizing: border-box;
-                /*overflow: hidden;*/
+            .timeline-header-content {
             }
 
             .timeline-header-bar {
                 height: 10px;
                 width: 100%;
-                background-color: red;
+                background-color: black;
                 margin-bottom: 10px;
             }
 
         </style>
         <!--<div class="timeline-box">-->
         <!--<paper-material elevation="2">-->
+        <div class="timeline-header-content">
             <p>{{timeline_data.name}}</p>
             <p>{{timeline_data.description}}</p>
 
             <div class="timeline-header-bar"></div>
+        </div>
 
-            <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
-                <div style="height:{{item.pixelLength}}px;">
-                    <timeline-block block_data="{{item}}"></timeline-block>
-                    </div>
-            </template>
+            <!--<template is="dom-repeat" items="{{timeline_data.cameraShots}}">-->
+                <!--<div style="height:{{item.pixelLength}}px;">-->
+                    <!--<timeline-block block_data="{{item}}"></timeline-block>-->
+                    <!--</div>-->
+            <!--</template>-->
         <!--</paper-material>-->
         <!--</div>-->
     </template>
@@ -51,7 +49,7 @@
     'use strict';
     class timelineClass {
         beforeRegister() {
-            this.is = 'timeline-element';
+            this.is = 'timeline-header';
 
             this.properties = {
                 timeline_data: Object
