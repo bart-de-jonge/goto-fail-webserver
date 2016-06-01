@@ -2,6 +2,7 @@
 <link rel="import" href="timeline-block.html">
 <dom-module id="timeline-element">
     <template>
+
         <style>
             :host {
                 margin-left: 1px;
@@ -18,21 +19,16 @@
             }
 
             paper-material > div {
-                /*border: 2px solid black;*/
                 box-sizing: border-box;
-                /*overflow: hidden;*/
             }
         </style>
-        <!--<div class="timeline-box">-->
-        <!--<paper-material elevation="2">-->
 
-            <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
-                <div style="height:{{item.pixelLength}}px;">
-                    <timeline-block block_data="{{item}}"></timeline-block>
-                    </div>
-            </template>
-        <!--</paper-material>-->
-        <!--</div>-->
+        <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
+            <div style="height:{{item.pixelLength}}px;">
+                <timeline-block block_data="{{item}}"></timeline-block>
+                </div>
+        </template>
+
     </template>
     <script>
     (function() {

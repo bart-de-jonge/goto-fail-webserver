@@ -2,38 +2,53 @@
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <dom-module id="timeline-block">
     <template>
+
         <style>
-            paper-material {
-                background-color: #00b0ff;
-                padding: 0px;
-                height: 100%;
-            }
-
-            paper-material p {
-                margin: 0;
-                padding: 0;
-            }
-
             paper-card {
                 padding: 0px;
                 height: 100%;
                 width: 100%;
+
+                border: 0 solid black;
+                border-bottom-width: 10px;
+
+                --paper-card-header-color: white;
+                --paper-card-header-text: {
+                    font-size: medium;
+                    background-color: black;
+                };
             }
+
+            .content-header {
+                color: gray
+            }
+
+            .content-content {
+
+            }
+
+            .timeline-separator {
+                background-color: black;
+                height: 1px;
+                margin: auto;
+                opacity: 0.2;
+                width: 100%;
+            }
+
         </style>
 
-        <!--<paper-material elevation="3" style="visibility: {{block_data.visible}};">-->
-            <!--<p>{{block_data.name}}</p>-->
-            <!--<p>{{block_data.description}}</p>-->
-            <!--<p>{{block_data.beginCount}} - {{block_data.endCount}}</p>-->
-        <!--</paper-material>-->
-
-        <paper-card elevation="4" heading="{{block_data.name}}" style="visibility: {{block_data.visible}};">
+        <paper-card elevation="4" heading="{{block_data.name}}"
+                    style="visibility: {{block_data.visible}};">
             <div class="card-content">
-                <p>{{block_data.beginCount}} - {{block_data.endCount}}</p>
-                <p>{{block_data.description}}</p>
+                <div class="content-header">Counts</div>
+                <div class="content-content">{{block_data.beginCount}} - {{block_data.endCount}}</div>
+            </div>
+            <div class="timeline-separator"></div>
+            <div class="card-content">
+                <div class="content-header">Description</div>
+                <div class="content-content">{{block_data.description}}</div>
             </div>
         </paper-card>
-
 
     </template>
     <script>

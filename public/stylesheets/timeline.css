@@ -16,9 +16,8 @@ gotofail-header {
 }
 
 paper-toolbar {
-    background-color: white !important;
-    height: 56px !important;
-    color: black !important;
+    background-color: black !important;
+    color: white !important;
 }
 
 #drawer {
@@ -27,4 +26,16 @@ paper-toolbar {
 
 #scrim {
     z-index: 4 !important;
+}
+
+#bottom-indicator {
+    background-color: black;
+    text-align: center;
+    vertical-align: middle;
+    font-size: large;
+    color: white;
+    line-height: 60px;
+    height: 60px;
+    width: 100%;
+    margin: auto;
 }
