@@ -16,6 +16,7 @@ class timelinePicker {
 
     setPickedTimelines(pickedTimelines) {
         this.pickedTimelines = pickedTimelines;
+        console.log(this.pickedTimelines); 
         const toggles = document.querySelectorAll("gotofail-togglebutton");
 
         for (let i = 0; i < toggles.length; i++) {

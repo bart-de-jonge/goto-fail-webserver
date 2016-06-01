@@ -63,9 +63,9 @@
 
         <paper-card heading="Please select your account" elevation="5">
             <div class="card-content layout horizontal">
-                <paper-listbox class="flex">
+                <paper-listbox class="flex" on-mouseout="listboxMouseOut">
                     <template is="dom-repeat" items="{{users}}">
-                        <paper-item id="{{item.id}}" userId="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover">{{item.name}}</paper-item>
+                        <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover">{{item.name}}</paper-item>
                     </template>
                 </paper-listbox>
                 <timeline-picker id="picker" class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
@@ -89,20 +89,25 @@
             }
 
             onListItemTab(e) {
-                console.log(e.target.id);
-//                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id};
+//                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id}
 //                document.querySelector("#pickedUserPost").generateRequest();
-                console.log(this.users);
             }
 
             onListItemHover(e) {
-                this.$.picker.setPickedTimelines(this.users[1].pickedTimelines);
-                console.log(this.users[1].pickedTimelines);
-                console.log(this.users);
+                console.log(e.target.id);
+                this.$.picker.setPickedTimelines(this.users[Number(e.target.id)].pickedTimelines);
             }
 
             handleUsersResponse(event) {
                 this.users = event.detail.response.users;
+            }
+
+            listboxMouseOut() {
+                if(document.querySelector("paper-item:focus") === null) {
+                    this.$.picker.setPickedTimelines([]);
+                } else {
+                    this.$.picker.setPickedTimelines(this.users[Number(document.querySelector("paper-item:focus").id)].pickedTimelines);
+                }
             }
 
             handlePickedUserResponse(event) {
