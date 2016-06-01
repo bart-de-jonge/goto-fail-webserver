@@ -7,7 +7,7 @@ const multipartMiddleware = multipart();
 router.post("/", multipartMiddleware, (req, res) => {
     const newPath = `${__dirname}/../project-scp-files/project.scp`;
 
-    if (req.files.project.name.endsWith(".scp")) {
+    if (req.files.project && req.files.project.name.endsWith(".scp")) {
         fs.rename(req.files.project.path, newPath, (err) => {
             if (err) {
                 res.json({
