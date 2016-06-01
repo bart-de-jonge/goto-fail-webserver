@@ -1,0 +1,61 @@
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+<dom-module id="timeline-play-button">
+    <template>
+        <style>
+            paper-button {
+                background-color: white;
+                color: black;
+                width: 100px;
+            }
+            paper-button:hover, paper-button[active]:hover {
+                background-color: rgb(255, 120, 90);
+            }
+            paper-button[active] {
+                background-color: rgb(255, 102, 70);
+                color: white;
+            }
+        </style>
+
+        <paper-button active="{{active::change}}" toggles raised>
+            <iron-icon icon="{{icon}}"></iron-icon>
+            {{ text }}
+        </paper-button>
+    </template>
+    <script>
+        (function() {
+            class timelinePlayButton {
+                beforeRegister() {
+                    this.is = "timeline-play-button";
+
+                    this.properties = {
+                        active: {
+                            type: Boolean,
+                            observer: "_activeChanged"
+                        },
+                        text: {
+                            type: String,
+                            compute: "computeText(active)",
+                            value: "PLAY"
+                        },
+                        icon: {
+                            type: String,
+                            compute: "computeText(active)",
+                            value: "av:play-arrow"
+                        }
+                    };
+                }
+                _activeChanged(newActive, oldActive) {
+                    this.text = newActive ? "PAUSE" : "PLAY";
+                    this.icon = newActive ? "av:pause" : "av:play-arrow";
+                    const toggleEvent = new CustomEvent("toggle-play", { "detail": this.active });
+                    document.dispatchEvent(toggleEvent);
+                }
+            }
+
+            Polymer(timelinePlayButton);
+        })();
+    </script>
+</dom-module>

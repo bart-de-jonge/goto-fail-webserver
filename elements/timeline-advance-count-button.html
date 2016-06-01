@@ -1,13 +1,19 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
 <dom-module id="timeline-advance-count-button">
     <template>
         <style>
             paper-button {
-                background-color: blue;
+                background-color: white;
+                color: rgb(255, 120, 90);
+                width: 200px;
             }
         </style>
 
-        <paper-button on-tap="handleTap" raised>Advance Count</paper-button>
+        <paper-button on-tap="handleTap" raised>
+            <iron-icon icon="av:play-arrow"></iron-icon>
+            Advance Count
+        </paper-button>
     </template>
     <script>
         (function() {
@@ -15,13 +21,11 @@
                 beforeRegister() {
                     this.is = "timeline-advance-count-button";
                 }
-
                 handleTap() {
                     const advanceCountEvent = new Event("advanceCount");
                     document.dispatchEvent(advanceCountEvent);
                 }
             }
-
             Polymer(timelinePlayButton);
         })();
     </script>

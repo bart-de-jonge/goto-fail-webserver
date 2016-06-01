@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="timeline-element.html">
+<link rel="import" href="timeline-header.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="timeline-grid">
@@ -9,15 +10,15 @@
         <style>
             :host {
                 display: block;
-            }
-
-            timeline-element:nth-of-type(n+2) {
-                margin-left: 20px;
-            }
-
-            .timeline-grid {
-                position: relative;
                 --top-movement: 102px;
+                position: relative;
+                margin: 16px 24px;
+            }
+
+            .timeline-separator {
+                background-color: grey;
+                margin: 0px 4px;
+                width: 1px;
             }
 
             #scrolling-box {
@@ -28,6 +29,7 @@
                 top: 62px;
                 z-index: 2;
             }
+
         </style>
         <iron-ajax
                 auto
@@ -38,11 +40,12 @@
 
         <div class="layout horizontal">
             <span id="scrolling-box"></span>
+            <div class="timeline-separator"></div>
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
                 <timeline-element timeline_data="{{item}}" class="flex"></timeline-element>
+                <div class="timeline-separator"></div>
             </template>
         </div>
-
     </template>
 
     // Scripts

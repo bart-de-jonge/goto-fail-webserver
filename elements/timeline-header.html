@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="timeline-block.html">
+<dom-module id="timeline-header">
+    <template>
+        <style>
+            :host {
+                padding: 0px 20px;
+                margin: 0px 0px;
+                color: black;
+            }
+
+            paper-card {
+                border-top: solid 8px black;
+                border-bottom: solid 2px black;
+                width: 100%;
+                background-color: rgb(245,245,245);
+                text-align: center;
+                padding: 5px 0px;
+            }
+
+            table, tr {
+                height: 100%;
+                width: 100%;
+            }
+
+            .header-title {
+                font-size: large;
+            }
+
+            .header-description {
+                color: grey;
+            }
+
+        </style>
+
+        <paper-card class="timeline-header-content" elevation="5">
+            <p class="header-description">{{timeline_data.description}}</p>
+            <p class="header-title">{{timeline_data.name}}</p>
+        </paper-card>
+
+    </template>
+    <script>
+    (function() {
+    'use strict';
+    class timelineClass {
+        beforeRegister() {
+            this.is = 'timeline-header';
+
+            this.properties = {
+                timeline_data: Object
+            };
+        }
+    }
+    Polymer(timelineClass);
+    })();
+    </script>
+</dom-module>
