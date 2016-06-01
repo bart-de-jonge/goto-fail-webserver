@@ -10,24 +10,17 @@
         <style>
             :host {
                 display: block;
-                --top-movement: 102px;
-                position: relative;
+                position: fixed;
+                width: 100%;
+                z-index: 4;
             }
 
             .timelines {
-                position: fixed;
-                width: 100%;
-                margin-right: 590px;
+                padding: 0 24px;
             }
         </style>
 
-        <iron-ajax
-                auto
-                url="/timeline/timeline-filtered-data"
-                handle-as="json"
-                on-response="handleResponse"
-                id="ajax-timeline-data">
-        </iron-ajax>
+        <iron-ajax auto id="ajaxTimelineData" url="/timeline/timeline-filtered-data" handle-as="json" on-response="handleResponse"></iron-ajax>
 
         <div class="layout horizontal timelines">
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
@@ -36,7 +29,6 @@
         </div>
     </template>
 
-    // Scripts
     <script>
         (function() {
             'use strict';
@@ -52,21 +44,7 @@
 
                 handleResponse(event) {
                     // Get data from ajax response
-                    const responseData = event.detail.response;
-
-                    // Setup new data
-                    const newData = {};
-                    newData.cameraTimelines = [];
-
-                    responseData.cameraTimelines.forEach((timeline, index) => {
-                        // Setup timeline
-                        const newTimeline = {};
-                        newTimeline.name = timeline.name;
-                        newTimeline.description = timeline.description;
-
-                    });
-
-                    this.timeline_data = newData;
+                    this.timeline_data = event.detail.response;
                 }
             }
             Polymer(timelineHeaders);

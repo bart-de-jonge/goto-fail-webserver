@@ -22,21 +22,9 @@
                 box-sizing: border-box;
                 /*overflow: hidden;*/
             }
-
-            .timeline-header-bar {
-                height: 10px;
-                width: 100%;
-                background-color: red;
-                margin-bottom: 10px;
-            }
-
         </style>
         <!--<div class="timeline-box">-->
         <!--<paper-material elevation="2">-->
-            <p>{{timeline_data.name}}</p>
-            <p>{{timeline_data.description}}</p>
-
-            <div class="timeline-header-bar"></div>
 
             <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
                 <div style="height:{{item.pixelLength}}px;">
