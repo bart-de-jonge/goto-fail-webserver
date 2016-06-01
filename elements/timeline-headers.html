@@ -20,7 +20,13 @@
             }
         </style>
 
-        <iron-ajax auto id="ajaxTimelineData" url="/timeline/timeline-filtered-data" handle-as="json" on-response="handleResponse"></iron-ajax>
+        <iron-ajax
+                auto
+                id="ajaxTimelineData"
+                url="/timeline/timeline-filtered-data"
+                handle-as="json"
+                on-response="handleResponse">
+        </iron-ajax>
 
         <div class="layout horizontal timelines">
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">

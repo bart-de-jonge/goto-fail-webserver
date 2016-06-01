@@ -8,25 +8,6 @@ html, body {
     width: 100%;
 }
 
-main {
-    margin-top: 70px;
-    margin-bottom: 140px;
-}
-
-/*.page-wrap {*/
-    /*min-height: 100%;*/
-    /*!* footer height *!*/
-/*}*/
-
-/*.page-wrap:after {*/
-    /*content: "";*/
-    /*display: block;*/
-/*}*/
-
-footer, .page-wrap:after {
-    height: 70px;
-}
-
 gotofail-header {
     padding: 0px;
     width: 100%;
@@ -34,7 +15,16 @@ gotofail-header {
     z-index: 3;
 }
 
-/*footer {*/
-    /*background-color: rgb(255, 102, 70);*/
-    /*color: white;*/
-/*}*/
+paper-toolbar {
+    background-color: white !important;
+    height: 56px !important;
+    color: black !important;
+}
+
+#drawer {
+    z-index: 4;
+}
+
+#scrim {
+    z-index: 4 !important;
+}

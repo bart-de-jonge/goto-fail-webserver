@@ -10,20 +10,24 @@
     <link rel="import" href="../elements/timeline-footer.html">
     <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
     <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+    <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
     <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
     <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 </head>
 
 <body class ="fit vertical layout">
 
-    <paper-drawer-panel force-narrow left-drawer>
+    <paper-drawer-panel peeking force-narrow left-drawer id="drawer-panel">
 
-        <div drawer>derp</div>
+        <div drawer id="drawer">derp<br>derp<br>derp</div>
 
         <paper-header-panel main mode="waterfall">
 
-            <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-            <gotofail-header class="paper-header"></gotofail-header>
+            <paper-toolbar justify="justified" id="head">
+                <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                <div class="flex"><h2>Goto fail;</h2></div>
+            </paper-toolbar>
+
             <div class="content fit">
                 <main>
                     <div class="content">
@@ -33,11 +37,7 @@
                 </main>
             </div>
         </paper-header-panel>
-
     </paper-drawer-panel>
-
-
-    <timeline-footer></timeline-footer>
 
     <script src="/js/timeline.js"></script>
 </body>

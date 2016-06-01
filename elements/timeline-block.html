@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
 <dom-module id="timeline-block">
     <template>
         <style>
@@ -12,13 +13,27 @@
                 margin: 0;
                 padding: 0;
             }
+
+            paper-card {
+                padding: 0px;
+                height: 100%;
+                width: 100%;
+            }
         </style>
 
-        <paper-material elevation="3" style="visibility:{{block_data.visible}};">
-            <p>{{block_data.name}}</p>
-            <p>{{block_data.description}}</p>
-            <p>{{block_data.beginCount}} - {{block_data.endCount}}</p>
-        </paper-material>
+        <!--<paper-material elevation="3" style="visibility: {{block_data.visible}};">-->
+            <!--<p>{{block_data.name}}</p>-->
+            <!--<p>{{block_data.description}}</p>-->
+            <!--<p>{{block_data.beginCount}} - {{block_data.endCount}}</p>-->
+        <!--</paper-material>-->
+
+        <paper-card elevation="4" heading="{{block_data.name}}" style="visibility: {{block_data.visible}};">
+            <div class="card-content">
+                <p>{{block_data.beginCount}} - {{block_data.endCount}}</p>
+                <p>{{block_data.description}}</p>
+            </div>
+        </paper-card>
+
 
     </template>
     <script>

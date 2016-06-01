@@ -21,10 +21,10 @@
                 margin-right: 590px;
             }
 
-            /*.timeline-separator {*/
-                /*background-color: grey;*/
-                /*width: 1px;*/
-            /*}*/
+            .timeline-separator {
+                background-color: grey;
+                width: 1px;
+            }
 
             #scrolling-box {
                 background: red;
@@ -45,10 +45,10 @@
 
         <div class="layout horizontal">
             <span id="scrolling-box"></span>
-            <!--<div class="timeline-separator"></div>-->
+            <div class="timeline-separator"></div>
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
                 <timeline-element timeline_data="{{item}}" class="flex"></timeline-element>
-                <!--<div class="timeline-separator"></div>-->
+                <div class="timeline-separator"></div>
             </template>
         </div>
     </template>
