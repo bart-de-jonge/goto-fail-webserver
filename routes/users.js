@@ -11,8 +11,8 @@ router.post("/picked-user", (req, res) => {
 
 router.get("/get-users", (req, res) => {
     res.json({ users: [
-        new CameraOperator(0, "Jan", []),
-        new CameraOperator(1, "Klaas", []),
+        new CameraOperator(0, "Jan", [0,1]),
+        new CameraOperator(1, "Klaas", [0,2]),
         new CameraOperator(2, "Piet", []),
     ] });
 });

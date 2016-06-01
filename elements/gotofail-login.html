@@ -65,10 +65,10 @@
             <div class="card-content layout horizontal">
                 <paper-listbox class="flex">
                     <template is="dom-repeat" items="{{users}}">
-                        <paper-item id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover">{{item.name}}</paper-item>
+                        <paper-item id="{{item.id}}" userId="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover">{{item.name}}</paper-item>
                     </template>
                 </paper-listbox>
-                <timeline-picker class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
+                <timeline-picker id="picker" class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
             </div>
         </paper-card>
 
@@ -96,18 +96,13 @@
             }
 
             onListItemHover(e) {
-//                console.log(e.target.id);
-                this.cameras = [2];
-//                console.log(document.querySelector("#toggleRepeat"));
-//                document.querySelector("#toggleRepeat").render();
-                document.querySelector("timeline-picker").setAttribute("hack", {hack: true});
-//                this.hover = e.target.id;
-//                document.querySelector("timeline-picker").setAttribute("pickedTimelines", "[2]");
+                this.$.picker.setPickedTimelines(this.users[1].pickedTimelines);
+                console.log(this.users[1].pickedTimelines);
+                console.log(this.users);
             }
 
             handleUsersResponse(event) {
                 this.users = event.detail.response.users;
-                console.log(this.users);
             }
 
             handlePickedUserResponse(event) {

@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-
+<link rel="import" href="../elements/gotofail-togglebutton.html">
 
 <dom-module id="timeline-picker">
     // Template
@@ -50,9 +50,9 @@
             <!--content-type="application/json"-->
             <!--on-response="handlePickedTimelinesResponse"></iron-ajax>-->
 
-                <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat">
+                <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
                     <div>
-                    <paper-toggle-button value="{{index}}" checked="{{computeChecked(index)}}" observe="hack">{{item.name}}</paper-toggle-button>
+                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}" checked="{{computeChecked(index)}}"></gotofail-togglebutton>
                         </div>
                 </template>
 
