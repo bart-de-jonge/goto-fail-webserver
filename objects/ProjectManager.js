@@ -116,7 +116,7 @@ class ProjectManager {
     }
 
     getUsers(XMLObject) {
-        
+        //TODO: implement
     }
 
     filterTimelines(pickedTimelines, data) {

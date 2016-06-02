@@ -1,6 +1,4 @@
 class timelinePicker {
-
-
     beforeRegister() {
         this.is = "timeline-picker";
 
