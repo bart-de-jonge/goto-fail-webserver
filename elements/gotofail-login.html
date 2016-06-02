@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../elements/timeline-picker.html">
 
 <dom-module id="gotofail-login">
@@ -25,6 +26,7 @@
 
             paper-listbox {
                 margin-right: 50px;
+                padding: 0;
             }
 
             paper-listbox {
@@ -34,9 +36,6 @@
             }
 
             paper-item {
-                --paper-item-focused: {
-                    background-color: #cb4b16;
-                };
                 background-color: lightgrey;
                 border: 1px solid darkgrey;
             }
@@ -44,6 +43,10 @@
             paper-item:hover {
                 background-color: darkgrey;
                 cursor: pointer;
+            }
+
+            paper-item.iron-selected {
+                background-color: black;
             }
 
         </style>
@@ -87,6 +90,8 @@
             onListItemTab(e) {
 //                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id}
 //                document.querySelector("#pickedUserPost").generateRequest();
+                const selectedUser = e.target;
+                console.log(selectedUser);
             }
 
             onListItemHover(e) {
@@ -98,11 +103,11 @@
             }
 
             listboxMouseOut() {
-                if(document.querySelector("paper-item:focus") === null) {
+                if(document.querySelector("paper-item.iron-selected") === null) {
                     this.$.picker.setUser({id: 0, name:"", pickedTimelines:[], jobType:0});
                 } else {
-                    this.$.picker.setUser(this.users[Number(document.querySelector("paper-item:focus").id)]);
-                    console.log(this.users[Number(document.querySelector("paper-item:focus").id)]);
+                    this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
+                    console.log(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
                 }
             }
 
