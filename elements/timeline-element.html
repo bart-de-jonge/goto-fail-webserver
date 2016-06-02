@@ -2,7 +2,13 @@
 <link rel="import" href="timeline-block.html">
 <dom-module id="timeline-element">
     <template>
+
         <style>
+            :host {
+                margin-left: 1px;
+                margin-right: 1px;
+            }
+
             paper-material {
                 padding: 10px;
             }
@@ -13,25 +19,16 @@
             }
 
             paper-material > div {
-                /*border: 2px solid black;*/
                 box-sizing: border-box;
-                /*overflow: hidden;*/
-            }
-
-            .timeline-seperator {
-                height: 10px;
-                width: 100%;
-                background-color: black;
-                margin-bottom: 10px;
             }
         </style>
 
-        <paper-material elevation="2">
-            <p>{{timeline_data.name}}</p>
-            <p>{{timeline_data.description}}</p>
-
-            <div class="timeline-seperator"></div>
-
+        <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
+            <div style="height:{{item.pixelLength}}px;">
+                <timeline-block block_data="{{item}}"></timeline-block>
+                </div>
+        </template>
+        ul
             <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
                 <div style$="height:{{item.pixelLength}}px;">
                     <timeline-block block_data="{{item}}"></timeline-block>

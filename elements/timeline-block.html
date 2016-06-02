@@ -1,24 +1,58 @@
 <link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/device-icons.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <dom-module id="timeline-block">
     <template>
+
         <style>
-            paper-material {
-                background-color: #00b0ff;
-                padding: 0px;
+            paper-card {
                 height: 100%;
+                width: 100%;
+
+                border-bottom: 10px solid black;
+
+                background-color: white;
+                --paper-card-header-color: white;
+                --paper-card-header-text: {
+                    font-size: medium;
+                    background-color: black;
+                };
             }
 
-            paper-material p {
-                margin: 0;
-                padding: 0;
+            .content-header {
+                color: gray;
             }
+
+            .timeline-separator {
+                background-color: black;
+                height: 1px;
+                margin: auto;
+                opacity: 0.2;
+                width: 100%;
+            }
+
+            .card-content-deep {
+                background-color: rgb(248,248,248);
+                font-size: small;
+                color: black;
+            }
+
         </style>
 
-        <paper-material elevation="3" style="visibility:{{block_data.visible}};">
-            <p>{{block_data.name}}</p>
-            <p>{{block_data.description}}</p>
-            <p>{{block_data.beginCount}} - {{block_data.endCount}}</p>
-        </paper-material>
+        <paper-card elevation="3" heading="{{block_data.name}}"
+                    style="visibility: {{block_data.visible}};">
+            <div class="card-content card-content-deep">
+                <div class="content-header">Count</div>
+                <span>{{block_data.beginCount}} - {{block_data.endCount}}</span>
+            </div>
+            <div class="timeline-separator"></div>
+            <div class="card-content">
+                <div class="content-header">Description</div>
+                <span>{{block_data.description}}</span>
+            </div>
+        </paper-card>
 
     </template>
     <script>

@@ -6,6 +6,7 @@ project-scp-files/
 *.swp
 .tern-project
 public/js/
+public/js/timeline.js
 coverage/
 *.sublime-project
 *.sublime-workspace

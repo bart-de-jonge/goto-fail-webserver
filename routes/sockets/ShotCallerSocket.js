@@ -10,8 +10,12 @@ const logger = log4js.getLogger();
 // Fetch the Project's DirectorTimeline
 const getDirectorTimeline = callback => {
     ProjectManager.waitForXML((projectManager) => {
-        const directorTimeline = projectManager.data.directorTimeline;
-        callback(directorTimeline);
+        if (projectManager.data) {
+            const directorTimeline = projectManager.data.directorTimeline;
+            callback(directorTimeline);
+        } else {
+            callback(null);
+        }
     });
 };
 
@@ -73,24 +77,29 @@ class ShotCallerSocket {
 
     // Find the current DirectorShot
     findCurrentShot(directorTimeline) {
-        const candidates = directorTimeline.getDirectorShots()
-            .filter((shot) =>
-                shot.endCount > this.currentCount && shot.beginCount <= this.currentCount
-            );
-        if (candidates.length === 0) {
-            return null;
+        if (directorTimeline) {
+            const candidates = directorTimeline.getDirectorShots()
+                .filter((shot) =>
+                    shot.endCount > this.currentCount && shot.beginCount <= this.currentCount
+                );
+            if (candidates.length === 0) {
+                return null;
+            }
+            return candidates[0];
         }
-        return candidates[0];
+        return null;
     }
 
     // Find the next DirectorShot
     findNextShot(directorTimeline) {
-        const nextShots = directorTimeline.getDirectorShots()
-            .filter((shot) =>
-                shot.beginCount > this.currentCount
-           );
-        if (nextShots.length !== 0) {
-            return nextShots[0];
+        if (directorTimeline) {
+            const nextShots = directorTimeline.getDirectorShots()
+                .filter((shot) =>
+                    shot.beginCount > this.currentCount
+               );
+            if (nextShots.length !== 0) {
+                return nextShots[0];
+            }
         }
         return null;
     }
