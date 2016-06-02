@@ -28,7 +28,13 @@
                 <timeline-block block_data="{{item}}"></timeline-block>
                 </div>
         </template>
-
+        ul
+            <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
+                <div style$="height:{{item.pixelLength}}px;">
+                    <timeline-block block_data="{{item}}"></timeline-block>
+                    </div>
+            </template>
+        </paper-material>
     </template>
     <script>
     (function() {

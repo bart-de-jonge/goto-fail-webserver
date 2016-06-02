@@ -3,8 +3,10 @@
 <link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-
-
+<link rel="import" href="../elements/gotofail-togglebutton.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <dom-module id="timeline-picker">
     // Template
     <template>
@@ -42,24 +44,24 @@
                 on-response="handleResponse"
                 id="ajax-timeline-data"></iron-ajax>
 
-        <iron-ajax
-            id="pickedTimelinesPost"
-            url="/timeline/picked-timelines"
-            handle-as="json"
-            method = "POST"
-            content-type="application/json"
-            on-response="handlePickedTimelinesResponse"></iron-ajax>
+        <p>Job type:</p>
+        <paper-tabs selected="0" on-click="paperTabsClicked" id="userTypeTabs">
+            <paper-tab>Camera operator</paper-tab>
+            <paper-tab>Shotcaller</paper-tab>
+            <paper-tab>Director</paper-tab>
+        </paper-tabs>
 
-        <paper-card heading="Please specify which timelines you want to control" elevation="5">
-            <div class="card-content">
-                <template is="dom-repeat" items="{{timelines}}">
+        <p>Active camera timelines:</p>
+        <div id="toggles">
+                <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
                     <div>
-                    <paper-toggle-button value="{{index}}">{{item.name}}</paper-toggle-button>
+                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}"></gotofail-togglebutton>
                         </div>
                 </template>
+        </div>
+        <paper-button on-click="buttonClicked" raised>Continue</paper-button>
             </div>
 
-            <paper-button on-click="buttonClicked" raised>Continue</paper-button>
         </paper-card>
 
     </template>

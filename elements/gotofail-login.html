@@ -1,0 +1,165 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../elements/timeline-picker.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<dom-module id="gotofail-login">
+    // Template
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            :host {
+                display: block;
+            }
+
+            paper-card {
+                background-color: #00B7FF;
+                padding: 20px;
+                font-weight: bolder;
+                font-size: 1.5em;
+                width: 100%;
+                max-width: 1000px;
+            }
+
+            paper-listbox {
+                margin-right: 50px;
+                padding: 0;
+            }
+
+            paper-listbox {
+                border-radius: 10px;
+                overflow: hidden;
+                background-color: white;
+            }
+
+            paper-item {
+                background-color: lightgrey;
+                border: 1px solid darkgrey;
+            }
+
+            paper-item:hover {
+                background-color: darkgrey;
+                cursor: pointer;
+            }
+
+            paper-item.iron-selected {
+                background-color: black;
+            }
+
+            paper-fab#add-fab {
+                background-color: darkgreen;
+                margin: 0 auto;
+                position: relative;
+                right: 28px;
+                margin-top: 30px;
+            }
+
+            paper-fab.remove-fab {
+                background-color: darkred;
+                width: 7px;
+                height: 7px;
+                visibility: hidden;
+            }
+            
+            paper-item:hover .remove-fab {
+                visibility: visible;
+            }
+
+        </style>
+        <iron-ajax
+                auto
+                url="/get-users"
+                handle-as="json"
+                on-response="handleUsersResponse"
+                id="ajax-users"></iron-ajax>
+        <iron-ajax
+                id="pickedUserPost"
+                url="/picked-user"
+                handle-as="json"
+                method = "POST"
+                content-type="application/json"
+                on-response="handlePickedUserResponse"></iron-ajax>
+
+        <paper-card heading="Please select your account" elevation="5">
+            <div class="card-content layout horizontal">
+                <div class="flex listboxWrapper">
+                <paper-listbox on-mouseout="listboxMouseOut">
+                    <template is="dom-repeat" items="{{users}}">
+                        <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
+                            <paper-fab class="remove-fab" icon="remove"></paper-fab></paper-item>
+                    </template>
+                </paper-listbox>
+
+                    <paper-fab id="add-fab" icon="add"></paper-fab>
+                </div>
+                <timeline-picker id="picker" class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
+            </div>
+        </paper-card>
+
+    </template>
+    <script>
+        class gotofailLogin {
+            beforeRegister() {
+                this.is = "gotofail-login";
+
+                this.properties = {
+                    users: Object,
+                    cameras: Array,
+                };
+            }
+
+            /*
+             * Method helper for when a list item (user) is clicked
+             */
+            _onListItemTab(e) {
+                // Note: this code is commented on purpose, I need it in the future (next PR)
+//                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id}
+//                document.querySelector("#pickedUserPost").generateRequest();
+                const selectedUser = e.target;
+                console.log(selectedUser);
+            }
+
+            /*
+             * Helper method for when the mouse is hovering over a user
+             */
+            _onListItemHover(e) {
+                this.$.picker.setUser(this.users[Number(e.target.id)]);
+            }
+
+            /*
+             * Helper method for handling ajax response when getting users
+             */
+            _handleUsersResponse(event) {
+                this.users = event.detail.response.users;
+            }
+
+            /*
+             * Helper method for when the mouse leaves the user list
+             */
+            _listboxMouseOut() {
+                if(document.querySelector("paper-item.iron-selected") === null) {
+                    this.$.picker.setUser({id: 0, name:"", pickedTimelines:[], jobType:0});
+                } else {
+                    this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
+                }
+            }
+
+            /*
+             * Helper method to handle response when picked user is posted
+             */
+            _handlePickedUserResponse(event) {
+                if (event.detail.response.success) {
+                    window.location.href = "/timeline";
+                }
+            }
+        }
+        // eslint-disable-next-line
+        Polymer(gotofailLogin);
+    </script>
+
+</dom-module>
