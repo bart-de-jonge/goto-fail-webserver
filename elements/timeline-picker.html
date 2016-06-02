@@ -52,13 +52,14 @@
             <!--content-type="application/json"-->
             <!--on-response="handlePickedTimelinesResponse"></iron-ajax>-->
 
-
+        <p>Job type:</p>
         <paper-tabs selected="0" on-click="paperTabsClicked" id="userTypeTabs">
             <paper-tab>Camera operator</paper-tab>
             <paper-tab>Shotcaller</paper-tab>
             <paper-tab>Director</paper-tab>
         </paper-tabs>
 
+        <p>Active camera timelines:</p>
         <div id="toggles">
                 <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
                     <div>

@@ -5,6 +5,8 @@
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../elements/timeline-picker.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 
 <dom-module id="gotofail-login">
     // Template
@@ -49,6 +51,25 @@
                 background-color: black;
             }
 
+            paper-fab#add-fab {
+                background-color: darkgreen;
+                margin: 0 auto;
+                position: relative;
+                right: 28px;
+                margin-top: 30px;
+            }
+
+            paper-fab.remove-fab {
+                background-color: darkred;
+                width: 7px;
+                height: 7px;
+                visibility: hidden;
+            }
+            
+            paper-item:hover .remove-fab {
+                visibility: visible;
+            }
+
         </style>
         <iron-ajax
                 auto
@@ -66,11 +87,16 @@
 
         <paper-card heading="Please select your account" elevation="5">
             <div class="card-content layout horizontal">
-                <paper-listbox class="flex" on-mouseout="listboxMouseOut">
+                <div class="flex listboxWrapper">
+                <paper-listbox on-mouseout="listboxMouseOut">
                     <template is="dom-repeat" items="{{users}}">
-                        <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover">{{item.name}}</paper-item>
+                        <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
+                            <paper-fab class="remove-fab" icon="remove"></paper-fab></paper-item>
                     </template>
                 </paper-listbox>
+
+                    <paper-fab id="add-fab" icon="add"></paper-fab>
+                </div>
                 <timeline-picker id="picker" class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
             </div>
         </paper-card>
