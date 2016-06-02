@@ -27,16 +27,19 @@
                 --paper-card-header-color: white;
                 --paper-card-header-text: {
                     font-size: medium;
-                    background-color: black;
+                    background-color: #F44336;
                 };
+                display: flex;
+                flex-direction: column;
             }
 
-            /*paper-card#left {*/
-                /*margin-right: 0px;*/
-            /*}*/
+            paper-card#left {
+                width: 30%;
+                margin-right: 0px;
+            }
 
             paper-card#right {
-                width: 100%;
+                width: 70%;
             }
 
             paper-listbox {
@@ -50,11 +53,6 @@
                 width: 100%;
             }
 
-            paper-item {
-                /*background-color: lightgrey;*/
-                /*border: 1px solid darkgrey;*/
-            }
-
             paper-item:hover {
                 background-color: rgb(245,245,245);
                 cursor: pointer;
@@ -64,33 +62,17 @@
                 background-color: rgb(245,245,245);
             }
 
-            paper-fab#add-fab {
-                background-color: darkgreen;
-                margin: 0 auto;
-                position: relative;
-                right: 28px;
-                margin-top: 30px;
-            }
-
             paper-button#add-button {
-                color: rgba(0,0,0,0.6);
-                /*background-color: darkgreen;*/
-                /*margin: 0 auto;*/
-                /*position: relative;*/
-                /*right: 28px;*/
-                /*margin-top: 30px;*/
+                color: #FF5252;
             }
 
             paper-button.remove-button {
-                color: black;
+                color: #FF5252;
+                font-size: smaller;
                 visibility: hidden;
             }
             
             paper-item:hover .remove-button {
-                visibility: visible;
-            }
-            
-            paper-item:hover .remove-fab {
                 visibility: visible;
             }
 
@@ -119,24 +101,25 @@
 
         <div class="layout horizontal">
 
-            <paper-card id="left" heading="Please select your account" elevation="3">
+            <paper-card id="left" heading="Please select your account" elevation="2">
                 <div class="card-content">
                     <paper-listbox on-mouseout="listboxMouseOut">
                         <template is="dom-repeat" items="{{users}}">
                             <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
-                                <paper-ripple></paper-ripple>
+                                <paper-ripple style="color: #EF5350;"></paper-ripple>
                                 <paper-button class="remove-button">remove user</paper-button>
                             </paper-item>
                         </template>
                     </paper-listbox>
                 </div>
+                <div style="flex: 1;"></div>
                 <div class="horizontal-separator"></div>
                 <div class="card-content">
                     <paper-button id="add-button">Add user</paper-button>
                 </div>
             </paper-card>
 
-            <paper-card id="right" heading="Account information" elevation="3">
+            <paper-card id="right" heading="Account information" elevation="2">
                 <timeline-picker id="picker" class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
             </paper-card>
 

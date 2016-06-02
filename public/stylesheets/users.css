@@ -10,7 +10,7 @@ html, body {
 }
 
 paper-toolbar {
-    background-color: black !important;
+    background-color: #F44336 !important;
     color: white !important;
 }
 

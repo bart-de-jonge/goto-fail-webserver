@@ -13,28 +13,16 @@
         <style include="iron-flex"></style>
         <style>
 
-            /*paper-card {*/
-                /*background-color: white;*/
-                /*width: 100%;*/
-                /*height: 100%;*/
-                /*margin: 36px;*/
-                /*--paper-card-header-color: white;*/
-                /*--paper-card-header-text: {*/
-                    /*font-size: medium;*/
-                    /*background-color: black;*/
-                /*};*/
-            /*}*/
-
+            :host {
+                display: flex;
+                flex-direction: column;
+            }
             paper-toggle-button {
                 margin-top: 20px;
             }
 
             paper-button {
-                margin: 30px auto;
-                /*display: block;*/
-                width: 200px;
-                background-color: #cb4b16;
-                /*border-radius: 25px;*/
+                color: #FF5252;
             }
 
             .horizontal-separator {
@@ -43,6 +31,19 @@
                 margin: auto;
                 opacity: 0.1;
                 width: 100%;
+            }
+
+            paper-tabs {
+                background-color: rgb(245,245,245);
+                --paper-tabs-selection-bar-color: #FF5252;
+            }
+
+            paper-tab {
+                --paper-tab-ink: #FF5252;
+            }
+
+            .content-header {
+                color: gray;
             }
 
         </style>
@@ -55,24 +56,28 @@
                 id="ajax-timeline-data">
         </iron-ajax>
 
-        <!--<paper-card heading="Account info" elevation="3">-->
-            <paper-tabs selected="0" on-click="paperTabsClicked" id="userTypeTabs">
-                <paper-tab>Camera operator</paper-tab>
-                <paper-tab>Shotcaller</paper-tab>
-                <paper-tab>Director</paper-tab>
-            </paper-tabs>
-            <div class="card-content">
-                <p>Active camera timelines:</p>
-                <div id="toggles">
-                    <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
-                        <div>
-                            <gotofail-togglebutton number="{{index}}" name="{{item.name}}"></gotofail-togglebutton>
-                        </div>
-                    </template>
-                </div>
-                <paper-button on-click="buttonClicked" raised>Continue</paper-button>
+        <paper-tabs selected="0" on-click="paperTabsClicked" id="userTypeTabs">
+            <paper-tab>Camera operator</paper-tab>
+            <paper-tab>Shotcaller</paper-tab>
+            <paper-tab>Director</paper-tab>
+        </paper-tabs>
+
+        <div class="card-content">
+            <div class="card-content content-header"> Active camera timelines</div>
+            <div id="toggles" class="layout horizontal flex">
+                <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
+                    <!--<div>-->
+                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}"></gotofail-togglebutton>
+                    <!--</div>-->
+                </template>
             </div>
-        <!--</paper-card>-->
+        </div>
+        <div style="flex: 1;"></div>
+        <div class="horizontal-separator"></div>
+
+        <div class="card-content">
+            <paper-button on-click="buttonClicked">Continue</paper-button>
+        </div>
 
     </template>
 
