@@ -26,14 +26,17 @@
             <div class="paper-header">
                 <paper-toolbar justify="justified" id="head" style="height: 60px;">
                     <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-                    <paper-button raised onclick="toast1.open()">raise toast</paper-button>
                     <h2 style="font-weight: lighter">Timeline view</h2>
                 </paper-toolbar>
                 <timeline-headers></timeline-headers>
             </div>
 
             <div class="fit">
-                <paper-toast id="toast1" duration="0" text="tralalala"></paper-toast>
+                <paper-toast duration="0" id="toast1">
+                    <paper-button onclick="toast1.toggle()">
+                        Close me for pete's sake!
+                    </paper-button>
+                </paper-toast>
                 <timeline-grid></timeline-grid>
             </div>
 
