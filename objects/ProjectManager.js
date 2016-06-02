@@ -5,6 +5,7 @@ import DirectorTimeline from "../objects/DirectorTimeline.js";
 import DirectorShot from "../objects/DirectorShot.js";
 import xml2js from "xml2js";
 import Camera from "./Camera";
+import User from "./User";
 
 const parser = new xml2js.Parser();
 
@@ -48,7 +49,6 @@ class ProjectManager {
                 }
             });
         }
-
         return { minCount, maxCount };
     }
 
@@ -113,6 +113,10 @@ class ProjectManager {
                 });
             }
         });
+    }
+
+    getUsers(XMLObject) {
+        
     }
 
     filterTimelines(pickedTimelines, data) {

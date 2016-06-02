@@ -24,10 +24,6 @@
                 font-size: 1.5em;
                 width: 100%;
                 max-width: 1000px;
-
-                --paper-card-header-text {
-
-                }
             }
 
             paper-listbox {
@@ -117,31 +113,46 @@
                 };
             }
 
-            onListItemTab(e) {
+            /*
+             * Method helper for when a list item (user) is clicked
+             */
+            _onListItemTab(e) {
+                // Note: this code is commented on purpose, I need it in the future (next PR)
 //                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id}
 //                document.querySelector("#pickedUserPost").generateRequest();
                 const selectedUser = e.target;
                 console.log(selectedUser);
             }
 
-            onListItemHover(e) {
+            /*
+             * Helper method for when the mouse is hovering over a user
+             */
+            _onListItemHover(e) {
                 this.$.picker.setUser(this.users[Number(e.target.id)]);
             }
 
-            handleUsersResponse(event) {
+            /*
+             * Helper method for handling ajax response when getting users
+             */
+            _handleUsersResponse(event) {
                 this.users = event.detail.response.users;
             }
 
-            listboxMouseOut() {
+            /*
+             * Helper method for when the mouse leaves the user list
+             */
+            _listboxMouseOut() {
                 if(document.querySelector("paper-item.iron-selected") === null) {
                     this.$.picker.setUser({id: 0, name:"", pickedTimelines:[], jobType:0});
                 } else {
                     this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
-                    console.log(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
                 }
             }
 
-            handlePickedUserResponse(event) {
+            /*
+             * Helper method to handle response when picked user is posted
+             */
+            _handlePickedUserResponse(event) {
                 if (event.detail.response.success) {
                     window.location.href = "/timeline";
                 }
