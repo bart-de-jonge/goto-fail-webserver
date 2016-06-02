@@ -12,7 +12,7 @@
 
         </style>
 
-        <paper-toggle-button id="toggle_button" value="{{number}}" checked="{{checked}}">{{name}}</paper-toggle-button>
+        <paper-toggle-button id="toggle_button" value="{{number}}" checked="{{checked}}" disabled="{{disabled}}">{{name}}</paper-toggle-button>
 
     </template>
 
@@ -29,7 +29,8 @@
                     },
                     name: String,
                     number: Number,
-                    checked: Boolean
+                    checked: Boolean,
+                    disabled: Boolean
                 }
             }
         }

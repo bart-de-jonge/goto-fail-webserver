@@ -41,11 +41,16 @@ class timelinePicker {
     paperTabsClicked() {
         console.log(this.$.userTypeTabs.selected);
         if (this.$.userTypeTabs.selected !== 0) {
-            const toggles = document.querySelector("#toggles");
-            toggles.hidden = true;
+            const toggles = document.querySelectorAll("#toggles gotofail-togglebutton");
+            console.log(toggles);
+            for (let i = 0; i < toggles.length; i++) {
+                toggles[i].disabled = true;
+            }
         } else {
-            const toggles = document.querySelector("#toggles");
-            toggles.hidden = false;
+            const toggles = document.querySelectorAll("#toggles gotofail-togglebutton");
+            for (let i = 0; i < toggles.length; i++) {
+                toggles[i].disabled = false;
+            }
         }
     }
 
