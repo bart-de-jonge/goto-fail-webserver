@@ -6,6 +6,7 @@
 html, body {
     height: 100%;
     width: 100%;
+    background-color: rgb(240,240,240);
 }
 
 paper-toolbar {
@@ -31,4 +32,5 @@ paper-toolbar {
     height: 60px;
     width: 100%;
     margin: auto;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.8);
 }

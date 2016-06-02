@@ -1,0 +1,92 @@
+<link rel="import" href="../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icon/image-icon.html">
+<link rel="import" href="timeline-block.html">
+<dom-module id="gotofail-drawer">
+    <template>
+        <style>
+            :host {
+                z-index: 4;
+            }
+
+            :focus {
+                outline: 0;
+            }
+
+            .timeline-header {
+                background-color: white;
+                color: rgba(0,0,0,0.6);
+                font-size: x-large;
+                vertical-align: middle;
+                line-height: 59px;
+                border-bottom: solid 1px rgba(0,0,0,0.2);
+                height: 59px;
+                padding-left: 20px;
+            }
+
+            .item-style {
+                color: rgba(0,0,0,0.6);
+            }
+
+            .item-selected-style {
+                color: black;
+                background-color: rgb(235,235,235);
+            }
+
+            .text-style {
+                text-decoration:none;
+                font-size: small;
+                font-weight: bold;
+                vertical-align: middle;
+                line-height: 100%;
+            }
+
+            .icon-style {
+                vertical-align: middle;
+                --iron-icon-height: 20px;
+                --iron-icon-width: 20px;
+            }
+
+        </style>
+
+        <div class="timeline-header">
+            Goto Fail;
+        </div>
+
+        <paper-listbox>
+            <a tabindex="-1"> <paper-item  class="item-style">
+                <paper-ripple></paper-ripple>
+                <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
+                <span class="text-style" style="padding-left: 10px;">User selection</span>
+            </paper-item> </a>
+
+            <a tabindex="-1"> <paper-item class="item-style item-selected-style">
+                <paper-ripple></paper-ripple>
+                <iron-icon class="icon-style" icon="image:camera"></iron-icon>
+                <span class="text-style" style="padding-left: 10px;">Timeline view</span>
+            </paper-item> </a>
+
+            <a tabindex="-1"> <paper-item class="item-style">
+                <paper-ripple></paper-ripple>
+                <iron-icon class="icon-style" icon="image:timer"></iron-icon>
+                <span class="text-style" style="padding-left: 10px;">Shotcount view</span>
+            </paper-item> </a>
+        </paper-listbox>
+
+    </template>
+    <script>
+    (function() {
+    'use strict';
+    class gotofailDrawer {
+        beforeRegister() {
+            this.is = 'gotofail-drawer';
+        }
+    }
+    Polymer(gotofailDrawer);
+    })();
+    </script>
+</dom-module>
