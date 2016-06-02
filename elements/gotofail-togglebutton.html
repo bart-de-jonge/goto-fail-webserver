@@ -1,0 +1,39 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+
+<dom-module id="gotofail-togglebutton">
+    // Template
+    <template>
+        <style>
+
+        </style>
+
+        <paper-toggle-button id="toggle_button" value="{{number}}" checked="{{checked}}">{{name}}</paper-toggle-button>
+
+    </template>
+
+    // Scripts
+    <script>
+        class gotofailToggleButton {
+            beforeRegister() {
+                this.is = "gotofail-togglebutton";
+
+                this.properties = {
+                    pickedTimelines: {
+                        type: Array,
+                        value: []
+                    },
+                    name: String,
+                    number: Number,
+                    checked: Boolean
+                }
+            }
+        }
+        // eslint-disable-next-line
+        Polymer(gotofailToggleButton);
+    </script>
+</dom-module>

@@ -1,4 +1,6 @@
 class timelinePicker {
+
+
     beforeRegister() {
         this.is = "timeline-picker";
 
@@ -6,30 +8,48 @@ class timelinePicker {
             timelines: Object,
             pickedTimelines: {
                 type: Array,
-                value: [],
             },
-            hack: Object,
         };
     }
 
+    ready() {
+        this.setPickedTimelines([]);
+    }
+
+    setUser(user) {
+        this.pickedTimelines = user.pickedTimelines;
+        this.jobType = user.jobType;
+
+        const toggles = document.querySelectorAll("gotofail-togglebutton");
+        for (let i = 0; i < toggles.length; i++) {
+            toggles[i].checked = this.computeChecked(i);
+        }
+
+        document.querySelector("paper-tabs").select(this.jobType);
+
+        this.paperTabsClicked();
+    }
+
+    setPickedTimelines(pickedTimelines) {
+        this.pickedTimelines = pickedTimelines;
+    }
+
     computeChecked(index) {
-        console.log(index)
-        console.log(this.pickedTimelines);
         return this.pickedTimelines.indexOf(index) >= 0;
     }
 
+    paperTabsClicked() {
+        console.log(this.$.userTypeTabs.selected);
+        if (this.$.userTypeTabs.selected !== 0) {
+            const toggles = document.querySelector("#toggles");
+            toggles.hidden = true;
+        } else {
+            const toggles = document.querySelector("#toggles");
+            toggles.hidden = false;
+        }
+    }
+
     buttonClicked() {
-        // const toggles = document.querySelectorAll("paper-toggle-button");
-        // const checkedToggles = [];
-        //
-        // for (let i = 0; i < toggles.length; i++) {
-        //     if (toggles[i].checked) {
-        //         checkedToggles.push(toggles[i].value);
-        //     }
-        // }
-        //
-        // document.querySelector("#pickedTimelinesPost").body = { pickedTimelines: checkedToggles };
-        // document.querySelector("#pickedTimelinesPost").generateRequest();
         console.log(this.pickedTimelines);
     }
 
@@ -37,13 +57,6 @@ class timelinePicker {
         // Get data from ajax response
         this.timelines = event.detail.response.cameraTimelines;
     }
-
-    // handlePickedTimelinesResponse(event) {
-    //     if (event.detail.response.success) {
-    //         window.location.href = "/timeline";
-    //     }
-    // }
 }
 // eslint-disable-next-line
 Polymer(timelinePicker);
-

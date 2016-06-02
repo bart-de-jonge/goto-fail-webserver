@@ -3,8 +3,9 @@
 <link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-
-
+<link rel="import" href="../elements/gotofail-togglebutton.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <dom-module id="timeline-picker">
     // Template
     <template>
@@ -50,12 +51,19 @@
             <!--content-type="application/json"-->
             <!--on-response="handlePickedTimelinesResponse"></iron-ajax>-->
 
-                <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat">
+        <paper-tabs selected="0" on-click="paperTabsClicked" id="userTypeTabs">
+            <paper-tab>Camera operator</paper-tab>
+            <paper-tab>Shotcaller</paper-tab>
+            <paper-tab>Director</paper-tab>
+        </paper-tabs>
+
+        <div id="toggles">
+                <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
                     <div>
-                    <paper-toggle-button value="{{index}}" checked="{{computeChecked(index)}}" observe="hack">{{item.name}}</paper-toggle-button>
+                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}"></gotofail-togglebutton>
                         </div>
                 </template>
-
+        </div>
         <paper-button on-click="buttonClicked">Continue</paper-button>
 
     </template>
