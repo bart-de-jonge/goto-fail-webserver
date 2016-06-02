@@ -18,12 +18,12 @@
             paper-card {
                 height: 100%;
                 width: 100%;
-                border-bottom: 6px solid black;
+                border-bottom: 6px solid #E53935;
                 background-color: white;
                 --paper-card-header-color: white;
                 --paper-card-header-text: {
                     font-size: medium;
-                    background-color: black;
+                    background-color: #F44336;
                 };
                 overflow: hidden;
             }
@@ -50,7 +50,7 @@
 
         <paper-card onclick="toast1.open()"
                     class="dropdown-trigger"
-                    elevation="3"
+                    elevation="2"
                     heading="{{block_data.name}}"
                     style="visibility: {{block_data.visible}};">
             <div class="card-content card-content-deep">
