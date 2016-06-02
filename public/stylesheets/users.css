@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(240,240,240);
+}
+
+paper-toolbar {
+    background-color: black !important;
+    color: white !important;
+}
+
+#drawer {
+    z-index: 4;
+}
+
+#scrim {
+    z-index: 4 !important;
+}

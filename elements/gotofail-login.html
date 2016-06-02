@@ -6,6 +6,8 @@
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../elements/timeline-picker.html">
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 
 <dom-module id="gotofail-login">
@@ -18,12 +20,23 @@
             }
 
             paper-card {
-                background-color: #00B7FF;
-                padding: 20px;
-                font-weight: bolder;
-                font-size: 1.5em;
+                background-color: white;
+                margin: 24px;
+                width: auto;
+                height: auto;
+                --paper-card-header-color: white;
+                --paper-card-header-text: {
+                    font-size: medium;
+                    background-color: black;
+                };
+            }
+
+            /*paper-card#left {*/
+                /*margin-right: 0px;*/
+            /*}*/
+
+            paper-card#right {
                 width: 100%;
-                max-width: 1000px;
             }
 
             paper-listbox {
@@ -32,23 +45,23 @@
             }
 
             paper-listbox {
-                border-radius: 10px;
                 overflow: hidden;
                 background-color: white;
+                width: 100%;
             }
 
             paper-item {
-                background-color: lightgrey;
-                border: 1px solid darkgrey;
+                /*background-color: lightgrey;*/
+                /*border: 1px solid darkgrey;*/
             }
 
             paper-item:hover {
-                background-color: darkgrey;
+                background-color: rgb(245,245,245);
                 cursor: pointer;
             }
 
             paper-item.iron-selected {
-                background-color: black;
+                background-color: rgb(245,245,245);
             }
 
             paper-fab#add-fab {
@@ -59,15 +72,34 @@
                 margin-top: 30px;
             }
 
-            paper-fab.remove-fab {
-                background-color: darkred;
-                width: 7px;
-                height: 7px;
+            paper-button#add-button {
+                color: rgba(0,0,0,0.6);
+                /*background-color: darkgreen;*/
+                /*margin: 0 auto;*/
+                /*position: relative;*/
+                /*right: 28px;*/
+                /*margin-top: 30px;*/
+            }
+
+            paper-button.remove-button {
+                color: black;
                 visibility: hidden;
+            }
+            
+            paper-item:hover .remove-button {
+                visibility: visible;
             }
             
             paper-item:hover .remove-fab {
                 visibility: visible;
+            }
+
+            .horizontal-separator {
+                background-color: black;
+                height: 2px;
+                margin: auto;
+                opacity: 0.1;
+                width: 100%;
             }
 
         </style>
@@ -85,21 +117,30 @@
                 content-type="application/json"
                 on-response="handlePickedUserResponse"></iron-ajax>
 
-        <paper-card heading="Please select your account" elevation="5">
-            <div class="card-content layout horizontal">
-                <div class="flex listboxWrapper">
-                <paper-listbox on-mouseout="listboxMouseOut">
-                    <template is="dom-repeat" items="{{users}}">
-                        <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
-                            <paper-fab class="remove-fab" icon="remove"></paper-fab></paper-item>
-                    </template>
-                </paper-listbox>
+        <div class="layout horizontal">
 
-                    <paper-fab id="add-fab" icon="add"></paper-fab>
+            <paper-card id="left" heading="Please select your account" elevation="3">
+                <div class="card-content">
+                    <paper-listbox on-mouseout="listboxMouseOut">
+                        <template is="dom-repeat" items="{{users}}">
+                            <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
+                                <paper-ripple></paper-ripple>
+                                <paper-button class="remove-button">remove user</paper-button>
+                            </paper-item>
+                        </template>
+                    </paper-listbox>
                 </div>
+                <div class="horizontal-separator"></div>
+                <div class="card-content">
+                    <paper-button id="add-button">Add user</paper-button>
+                </div>
+            </paper-card>
+
+            <paper-card id="right" heading="Account information" elevation="3">
                 <timeline-picker id="picker" class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
-            </div>
-        </paper-card>
+            </paper-card>
+
+        </div>
 
     </template>
     <script>

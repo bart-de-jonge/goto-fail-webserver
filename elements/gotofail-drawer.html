@@ -33,13 +33,14 @@
                 color: rgba(0,0,0,0.6);
             }
 
-            .item-selected-style {
-                color: black;
-                background-color: rgb(235,235,235);
-            }
+            /*.item-selected-style {*/
+                /*color: black;*/
+                /*background-color: rgb(235,235,235);*/
+            /*}*/
 
             .text-style {
                 text-decoration:none;
+                text-underline: none;
                 font-size: small;
                 font-weight: bold;
                 vertical-align: middle;
@@ -59,19 +60,19 @@
         </div>
 
         <paper-listbox>
-            <a tabindex="-1"> <paper-item  class="item-style">
+            <a href="/" tabindex="-1" style="text-decoration:none"> <paper-item  class="item-style">
                 <paper-ripple></paper-ripple>
                 <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
                 <span class="text-style" style="padding-left: 10px;">User selection</span>
             </paper-item> </a>
 
-            <a tabindex="-1"> <paper-item class="item-style item-selected-style">
+            <a href="/timeline" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
                 <paper-ripple></paper-ripple>
                 <iron-icon class="icon-style" icon="image:camera"></iron-icon>
                 <span class="text-style" style="padding-left: 10px;">Timeline view</span>
             </paper-item> </a>
 
-            <a tabindex="-1"> <paper-item class="item-style">
+            <a href="/shot-caller" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
                 <paper-ripple></paper-ripple>
                 <iron-icon class="icon-style" icon="image:timer"></iron-icon>
                 <span class="text-style" style="padding-left: 10px;">Shotcount view</span>
