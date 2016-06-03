@@ -8,6 +8,8 @@
                 padding: 0px 20px;
                 margin: 0px 0px;
                 color: black;
+                text-align: center;
+                padding: 5px 0px;
             }
 
             paper-card {
@@ -34,10 +36,8 @@
 
         </style>
 
-        <paper-card class="timeline-header-content" elevation="5">
-            <p class="header-description">{{timeline_data.description}}</p>
-            <p class="header-title">{{timeline_data.name}}</p>
-        </paper-card>
+        <p class="header-description">{{timeline_data.description}}</p>
+        <p class="header-title">{{timeline_data.name}}</p>
 
     </template>
     <script>

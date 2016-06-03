@@ -7,19 +7,13 @@
             :host {
                 margin-left: 1px;
                 margin-right: 1px;
-            }
-
-            paper-material {
-                padding: 10px;
+                margin: 24px 0px;
+                padding: 0px 4px;
             }
 
             table, tr {
                 height: 100%;
                 width: 100%;
-            }
-
-            paper-material > div {
-                box-sizing: border-box;
             }
         </style>
 
@@ -28,13 +22,6 @@
                 <timeline-block block_data="{{item}}"></timeline-block>
                 </div>
         </template>
-        ul
-            <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
-                <div style$="height:{{item.pixelLength}}px;">
-                    <timeline-block block_data="{{item}}"></timeline-block>
-                    </div>
-            </template>
-        </paper-material>
     </template>
     <script>
     (function() {
