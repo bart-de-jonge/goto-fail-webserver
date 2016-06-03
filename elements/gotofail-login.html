@@ -24,10 +24,13 @@
                 margin: 24px;
                 width: auto;
                 height: auto;
+                --paper-card-header: {
+                    border-top: 6px solid #303F9F;
+                };
                 --paper-card-header-color: white;
                 --paper-card-header-text: {
                     font-size: medium;
-                    background-color: #F44336;
+                    background-color: #3F51B5;
                 };
                 display: flex;
                 flex-direction: column;
@@ -63,11 +66,11 @@
             }
 
             paper-button#add-button {
-                color: #FF5252;
+                color: #FFC107;
             }
 
             paper-button.remove-button {
-                color: #FF5252;
+                color: #FFC107;
                 font-size: smaller;
                 visibility: hidden;
             }
@@ -78,10 +81,14 @@
 
             .horizontal-separator {
                 background-color: black;
-                height: 2px;
+                height: 1px;
                 margin: auto;
                 opacity: 0.1;
                 width: 100%;
+            }
+
+            .shadowed {
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.5);
             }
 
         </style>
@@ -101,12 +108,12 @@
 
         <div class="layout horizontal">
 
-            <paper-card id="left" heading="Please select your account" elevation="2">
-                <div class="card-content">
+            <paper-card id="left" heading="Please select your account" elevation="1">
+                <div class="card-content shadowed">
                     <paper-listbox on-mouseout="listboxMouseOut">
                         <template is="dom-repeat" items="{{users}}">
                             <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
-                                <paper-ripple style="color: #EF5350;"></paper-ripple>
+                                <paper-ripple></paper-ripple>
                                 <paper-button class="remove-button">remove user</paper-button>
                             </paper-item>
                         </template>
@@ -119,7 +126,7 @@
                 </div>
             </paper-card>
 
-            <paper-card id="right" heading="Account information" elevation="2">
+            <paper-card id="right" heading="Account information" elevation="1">
                 <timeline-picker id="picker" class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
             </paper-card>
 

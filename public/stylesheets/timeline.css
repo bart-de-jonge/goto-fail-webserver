@@ -10,7 +10,7 @@ html, body {
 }
 
 paper-toolbar {
-    background-color: #F44336 !important;
+    background-color: #3F51B5 !important;
     color: white !important;
     box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
 }
@@ -24,15 +24,15 @@ paper-toolbar {
 }
 
 #bottom-indicator {
-    background-color: #F44336;
+    background-color: #3F51B5;
     text-align: center;
     vertical-align: middle;
     font-size: large;
-    font-weight: lighter;
+    font-weight: 100;
     color: white;
     line-height: 40px;
     height: 40px;
     width: 100%;
     margin: auto;
-    box-shadow: 0px -2px 5px rgba(0,0,0,0.4);
+    box-shadow: 0px -2px 5px rgba(0,0,0,0.3);
 }
