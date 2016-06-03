@@ -80,7 +80,7 @@ class timelineGrid {
             },
         };
 
-        this.prevTop = 62;
+        this.prevTop = 22;
     }
 
     handleResponse(event) {
@@ -135,7 +135,7 @@ class timelineGrid {
     }
 
     _countChanged(newCount) {
-        if (newCount > 0) {
+        if (newCount >= 0) {
             // eslint-disable-next-line no-undef
             const timeDiv = Polymer.dom(this.root).querySelector("div.timeline-grid");
             // eslint-disable-next-line no-undef

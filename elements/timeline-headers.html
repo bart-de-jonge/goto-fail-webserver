@@ -10,14 +10,21 @@
         <style>
             :host {
                 display: block;
-                position: fixed;
                 width: 100%;
                 z-index: 4;
             }
 
             .timelines {
-                margin: 0 28px;
+                margin: 0 24px;
             }
+
+            .timeline-separator {
+                background-color: black;
+                opacity: 0.1;
+                margin: 0px 4px;
+                width: 2px;
+            }
+
         </style>
 
         <iron-ajax
@@ -29,8 +36,10 @@
         </iron-ajax>
 
         <div class="layout horizontal timelines">
+            <div class="timeline-separator"></div>
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
                 <timeline-header timeline_data="{{item}}" class="flex"></timeline-header>
+                <div class="timeline-separator"></div>
             </template>
         </div>
     </template>
