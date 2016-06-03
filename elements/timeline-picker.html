@@ -38,9 +38,6 @@
                 background-color: #3F51B5;
                 color: white;
                 --paper-tabs-selection-bar-color: #FFC107;
-                /*--paper-tabs-selection-bar: {*/
-                    /*height: 3px;*/
-                /*};*/
             }
 
             paper-tab {
@@ -48,7 +45,6 @@
             }
 
             paper-input {
-                /*color: #448aff;*/
                 --paper-input-container-color: rgba(0,0,0,0.4);
             }
 
@@ -83,7 +79,6 @@
         <div class="horizontal-separator"></div>
 
         <div class="card-content">
-            <!--<paper-input label="Account name"></paper-input>-->
             <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
             <div id="toggles" class="layout horizontal flex">
                 <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">

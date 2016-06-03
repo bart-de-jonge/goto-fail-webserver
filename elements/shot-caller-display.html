@@ -26,12 +26,13 @@
 
         <paper-card>
             <div class="card-content">
-                <div class="card-header">{{ currentCount }}</div>
-                <div class="card-actions">
-                    <paper-button on-tap="handleAdvanceTap">Advance Count</paper-button>
-                </div>
+                <paper-button on-tap="handleAdvanceTap">Advance Count</paper-button>
+                <span class="card-header">{{ currentCount }}</span>
             </div>
         </paper-card>
+
+
+
         <shot-caller-shot-card shot-type="Current" shot="{{ currentShot }}"></shot-caller-shot-card>
         <shot-caller-shot-card shot-type="Next" shot="{{ nextShot }}"></shot-caller-shot-card>
     </template>

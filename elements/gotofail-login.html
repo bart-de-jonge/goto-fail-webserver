@@ -109,7 +109,8 @@
         <div class="layout horizontal">
 
             <paper-card id="left" heading="Please select your account" elevation="1">
-                <div class="card-content shadowed">
+                <div class="shadowed" style="flex: 1;"></div>
+                <div class="card-content">
                     <paper-listbox on-mouseout="listboxMouseOut">
                         <template is="dom-repeat" items="{{users}}">
                             <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>

@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    background-color: rgb(240,240,240);
+}
+
+paper-toolbar {
+    background-color: #3F51B5 !important;
+    color: white !important;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
+}
+
+#drawer {
+    z-index: 4;
+}
+
+#scrim {
+    z-index: 4 !important;
+}
