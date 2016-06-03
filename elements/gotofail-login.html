@@ -184,10 +184,6 @@
             }
 
             onListItemTab() {
-//                const tabs = document.querySelectorAll("paper-tab");
-//                Array.from(tabs).forEach(function(tab) {
-//                    tab.disabled = false;
-//                });
                 this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
                 document.querySelector("#continue_button").disabled = false;
             }
