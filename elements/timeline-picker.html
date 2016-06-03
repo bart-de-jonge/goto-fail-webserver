@@ -6,6 +6,7 @@
 <link rel="import" href="../elements/gotofail-togglebutton.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <dom-module id="timeline-picker">
     // Template
@@ -46,6 +47,11 @@
                 --paper-tab-ink: #448AFF;
             }
 
+            paper-input {
+                /*color: #448aff;*/
+                --paper-input-container-color: rgba(0,0,0,0.4);
+            }
+
             .content-header {
                 color: gray;
             }
@@ -71,7 +77,14 @@
         </paper-tabs>
 
         <div class="card-content shadowed">
-            <div class="card-content content-header"> Active camera timelines</div>
+            <paper-input label="User name:"></paper-input>
+        </div>
+
+        <div class="horizontal-separator"></div>
+
+        <div class="card-content">
+            <!--<paper-input label="Account name"></paper-input>-->
+            <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
             <div id="toggles" class="layout horizontal flex">
                 <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
                         <gotofail-togglebutton number="{{index}}" name="{{item.name}}"></gotofail-togglebutton>
