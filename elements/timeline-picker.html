@@ -3,64 +3,102 @@
 <link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-
-
+<link rel="import" href="../elements/gotofail-togglebutton.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <dom-module id="timeline-picker">
     // Template
     <template>
         <style include="iron-flex"></style>
         <style>
-            paper-card {
-                background-color: #00B7FF;
-                padding: 20px;
-                font-weight: bolder;
-                font-size: 1.5em;
-            }
 
-            paper-material > p {
-                margin: 20px auto;
-                text-align: center;
+            :host {
+                display: flex;
+                flex-direction: column;
             }
-
             paper-toggle-button {
                 margin-top: 20px;
             }
 
             paper-button {
-                margin: 30px auto;
-                display: block;
-                width: 200px;
-                background-color: #cb4b16;
-                border-radius: 25px;
+                color: #FFC107;
+            }
+
+            .horizontal-separator {
+                background-color: black;
+                height: 1px;
+                margin: auto;
+                opacity: 0.1;
+                width: 100%;
+            }
+
+            paper-tabs {
+                background-color: #3F51B5;
+                color: white;
+                --paper-tabs-selection-bar-color: #FFC107;
+            }
+
+            paper-tab {
+                --paper-tab-ink: #448AFF;
+            }
+
+            paper-input {
+                --paper-input-container-color: rgba(0,0,0,0.4);
+            }
+
+            .content-header {
+                color: gray;
+            }
+
+            .shadowed {
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.5);
             }
 
         </style>
+
         <iron-ajax
                 auto
                 url="/timeline/timeline-data"
                 handle-as="json"
                 on-response="handleResponse"
                 id="ajax-timeline-data"></iron-ajax>
-
         <iron-ajax
-            id="pickedTimelinesPost"
-            url="/timeline/picked-timelines"
-            handle-as="json"
-            method = "POST"
-            content-type="application/json"
-            on-response="handlePickedTimelinesResponse"></iron-ajax>
+                id="pickedUserPost"
+                url="/picked-user"
+                handle-as="json"
+                method = "POST"
+                content-type="application/json"
+                on-response="handlePickedUserResponse"></iron-ajax>
 
-        <paper-card heading="Please specify which timelines you want to control" elevation="5">
-            <div class="card-content">
-                <template is="dom-repeat" items="{{timelines}}">
-                    <div>
-                    <paper-toggle-button value="{{index}}">{{item.name}}</paper-toggle-button>
-                        </div>
+        <paper-tabs on-click="paperTabsClicked" id="userTypeTabs">
+            <paper-tab>Camera operator</paper-tab>
+            <paper-tab>Shotcaller</paper-tab>
+            <paper-tab>Director</paper-tab>
+        </paper-tabs>
+
+        <div class="card-content shadowed">
+            <paper-input label="User name:"></paper-input>
+        </div>
+
+        <div class="horizontal-separator"></div>
+
+        <div class="card-content">
+            <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
+            <div id="toggles" class="layout horizontal flex">
+                <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
+                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}" disabled></gotofail-togglebutton>
                 </template>
             </div>
+        </div>
 
+        <div style="flex: 1;"></div>
+        <div class="horizontal-separator"></div>
+
+        <div class="card-content">
             <paper-button on-click="buttonClicked">Continue</paper-button>
-        </paper-card>
+        </div>
 
     </template>
 

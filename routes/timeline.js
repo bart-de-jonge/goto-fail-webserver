@@ -1,24 +1,21 @@
 import express from "express";
-import XMLHelper from "../objects/XMLHelper";
+import ProjectManager from "../objects/ProjectManager";
 const router = new express.Router();
 
 // Get timelines from xml
-const getTimelines = function getTimelines(pickedTimelines, filtered, callback) {
-    // Dummyfile Todo: replace with dyn0amic
-    const xmlHelper = new XMLHelper();
-    function waitForXML() {
-        if (!xmlHelper.initialized) {
-            setTimeout(waitForXML, 10);
-        } else {
-            const data = xmlHelper.data;
-            if (filtered && typeof pickedTimelines !== "undefined") {
-                callback(xmlHelper.filterTimelines(pickedTimelines, data));
+const getTimelines = function getTimelines(user, filtered, callback) {
+    ProjectManager.waitForXML((projectManager) => {
+        const data = projectManager.data;
+        if (data) {
+            if (filtered && typeof user !== "undefined") {
+                callback(projectManager.filterTimelines(data.users[user].pickedTimelines, data.cameraTimelines));
             } else {
-                callback(xmlHelper.data);
+                callback(projectManager.data.cameraTimelines);
             }
+        } else {
+            callback(null, true);
         }
-    }
-    waitForXML();
+    });
 };
 
 router.get("/timeline-data", (req, res) => {
@@ -39,7 +36,7 @@ router.get("/timeline-data", (req, res) => {
 });
 
 router.get("/timeline-filtered-data", (req, res) => {
-    getTimelines(req.session.pickedTimelines, true, (data, err) => {
+    getTimelines(req.session.pickedUser, true, (data, err) => {
         if (err) {
             res.json({
                 succes: false,

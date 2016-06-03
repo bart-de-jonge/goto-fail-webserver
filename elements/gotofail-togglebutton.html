@@ -1,0 +1,69 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+
+<dom-module id="gotofail-togglebutton">
+    // Template
+    <template>
+        <style>
+            :host {
+                margin: 5px;
+                flex: 1;
+            }
+            paper-toggle-button {
+                --paper-toggle-button-checked-bar-color:  #FFC107;
+                --paper-toggle-button-checked-button-color:  #FFC107;);
+                --paper-toggle-button-checked-ink-color: #FFC107;
+                --paper-toggle-button-unchecked-bar-color:  rgba(0,0,0,0.3);
+                --paper-toggle-button-unchecked-ink-color: #FFC107;
+                text-align: center;
+                vertical-align: middle;
+            }
+        </style>
+
+        <paper-toggle-button id="toggle_button" value="{{number}}" checked="{{checked}}" disabled="{{disabled}}">
+            {{name}}
+        </paper-toggle-button>
+
+    </template>
+
+    // Scripts
+    <script>
+        class gotofailToggleButton {
+            beforeRegister() {
+                this.is = "gotofail-togglebutton";
+
+                this.properties = {
+                    name: String,
+                    number: Number,
+                    checked: Boolean,
+                    disabled: Boolean,
+                    callback: Function,
+                }
+            }
+
+
+            ready() {
+                this.addEventListener("change", function (e) {
+                    const id = document.querySelector("paper-item.iron-selected").id;
+                    const login = document.querySelector("gotofail-login");
+                    const pickedTimelines = login.getUsers()[id].pickedTimelines;
+                    if (e.target.checked) {
+                        pickedTimelines.push(e.target.value);
+                    } else {
+                        const index = pickedTimelines.indexOf(e.target.value);
+                        if (index > -1) {
+                            pickedTimelines.splice(index, 1);
+                        }
+                    }
+                    login.updateUsers();
+                });
+            }
+        }
+        // eslint-disable-next-line
+        Polymer(gotofailToggleButton);
+    </script>
+</dom-module>

@@ -3,16 +3,19 @@
 <link rel="import" href="timeline-header.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
-<dom-module id="timeline-grid">
+<dom-module id="timeline-headers">
     // Template
     <template>
         <style include="iron-flex"></style>
         <style>
             :host {
                 display: block;
-                --top-movement: 102px;
-                position: relative;
-                margin: 0px 24px;
+                width: 100%;
+                z-index: 4;
+            }
+
+            .timelines {
+                margin: 0 24px;
             }
 
             .timeline-separator {
@@ -22,34 +25,44 @@
                 width: 2px;
             }
 
-            #scrolling-box {
-                background: red;
-                width: 100%;
-                height: 3px;
-                position: absolute;
-                top: 62px;
-                z-index: 2;
-            }
-
         </style>
+
         <iron-ajax
                 auto
+                id="ajaxTimelineData"
                 url="/timeline/timeline-filtered-data"
                 handle-as="json"
-                on-response="handleResponse"
-                id="ajax-timeline-data"></iron-ajax>
+                on-response="handleResponse">
+        </iron-ajax>
 
-        <div class="layout horizontal">
-            <span id="scrolling-box"></span>
+        <div class="layout horizontal timelines">
             <div class="timeline-separator"></div>
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
-                <timeline-element timeline_data="{{item}}" class="flex"></timeline-element>
+                <timeline-header timeline_data="{{item}}" class="flex"></timeline-header>
                 <div class="timeline-separator"></div>
             </template>
         </div>
     </template>
 
-    // Scripts
-    <script src="../bower_components/velocity/velocity.js"></script>
-    <script src="timeline-grid.js"></script>
+    <script>
+        (function() {
+            'use strict';
+            class timelineHeaders {
+                beforeRegister() {
+                    this.is = 'timeline-headers';
+
+                    this.properties = {
+                        name: String,
+                        timeline_data: Object
+                    };
+                }
+
+                handleResponse(event) {
+                    this.timeline_data = event.detail.response;
+                }
+            }
+            Polymer(timelineHeaders);
+        })();
+    </script>
+
 </dom-module>
