@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     socket.on("next_count", (countData) => {
         // TODO: Add Data Manipulation Here
-        console.log("Update the count");
 
         document.getElementsByTagName("timeline-grid")[0]
             .setAttribute("current-count", countData.newCount);
