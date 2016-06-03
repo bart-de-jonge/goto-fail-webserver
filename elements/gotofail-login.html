@@ -116,7 +116,7 @@
             /*
              * Method helper for when a list item (user) is clicked
              */
-            _onListItemTab(e) {
+            onListItemTab(e) {
                 // Note: this code is commented on purpose, I need it in the future (next PR)
 //                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id}
 //                document.querySelector("#pickedUserPost").generateRequest();
@@ -127,21 +127,22 @@
             /*
              * Helper method for when the mouse is hovering over a user
              */
-            _onListItemHover(e) {
+            onListItemHover(e) {
                 this.$.picker.setUser(this.users[Number(e.target.id)]);
             }
 
             /*
              * Helper method for handling ajax response when getting users
              */
-            _handleUsersResponse(event) {
+            handleUsersResponse(event) {
                 this.users = event.detail.response.users;
+                console.log(this.users);
             }
 
             /*
              * Helper method for when the mouse leaves the user list
              */
-            _listboxMouseOut() {
+            listboxMouseOut() {
                 if(document.querySelector("paper-item.iron-selected") === null) {
                     this.$.picker.setUser({id: 0, name:"", pickedTimelines:[], jobType:0});
                 } else {
@@ -152,7 +153,7 @@
             /*
              * Helper method to handle response when picked user is posted
              */
-            _handlePickedUserResponse(event) {
+            handlePickedUserResponse(event) {
                 if (event.detail.response.success) {
                     window.location.href = "/timeline";
                 }

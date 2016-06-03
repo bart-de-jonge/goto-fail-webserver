@@ -1,5 +1,5 @@
 import express from "express";
-import User from "../objects/User";
+import ProjectManager from "../objects/ProjectManager";
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.post("/picked-user", (req, res) => {
@@ -10,11 +10,12 @@ router.post("/picked-user", (req, res) => {
 });
 
 router.get("/get-users", (req, res) => {
-    res.json({ users: [
-        new User(0, "Jan", [0, 1], 0),
-        new User(1, "Klaas", [0, 2], 0),
-        new User(2, "Piet", [], 1),
-    ] });
+    ProjectManager.waitForXML((projectManager) => {
+        const data = projectManager.data;
+        res.json({
+            users: data.users,
+        });
+    });
 });
 
 module.exports = router;
