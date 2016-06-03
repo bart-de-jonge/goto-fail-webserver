@@ -90,7 +90,7 @@
                 <div class="flex listboxWrapper">
                 <paper-listbox on-mouseout="listboxMouseOut">
                     <template is="dom-repeat" items="{{users}}">
-                        <paper-item id="{{item.id}}" user-id="{{item.id}}" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
+                        <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
                             <paper-fab class="remove-fab" icon="remove"></paper-fab></paper-item>
                     </template>
                 </paper-listbox>
@@ -149,6 +149,15 @@
                 } else {
                     this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
                 }
+            }
+
+            onListItemTab() {
+//                const tabs = document.querySelectorAll("paper-tab");
+//                Array.from(tabs).forEach(function(tab) {
+//                    tab.disabled = false;
+//                });
+                this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
+                document.querySelector("#continue_button").disabled = false;
             }
         }
         // eslint-disable-next-line

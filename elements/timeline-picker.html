@@ -52,7 +52,7 @@
                 on-response="handlePickedUserResponse"></iron-ajax>
 
         <p>Job type:</p>
-        <paper-tabs selected="0" on-click="paperTabsClicked" id="userTypeTabs">
+        <paper-tabs on-click="paperTabsClicked" id="userTypeTabs">
             <paper-tab>Camera operator</paper-tab>
             <paper-tab>Shotcaller</paper-tab>
             <paper-tab>Director</paper-tab>
@@ -62,11 +62,11 @@
         <div id="toggles">
                 <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
                     <div>
-                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}" callback="toggleButtonClicked"></gotofail-togglebutton>
+                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}" callback="toggleButtonClicked" disabled></gotofail-togglebutton>
                         </div>
                 </template>
         </div>
-        <paper-button on-click="buttonClicked" raised>Continue</paper-button>
+        <paper-button id="continue_button" on-click="buttonClicked" raised disabled>Continue</paper-button>
             </div>
 
         </paper-card>

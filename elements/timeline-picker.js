@@ -64,6 +64,8 @@ class timelinePicker {
      * Helper method to handle response when picked user is posted
      */
     handlePickedUserResponse(event) {
+        // TODO: redirect to right page for director and shotcallers
+        
         if (event.detail.response.success) {
             window.location.href = "/timeline";
         }
