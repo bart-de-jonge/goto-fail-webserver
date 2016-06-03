@@ -55,7 +55,7 @@
         <div id="toggles">
                 <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
                     <div>
-                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}"></gotofail-togglebutton>
+                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}" callback="toggleButtonClicked"></gotofail-togglebutton>
                         </div>
                 </template>
         </div>

@@ -24,7 +24,6 @@ class timelinePicker {
         }
 
         document.querySelector("paper-tabs").select(this.jobType);
-
         this.paperTabsClicked();
     }
 
@@ -37,10 +36,8 @@ class timelinePicker {
     }
 
     paperTabsClicked() {
-        console.log(this.$.userTypeTabs.selected);
         if (this.$.userTypeTabs.selected !== 0) {
             const toggles = document.querySelectorAll("#toggles gotofail-togglebutton");
-            console.log(toggles);
             for (let i = 0; i < toggles.length; i++) {
                 toggles[i].disabled = true;
             }

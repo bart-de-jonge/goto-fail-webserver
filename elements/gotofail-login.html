@@ -84,6 +84,13 @@
                 method = "POST"
                 content-type="application/json"
                 on-response="handlePickedUserResponse"></iron-ajax>
+        <iron-ajax
+                id="updateUsersPost"
+                url="/update-users"
+                handle-as="json"
+                method = "POST"
+                content-type="application/json"
+                on-response="handleUpdateUsersResponse"></iron-ajax>
 
         <paper-card heading="Please select your account" elevation="5">
             <div class="card-content layout horizontal">
@@ -113,6 +120,19 @@
                 };
             }
 
+            getUsers() {
+                return this.users;
+            }
+
+            updateUsers() {
+                document.querySelector("#updateUsersPost").body = {users: this.users};
+                document.querySelector("#updateUsersPost").generateRequest();
+            }
+
+            handleUpdateUsersResponse(event) {
+                console.log(event.detail.response.success);
+            }
+
             /*
              * Method helper for when a list item (user) is clicked
              */
@@ -121,7 +141,7 @@
 //                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id}
 //                document.querySelector("#pickedUserPost").generateRequest();
                 const selectedUser = e.target;
-                console.log(selectedUser);
+//                console.log(selectedUser);
             }
 
             /*
@@ -136,7 +156,6 @@
              */
             handleUsersResponse(event) {
                 this.users = event.detail.response.users;
-                console.log(this.users);
             }
 
             /*

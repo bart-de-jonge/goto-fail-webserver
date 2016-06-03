@@ -23,15 +23,30 @@
                 this.is = "gotofail-togglebutton";
 
                 this.properties = {
-                    pickedTimelines: {
-                        type: Array,
-                        value: []
-                    },
                     name: String,
                     number: Number,
                     checked: Boolean,
-                    disabled: Boolean
+                    disabled: Boolean,
+                    callback: Function,
                 }
+            }
+
+
+            ready() {
+                this.addEventListener("change", function (e) {
+                    const id = document.querySelector("paper-item.iron-selected").id;
+                    const login = document.querySelector("gotofail-login");
+                    const pickedTimelines = login.getUsers()[id].pickedTimelines;
+                    if (e.target.checked) {
+                        pickedTimelines.push(e.target.value);
+                    } else {
+                        const index = pickedTimelines.indexOf(e.target.value);
+                        if (index > -1) {
+                            pickedTimelines.splice(index, 1);
+                        }
+                    }
+                    login.updateUsers();
+                });
             }
         }
         // eslint-disable-next-line
