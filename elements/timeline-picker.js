@@ -24,7 +24,6 @@ class timelinePicker {
         }
 
         document.querySelector("paper-tabs").select(this.jobType);
-
         this.paperTabsClicked();
     }
 
@@ -37,10 +36,8 @@ class timelinePicker {
     }
 
     paperTabsClicked() {
-        console.log(this.$.userTypeTabs.selected);
         if (this.$.userTypeTabs.selected !== 0) {
             const toggles = document.querySelectorAll("#toggles gotofail-togglebutton");
-            console.log(toggles);
             for (let i = 0; i < toggles.length; i++) {
                 toggles[i].disabled = true;
             }
@@ -53,12 +50,25 @@ class timelinePicker {
     }
 
     buttonClicked() {
-        console.log(this.pickedTimelines);
+        const id = document.querySelector("paper-item.iron-selected").id;
+        document.querySelector("#pickedUserPost").body = { pickedUser: id };
+        document.querySelector("#pickedUserPost").generateRequest();
     }
 
     handleResponse(event) {
         // Get data from ajax response
         this.timelines = event.detail.response.cameraTimelines;
+    }
+
+    /*
+     * Helper method to handle response when picked user is posted
+     */
+    handlePickedUserResponse(event) {
+        // TODO: redirect to right page for director and shotcallers
+        
+        if (event.detail.response.success) {
+            window.location.href = "/timeline";
+        }
     }
 }
 // eslint-disable-next-line

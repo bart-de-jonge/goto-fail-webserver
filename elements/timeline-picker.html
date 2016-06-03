@@ -63,10 +63,16 @@
                 url="/timeline/timeline-data"
                 handle-as="json"
                 on-response="handleResponse"
-                id="ajax-timeline-data">
-        </iron-ajax>
+                id="ajax-timeline-data"></iron-ajax>
+        <iron-ajax
+                id="pickedUserPost"
+                url="/picked-user"
+                handle-as="json"
+                method = "POST"
+                content-type="application/json"
+                on-response="handlePickedUserResponse"></iron-ajax>
 
-        <paper-tabs selected="0" on-click="paperTabsClicked" id="userTypeTabs">
+        <paper-tabs on-click="paperTabsClicked" id="userTypeTabs">
             <paper-tab>Camera operator</paper-tab>
             <paper-tab>Shotcaller</paper-tab>
             <paper-tab>Director</paper-tab>
@@ -82,7 +88,7 @@
             <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
             <div id="toggles" class="layout horizontal flex">
                 <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
-                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}"></gotofail-togglebutton>
+                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}" disabled></gotofail-togglebutton>
                 </template>
             </div>
         </div>

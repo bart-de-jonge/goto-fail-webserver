@@ -99,12 +99,12 @@
                 on-response="handleUsersResponse"
                 id="ajax-users"></iron-ajax>
         <iron-ajax
-                id="pickedUserPost"
-                url="/picked-user"
+                id="updateUsersPost"
+                url="/update-users"
                 handle-as="json"
                 method = "POST"
                 content-type="application/json"
-                on-response="handlePickedUserResponse"></iron-ajax>
+                on-response="handleUpdateUsersResponse"></iron-ajax>
 
         <div class="layout horizontal">
 
@@ -145,15 +145,17 @@
                 };
             }
 
-            /*
-             * Method helper for when a list item (user) is clicked
-             */
-            onListItemTab(e) {
-                // Note: this code is commented on purpose, I need it in the future (next PR)
-//                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id}
-//                document.querySelector("#pickedUserPost").generateRequest();
-                const selectedUser = e.target;
-                console.log(selectedUser);
+            getUsers() {
+                return this.users;
+            }
+
+            updateUsers() {
+                document.querySelector("#updateUsersPost").body = {users: this.users};
+                document.querySelector("#updateUsersPost").generateRequest();
+            }
+
+            handleUpdateUsersResponse(event) {
+                console.log(event.detail.response.success);
             }
 
             /*
@@ -181,13 +183,9 @@
                 }
             }
 
-            /*
-             * Helper method to handle response when picked user is posted
-             */
-            handlePickedUserResponse(event) {
-                if (event.detail.response.success) {
-                    window.location.href = "/timeline";
-                }
+            onListItemTab() {
+                this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
+                document.querySelector("#continue_button").disabled = false;
             }
         }
         // eslint-disable-next-line

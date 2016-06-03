@@ -10,9 +10,14 @@ class User {
         this.jobType = jobType;
     }
 
-    // static fromXML(XMLObject) {
-    //     // TODO: implement
-    // }
+    static fromXML(XMLObject, id) {
+        const pickedTimelines = [];
+        XMLObject.chosenTimelines[0].chosenTimeline.forEach((numberString) => {
+            pickedTimelines.push(Number(numberString));
+        });
+
+        return new User(id, XMLObject.name[0], pickedTimelines, Number(XMLObject.roleValue[0]));
+    }
 }
 
 export default User;
