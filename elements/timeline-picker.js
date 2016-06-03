@@ -50,12 +50,23 @@ class timelinePicker {
     }
 
     buttonClicked() {
-        console.log(this.pickedTimelines);
+        const id = document.querySelector("paper-item.iron-selected").id;
+        document.querySelector("#pickedUserPost").body = { pickedUser: id };
+        document.querySelector("#pickedUserPost").generateRequest();
     }
 
     handleResponse(event) {
         // Get data from ajax response
         this.timelines = event.detail.response.cameraTimelines;
+    }
+
+    /*
+     * Helper method to handle response when picked user is posted
+     */
+    handlePickedUserResponse(event) {
+        if (event.detail.response.success) {
+            window.location.href = "/timeline";
+        }
     }
 }
 // eslint-disable-next-line

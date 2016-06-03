@@ -78,13 +78,6 @@
                 on-response="handleUsersResponse"
                 id="ajax-users"></iron-ajax>
         <iron-ajax
-                id="pickedUserPost"
-                url="/picked-user"
-                handle-as="json"
-                method = "POST"
-                content-type="application/json"
-                on-response="handlePickedUserResponse"></iron-ajax>
-        <iron-ajax
                 id="updateUsersPost"
                 url="/update-users"
                 handle-as="json"
@@ -97,7 +90,7 @@
                 <div class="flex listboxWrapper">
                 <paper-listbox on-mouseout="listboxMouseOut">
                     <template is="dom-repeat" items="{{users}}">
-                        <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
+                        <paper-item id="{{item.id}}" user-id="{{item.id}}" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
                             <paper-fab class="remove-fab" icon="remove"></paper-fab></paper-item>
                     </template>
                 </paper-listbox>
@@ -134,17 +127,6 @@
             }
 
             /*
-             * Method helper for when a list item (user) is clicked
-             */
-            onListItemTab(e) {
-                // Note: this code is commented on purpose, I need it in the future (next PR)
-//                document.querySelector("#pickedUserPost").body = {pickedUser: e.target.id}
-//                document.querySelector("#pickedUserPost").generateRequest();
-                const selectedUser = e.target;
-//                console.log(selectedUser);
-            }
-
-            /*
              * Helper method for when the mouse is hovering over a user
              */
             onListItemHover(e) {
@@ -166,15 +148,6 @@
                     this.$.picker.setUser({id: 0, name:"", pickedTimelines:[], jobType:0});
                 } else {
                     this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
-                }
-            }
-
-            /*
-             * Helper method to handle response when picked user is posted
-             */
-            handlePickedUserResponse(event) {
-                if (event.detail.response.success) {
-                    window.location.href = "/timeline";
                 }
             }
         }

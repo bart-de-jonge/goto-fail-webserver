@@ -3,12 +3,12 @@ import ProjectManager from "../objects/ProjectManager";
 const router = new express.Router();
 
 // Get timelines from xml
-const getTimelines = function getTimelines(pickedTimelines, filtered, callback) {
+const getTimelines = function getTimelines(user, filtered, callback) {
     ProjectManager.waitForXML((projectManager) => {
         const data = projectManager.data;
         if (data) {
-            if (filtered && typeof pickedTimelines !== "undefined") {
-                callback(projectManager.filterTimelines(pickedTimelines, data.cameraTimelines));
+            if (filtered && typeof user !== "undefined") {
+                callback(projectManager.filterTimelines(data.users[user].pickedTimelines, data.cameraTimelines));
             } else {
                 callback(projectManager.data.cameraTimelines);
             }
@@ -36,7 +36,7 @@ router.get("/timeline-data", (req, res) => {
 });
 
 router.get("/timeline-filtered-data", (req, res) => {
-    getTimelines(req.session.pickedTimelines, true, (data, err) => {
+    getTimelines(req.session.pickedUser, true, (data, err) => {
         if (err) {
             res.json({
                 succes: false,

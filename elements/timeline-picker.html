@@ -43,6 +43,13 @@
                 handle-as="json"
                 on-response="handleResponse"
                 id="ajax-timeline-data"></iron-ajax>
+        <iron-ajax
+                id="pickedUserPost"
+                url="/picked-user"
+                handle-as="json"
+                method = "POST"
+                content-type="application/json"
+                on-response="handlePickedUserResponse"></iron-ajax>
 
         <p>Job type:</p>
         <paper-tabs selected="0" on-click="paperTabsClicked" id="userTypeTabs">
