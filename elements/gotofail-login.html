@@ -145,7 +145,7 @@
 
         </div>
 
-        <new-user-dialog id="addUserDialog"></new-user-dialog>
+        <new-user-dialog id="addUserDialog" timelines="{{timelines}}"></new-user-dialog>
     </template>
     <script>
         class gotofailLogin {
@@ -155,6 +155,7 @@
                 this.properties = {
                     users: Object,
                     cameras: Array,
+                    timelines: Array,
                 };
             }
 

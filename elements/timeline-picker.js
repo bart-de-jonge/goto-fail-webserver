@@ -4,7 +4,7 @@ class timelinePicker {
 
         this.properties = {
             user: Object,
-            timelines: Object,
+            timelines: Array,
         };
     }
 

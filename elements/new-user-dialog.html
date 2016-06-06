@@ -14,6 +14,7 @@
 <dom-module id="new-user-dialog">
     // Template
     <template>
+        <style include="iron-flex"></style>
         <style>
             .horizontal-separator {
                 background-color: black;
@@ -21,6 +22,19 @@
                 margin: auto;
                 opacity: 0.1;
                 width: 100%;
+            }
+
+            #newUserInput {
+                margin-bottom: 20px;
+            }
+
+            #toggles {
+                display: flex;
+                flex-flow: row wrap;
+            }
+
+            paper-toggle-button {
+                flex-basis: 50%;
             }
         </style>
 
@@ -61,17 +75,33 @@
                 this.is = "new-user-dialog";
 
                 this.properties = {
-                    timelines =
+                    timelines: Array,
                 };
             }
 
             addUserConfirmButtonTapped() {
+
+                console.log();
+
                 console.log(" add user");
                 if (this.$.newUserInput.value.length === 0) {
                     this.$.newUserInput.invalid = true;
                 } else {
+                    const users = document.querySelector("gotofail-login").users;
+                    const id = users[users.length - 1].id + 1;
+                    const pickedTimelines = [];
                     const name = this.$.newUserInput.value;
-                    const
+                    const jobType = this.$.newUserTabs.selected;
+
+                    Array.from(document.querySelectorAll("paper-toggle-button[checked]")).forEach(function(user) {
+                       pickedTimelines.push(user.value);
+                    });
+
+                    const newUser = {id: id,
+                                    name: name,
+                                    pickedTimelines: pickedTimelines,
+                                    jobType: jobType};
+                    console.log(newUser);
                 }
             }
 
