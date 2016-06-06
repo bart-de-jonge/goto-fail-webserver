@@ -20,7 +20,11 @@ class timelinePicker {
 
         const toggles = document.querySelectorAll("gotofail-togglebutton");
         for (let i = 0; i < toggles.length; i++) {
-            toggles[i].checked = this.computeChecked(i);
+            if (this.jobType === 0) {
+                toggles[i].checked = this.computeChecked(i);
+            } else {
+                toggles[i].checked = false;
+            }
         }
 
         document.querySelector("paper-tabs").select(this.jobType);
