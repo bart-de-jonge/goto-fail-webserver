@@ -18,7 +18,7 @@
 
 <body class ="fit vertical layout">
 
-    <paper-drawer-panel peeking force-narrow left-drawer id="drawer-panel">
+    <paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking left-drawer id="drawer-panel">
 
         <gotofail-drawer drawer id="drawer"></gotofail-drawer>
 
@@ -34,10 +34,7 @@
 
             <div class="fit">
                 <timeline-grid></timeline-grid>
-
-                <!--<paper-toast style="width: 100%; text-align: center;" duration="0" id="timelinetoast">-->
-                    <timeline-toast id="timelinetoastcontent"></timeline-toast>
-                <!--</paper-toast>-->
+                <timeline-toast id="timelinetoastcontent"></timeline-toast>
             </div>
 
             <div id="bottom-indicator">

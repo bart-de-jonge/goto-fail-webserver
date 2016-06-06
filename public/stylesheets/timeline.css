@@ -11,7 +11,6 @@ html, body {
 
 paper-drawer-panel {
     background-color: rgb(240,240,240);
-
 }
 
 paper-toolbar {
@@ -22,10 +21,12 @@ paper-toolbar {
 
 #drawer {
     z-index: 4;
+    box-shadow: 0px 0px 40px rgba(0,0,0,0.3) !important;
 }
 
 #scrim {
     z-index: 4 !important;
+    background-color: transparent !important;
 }
 
 #bottom-indicator {
