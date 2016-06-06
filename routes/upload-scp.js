@@ -21,4 +21,8 @@ router.post("/", multipartMiddleware, (req, res) => {
     }
 });
 
+router.get("/", (req, res) => {
+    res.render("upload");
+});
+
 module.exports = router;
