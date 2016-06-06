@@ -3,40 +3,30 @@ class timelinePicker {
         this.is = "timeline-picker";
 
         this.properties = {
+            user: Object,
             timelines: Object,
-            pickedTimelines: {
-                type: Array,
-            },
         };
     }
 
-    ready() {
-        this.setPickedTimelines([]);
-    }
-
     setUser(user) {
-        this.pickedTimelines = user.pickedTimelines;
-        this.jobType = user.jobType;
+        this.user = user;
 
         const toggles = document.querySelectorAll("gotofail-togglebutton");
         for (let i = 0; i < toggles.length; i++) {
-            if (this.jobType === 0) {
+            if (user.jobType === 0) {
                 toggles[i].checked = this.computeChecked(i);
             } else {
                 toggles[i].checked = false;
             }
         }
 
-        document.querySelector("paper-tabs").select(this.jobType);
+        this.$.nameInput.value = user.name;
+        document.querySelector("paper-tabs").select(this.user.jobType);
         this.paperTabsClicked();
     }
 
-    setPickedTimelines(pickedTimelines) {
-        this.pickedTimelines = pickedTimelines;
-    }
-
     computeChecked(index) {
-        return this.pickedTimelines.indexOf(index) >= 0;
+        return this.user.pickedTimelines.indexOf(index) >= 0;
     }
 
     paperTabsClicked() {
@@ -73,6 +63,11 @@ class timelinePicker {
         if (event.detail.response.success) {
             window.location.href = "/timeline";
         }
+    }
+
+    nameInputChanged(e) {
+        this.user.name = e.target.value;
+        document.querySelector("#gotofailLogin").changeUserName(this.user.id, this.user.name);
     }
 }
 // eslint-disable-next-line

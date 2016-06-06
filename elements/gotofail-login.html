@@ -56,13 +56,17 @@
                 width: 100%;
             }
 
+            paper-item > span {
+                overflow: hidden;
+                white-space: nowrap;
+                -ms-text-overflow: ellipsis;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
             paper-item:hover {
                 background-color: rgb(245,245,245);
                 cursor: pointer;
-            }
-
-            paper-item.iron-selected {
-                background-color: rgb(245,245,245);
             }
 
             paper-button#add-button {
@@ -72,11 +76,11 @@
             paper-button.remove-button {
                 color: #FFC107;
                 font-size: smaller;
-                visibility: hidden;
+                display: none;
             }
             
             paper-item:hover .remove-button {
-                visibility: visible;
+                display: block;
             }
 
             .horizontal-separator {
@@ -112,8 +116,8 @@
                 <div class="shadowed" style="flex: 1;"></div>
                 <div class="card-content">
                     <paper-listbox id="listbox">
-                        <template is="dom-repeat" items="{{users}}">
-                            <paper-item user="{{item.id}}" on-tap="onListItemTap" class="layout horizontal"><div class="flex">{{item.name}}</div>
+                        <template is="dom-repeat" items="{{users}}" id="usersRepeat">
+                            <paper-item user="{{item.id}}" id="paperItem{{item.id}}" on-tap="onListItemTap" class="layout horizontal"><span class="flex">{{item.name}}</span>
                                 <paper-ripple></paper-ripple>
                                 <paper-button class="remove-button">remove user</paper-button>
                             </paper-item>
@@ -168,6 +172,13 @@
             onListItemTap() {
                 this.$.picker.setUser(this.users[Number(document.querySelector("paper-item[focused]").user)]);
                 document.querySelector("#continue_button").disabled = false;
+                document.querySelector("#nameInput").disabled = false;
+            }
+
+            changeUserName(id, name) {
+                this.users[id].name = name;
+                console.log();
+                document.querySelector("#paperItem" + id + " > span").innerHTML = name;
             }
         }
         // eslint-disable-next-line
