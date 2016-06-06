@@ -62,8 +62,12 @@ class ProjectManager {
                 parser.parseString(data, (err, result) => {
                     this.data = {};
 
-                    const users = this.getUsers(result.scriptingProject.users[0].user);
-                    this.data.users = users;
+                    if (typeof result.scriptingProject.users !== "undefined") {
+                        const users = this.getUsers(result.scriptingProject.users[0].user);
+                        this.data.users = users;
+                    } else {
+                        this.data.users = [];
+                    }
 
                     // Read director timeline from xml
                     const directorTimelineXML = result.scriptingProject.directorTimeline[0];
@@ -123,9 +127,11 @@ class ProjectManager {
 
     getUsers(XMLObject) {
         const users = [];
-        XMLObject.forEach((user, index) => {
-            users.push(User.fromXML(user, index));
-        });
+        if (typeof XMLObject !== "undefined") {
+            XMLObject.forEach((user, index) => {
+                users.push(User.fromXML(user, index));
+            });
+        }
         return users;
     }
 
