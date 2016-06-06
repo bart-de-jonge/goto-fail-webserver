@@ -111,9 +111,9 @@
             <paper-card id="left" heading="Please select your account" elevation="1">
                 <div class="shadowed" style="flex: 1;"></div>
                 <div class="card-content">
-                    <paper-listbox on-mouseout="listboxMouseOut">
+                    <paper-listbox id="listbox">
                         <template is="dom-repeat" items="{{users}}">
-                            <paper-item id="{{item.id}}" user-id="{{item.id}}" on-click="onListItemTab" on-mouseover="onListItemHover" class="layout horizontal"><span class="flex">{{item.name}}</span>
+                            <paper-item user="{{item.id}}" on-tap="onListItemTap" class="layout horizontal"><div class="flex">{{item.name}}</div>
                                 <paper-ripple></paper-ripple>
                                 <paper-button class="remove-button">remove user</paper-button>
                             </paper-item>
@@ -159,32 +159,14 @@
             }
 
             /*
-             * Helper method for when the mouse is hovering over a user
-             */
-            onListItemHover(e) {
-                this.$.picker.setUser(this.users[Number(e.target.id)]);
-            }
-
-            /*
              * Helper method for handling ajax response when getting users
              */
             handleUsersResponse(event) {
                 this.users = event.detail.response.users;
             }
 
-            /*
-             * Helper method for when the mouse leaves the user list
-             */
-            listboxMouseOut() {
-                if(document.querySelector("paper-item.iron-selected") === null) {
-                    this.$.picker.setUser({id: 0, name:"", pickedTimelines:[], jobType:0});
-                } else {
-                    this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
-                }
-            }
-
-            onListItemTab() {
-                this.$.picker.setUser(this.users[Number(document.querySelector("paper-item.iron-selected").id)]);
+            onListItemTap() {
+                this.$.picker.setUser(this.users[Number(document.querySelector("paper-item[focused]").user)]);
                 document.querySelector("#continue_button").disabled = false;
             }
         }
