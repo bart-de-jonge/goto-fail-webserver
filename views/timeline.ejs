@@ -6,6 +6,7 @@
     <link rel="import" href="../bower_components/polymer/polymer.html">
     <link rel="import" href="../elements/timeline-grid.html">
     <link rel="import" href="../elements/timeline-headers.html">
+    <link rel="import" href="../elements/timeline-toast.html">
     <link rel="import" href="../elements/gotofail-drawer.html">
     <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
     <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
@@ -32,12 +33,11 @@
             </div>
 
             <div class="fit">
-                <paper-toast style="width: 100%; text-align: center;" duration="0" id="toast1">
-                    <paper-button onclick="toast1.toggle()">
-                        Close me for pete's sake!
-                    </paper-button>
-                </paper-toast>
                 <timeline-grid></timeline-grid>
+
+                <!--<paper-toast style="width: 100%; text-align: center;" duration="0" id="timelinetoast">-->
+                    <timeline-toast id="timelinetoastcontent"></timeline-toast>
+                <!--</paper-toast>-->
             </div>
 
             <div id="bottom-indicator">
