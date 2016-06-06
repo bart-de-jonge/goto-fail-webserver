@@ -19,7 +19,9 @@ router.get("/get-users", (req, res) => {
 });
 
 router.post("/update-users", (req, res) => {
+    console.log("updating users");
     ProjectManager.waitForXML((projectManager) => {
+        console.log("updating users");
         const data = projectManager.data;
         data.users = req.body.users;
         res.json({ success: true });

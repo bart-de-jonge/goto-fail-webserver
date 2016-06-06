@@ -41,9 +41,11 @@ class timelinePicker {
                 toggles[i].disabled = false;
             }
         }
+        document.querySelector("#gotofailLogin").updateUsers();
     }
 
     buttonClicked() {
+        document.querySelector("#gotofailLogin").updateUsers();
         const id = document.querySelector("paper-item.iron-selected").id;
         document.querySelector("#pickedUserPost").body = { pickedUser: id };
         document.querySelector("#pickedUserPost").generateRequest();
@@ -68,6 +70,18 @@ class timelinePicker {
     nameInputChanged(e) {
         this.user.name = e.target.value;
         document.querySelector("#gotofailLogin").changeUserName(this.user.id, this.user.name);
+    }
+
+    onNameInputBlur() {
+        document.querySelector("#gotofailLogin").updateUsers();
+    }
+
+    onNameInputKeypress(e) {
+        const code = e.keyCode;
+        if (code === 13) {
+            // enter pressed
+            document.querySelector("#gotofailLogin").updateUsers();
+        }
     }
 }
 // eslint-disable-next-line

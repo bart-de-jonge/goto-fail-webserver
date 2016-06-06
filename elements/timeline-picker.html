@@ -79,7 +79,7 @@
         </paper-tabs>
 
         <div class="card-content shadowed">
-            <paper-input label="User name:" id="nameInput" on-input="nameInputChanged" disabled></paper-input>
+            <paper-input label="User name:" id="nameInput" on-input="nameInputChanged" disabled on-blur="onNameInputBlur" on-keypress="onNameInputKeypress"></paper-input>
         </div>
 
         <div class="horizontal-separator"></div>
