@@ -91,7 +91,6 @@ class ProjectManager {
                     const flattenedTimelines = [];
 
                     if (typeof cameraTimelinesXML !== "undefined") {
-
                         // Insert shots in timeline which is pushed to timelinesarray
                         // and push to flattenedArray
                         cameraTimelinesXML.forEach((timeline) => {
@@ -151,6 +150,16 @@ class ProjectManager {
         resultingData.minCount = minMaxCount.minCount;
         resultingData.maxCount = minMaxCount.maxCount;
         return resultingData;
+    }
+
+    /*
+     * Reload Project File After New Upload
+     */
+    reloadProject(callback) {
+        this.initialized = false;
+        // Force a call to reload the file, then wait for loaded file
+        this.parseXML();
+        ProjectManager.waitForXML(callback);
     }
 
     /*
