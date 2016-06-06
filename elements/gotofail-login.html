@@ -192,8 +192,12 @@
 
             changeUserName(id, name) {
                 this.users[id].name = name;
-                console.log();
                 document.querySelector("#paperItem" + id + " > span").innerHTML = name;
+            }
+
+            addUser(user) {
+                this.push("users", user);
+                this.updateUsers();
             }
 
             getTimelines() {

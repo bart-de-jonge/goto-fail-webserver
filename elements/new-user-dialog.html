@@ -87,7 +87,7 @@
                     const id = users[users.length - 1].id + 1;
                     const pickedTimelines = [];
                     const name = this.$.newUserInput.value;
-                    const jobType = this.$.newUserTabs.selected;
+                    const jobType = Number(this.$.newUserTabs.selected);
 
                     Array.from(document.querySelectorAll("paper-toggle-button.newUserToggleButton[checked]")).forEach(function(user) {
                        pickedTimelines.push(user.value);
@@ -97,7 +97,8 @@
                                     name: name,
                                     pickedTimelines: pickedTimelines,
                                     jobType: jobType};
-                    console.log(newUser);
+                    document.querySelector("gotofail-login").addUser(newUser);
+                    this.$.addUserDialog.close();
                 }
             }
 
