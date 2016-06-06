@@ -103,6 +103,12 @@
                 on-response="handleUsersResponse"
                 id="ajax-users"></iron-ajax>
         <iron-ajax
+                auto
+                url="/timeline/timeline-data"
+                handle-as="json"
+                on-response="handleResponse"
+                id="ajax-timeline-data"></iron-ajax>
+        <iron-ajax
                 id="updateUsersPost"
                 url="/update-users"
                 handle-as="json"
@@ -127,7 +133,7 @@
                 <div style="flex: 1;"></div>
                 <div class="horizontal-separator"></div>
                 <div class="card-content">
-                    <paper-button id="add-button">Add user</paper-button>
+                    <paper-button id="add-button" on-tap="addUserButtonClicked">Add user</paper-button>
                 </div>
             </paper-card>
 
@@ -136,6 +142,36 @@
             </paper-card>
 
         </div>
+
+        <paper-dialog id="addUserDialog" modal="true">
+            <h2>Add a new user</h2>
+            <div>
+                <paper-tabs on-click="paperTabsClicked" id="newUserTabs" selected="0">
+                    <paper-tab>Camera operator</paper-tab>
+                    <paper-tab>Shotcaller</paper-tab>
+                    <paper-tab>Director</paper-tab>
+                </paper-tabs>
+
+                <paper-input label="User name:" id="newUserInput"></paper-input>
+
+                <div class="horizontal-separator"></div>
+
+                <div class="card-content">
+                    <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
+                    <div id="toggles" class="layout horizontal flex">
+                        <template is="dom-repeat" items="{{timelines}}">
+                            <paper-toggle-button value="{{index}}">{{item.name}}</paper-toggle-button>
+                        </template>
+                    </div>
+                </div>
+
+            </div>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button dialog-confirm>Add user</paper-button>
+            </div>
+        </paper-dialog>
+
 
     </template>
     <script>
@@ -147,6 +183,10 @@
                     users: Object,
                     cameras: Array,
                 };
+            }
+
+            addUserButtonClicked() {
+                this.$.addUserDialog.open();
             }
 
             getUsers() {
@@ -180,6 +220,17 @@
                 this.users[id].name = name;
                 console.log();
                 document.querySelector("#paperItem" + id + " > span").innerHTML = name;
+            }
+
+            getTimelines() {
+                console.log("lakjdflkasdjf");
+                return document.querySelector("#picker").timelines;
+            }
+
+            handleResponse(event) {
+                // Get data from ajax response
+                this.timelines = event.detail.response.cameraTimelines;
+                this.$.picker.timelines = this.timelines;
             }
         }
         // eslint-disable-next-line

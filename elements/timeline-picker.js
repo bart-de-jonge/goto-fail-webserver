@@ -51,11 +51,6 @@ class timelinePicker {
         document.querySelector("#pickedUserPost").generateRequest();
     }
 
-    handleResponse(event) {
-        // Get data from ajax response
-        this.timelines = event.detail.response.cameraTimelines;
-    }
-
     /*
      * Helper method to handle response when picked user is posted
      */
