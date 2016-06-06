@@ -1,0 +1,86 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../elements/timeline-picker.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+<dom-module id="new-user-dialog">
+    // Template
+    <template>
+        <style>
+            .horizontal-separator {
+                background-color: black;
+                height: 1px;
+                margin: auto;
+                opacity: 0.1;
+                width: 100%;
+            }
+        </style>
+
+        <paper-dialog id="addUserDialog" modal="true">
+            <h2>Add a new user</h2>
+            <div>
+
+
+                <paper-tabs on-click="paperTabsClicked" id="newUserTabs" selected="0">
+                    <paper-tab>Camera operator</paper-tab>
+                    <paper-tab>Shotcaller</paper-tab>
+                    <paper-tab>Director</paper-tab>
+                </paper-tabs>
+
+                <paper-input error-message="Username required" label="User name:" id="newUserInput"></paper-input>
+
+                <div class="horizontal-separator"></div>
+
+                <div class="card-content">
+                    <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
+                    <div id="toggles" class="layout horizontal flex">
+                        <template is="dom-repeat" items="{{timelines}}">
+                            <paper-toggle-button value="{{index}}">{{item.name}}</paper-toggle-button>
+                        </template>
+                    </div>
+                </div>
+
+            </div>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button id="addUserConfirmButton" on-tap="addUserConfirmButtonTapped">Add user</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+        class newUserDialog {
+            beforeRegister() {
+                this.is = "new-user-dialog";
+
+                this.properties = {
+                    timelines =
+                };
+            }
+
+            addUserConfirmButtonTapped() {
+                console.log(" add user");
+                if (this.$.newUserInput.value.length === 0) {
+                    this.$.newUserInput.invalid = true;
+                } else {
+                    const name = this.$.newUserInput.value;
+                    const
+                }
+            }
+
+            open() {
+                this.$.addUserDialog.open();
+            }
+        }
+        // eslint-disable-next-line
+        Polymer(newUserDialog);
+    </script>
+
+</dom-module>
