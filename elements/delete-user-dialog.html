@@ -1,0 +1,58 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../elements/timeline-picker.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+<dom-module id="delete-user-dialog">
+    // Template
+    <template>
+        <paper-dialog id="deleteUserDialog" modal="true">
+            <h2>Delete a new user</h2>
+            <div>
+                <p>Are you sure you want to delete the user with name <b>{{user.name}}</b>?</p>
+            </div>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button id="deleteUserConfirmButton" on-tap="deleteUserConfirmButtonTapped">Delete user</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+        class deleteUserDialog {
+            beforeRegister() {
+                this.is = "delete-user-dialog";
+
+                this.properties = {
+                    user: Object,
+                };
+            }
+
+            /**
+             * confirm button tapped, proceed to delete the user
+             */
+            deleteUserConfirmButtonTapped() {
+                document.querySelector("gotofail-login").deleteUserPush(this.user);
+                this.$.deleteUserDialog.close();
+            }
+
+            /**
+             * Open the dialog
+             */
+            open() {
+                this.$.deleteUserDialog.open();
+            }
+
+        }
+        // eslint-disable-next-line
+        Polymer(deleteUserDialog);
+    </script>
+
+</dom-module>
