@@ -8,7 +8,8 @@ const getTimelines = function getTimelines(user, filtered, callback) {
         const data = projectManager.data;
         if (data) {
             if (filtered && typeof user !== "undefined") {
-                callback(projectManager.filterTimelines(data.users[user].pickedTimelines, data.cameraTimelines));
+                callback(projectManager.filterTimelines(
+                    data.users[user].pickedTimelines, data.cameraTimelines));
             } else {
                 callback(projectManager.data.cameraTimelines);
             }
@@ -18,6 +19,7 @@ const getTimelines = function getTimelines(user, filtered, callback) {
     });
 };
 
+// Get timeline data
 router.get("/timeline-data", (req, res) => {
     getTimelines(req.session.pickedTimelines, false, (data, err) => {
         if (err) {
@@ -35,6 +37,7 @@ router.get("/timeline-data", (req, res) => {
     });
 });
 
+// Get timeline data, but filtered (only some timelines)
 router.get("/timeline-filtered-data", (req, res) => {
     getTimelines(req.session.pickedUser, true, (data, err) => {
         if (err) {
@@ -59,6 +62,7 @@ router.get("/", (req, res) => {
     res.render("timeline");
 });
 
+// Set picked timelines
 router.post("/picked-timelines", (req, res) => {
     // eslint-disable-next-line
     req.session.pickedTimelines = req.body.pickedTimelines;
