@@ -46,8 +46,8 @@ class timelinePicker {
 
     buttonClicked() {
         document.querySelector("#gotofailLogin").updateUsers();
-        const id = document.querySelector("paper-item.iron-selected").id;
-        document.querySelector("#pickedUserPost").body = { pickedUser: id };
+        const user = document.querySelector("paper-item.iron-selected").user;
+        document.querySelector("#pickedUserPost").body = { pickedUser: Number(user) };
         document.querySelector("#pickedUserPost").generateRequest();
     }
 

@@ -11,6 +11,7 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../elements/new-user-dialog.html">
+<link rel="import" href="../elements/delete-user-dialog.html">
 
 <dom-module id="gotofail-login">
     // Template
@@ -127,7 +128,7 @@
                         <template is="dom-repeat" items="{{users}}" id="usersRepeat">
                             <paper-item user="{{item.id}}" id="paperItem{{item.id}}" on-tap="onListItemTap" class="layout horizontal"><span class="flex">{{item.name}}</span>
                                 <paper-ripple></paper-ripple>
-                                <paper-button class="remove-button">remove user</paper-button>
+                                <paper-button class="remove-button" user="{{item.id}}" on-tap="deleteUserButtonClicked">remove user</paper-button>
                             </paper-item>
                         </template>
                     </paper-listbox>
@@ -146,6 +147,7 @@
         </div>
 
         <new-user-dialog id="addUserDialog" timelines="{{timelines}}"></new-user-dialog>
+        <delete-user-dialog id="deleteUserDialog" user="{{deleteUser}}"></delete-user-dialog>
     </template>
     <script>
         class gotofailLogin {
@@ -156,11 +158,17 @@
                     users: Object,
                     cameras: Array,
                     timelines: Array,
+                    deleteName: String,
                 };
             }
 
             addUserButtonClicked() {
                 this.$.addUserDialog.open();
+            }
+
+            deleteUserButtonClicked(e) {
+                this.deleteUser = this.users[e.target.user];
+                this.$.deleteUserDialog.open();
             }
 
             getUsers() {
@@ -184,10 +192,12 @@
                 this.users = event.detail.response.users;
             }
 
-            onListItemTap() {
-                this.$.picker.setUser(this.users[Number(document.querySelector("paper-item[focused]").user)]);
-                document.querySelector("#continue_button").disabled = false;
-                document.querySelector("#nameInput").disabled = false;
+            onListItemTap(e) {
+                if (document.querySelector("paper-item[focused]")) {
+                    this.$.picker.setUser(this.users[Number(document.querySelector("paper-item[focused]").user)]);
+                    document.querySelector("#continue_button").disabled = false;
+                    document.querySelector("#nameInput").disabled = false;
+                }
             }
 
             changeUserName(id, name) {
@@ -198,6 +208,14 @@
             addUser(user) {
                 this.push("users", user);
                 this.updateUsers();
+            }
+
+            deleteUserPush(user) {
+                const index = this.users.indexOf(user);
+                if (index >= 0) {
+                    this.splice("users", index, 1);
+                    this.updateUsers();
+                }
             }
 
             getTimelines() {
