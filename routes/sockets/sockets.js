@@ -28,12 +28,15 @@ const listen = (server) => {
     let maxCount = 12;
     let currentCount = 0;
 
+    const namespaces = [];
+
     // Watch Project File For Changes
-    fs.watch(`${__dirname}/../../project-scp-files/project.scp`, (event, filename) => {
+    fs.watch(`${__dirname}/../../project-scp-files/`, (event, filename) => {
         logger.info(`${event} operation on ${filename}`);
         getMaxCount(newMaxCount => {
             logger.info(`Reset current count and load new max count: ${newMaxCount}`);
             currentCount = 0;
+            namespaces.forEach(namespace => namespace.sendNextCount(currentCount));
             maxCount = newMaxCount;
         });
     });
@@ -41,8 +44,6 @@ const listen = (server) => {
     getMaxCount(newMaxCount => {
         maxCount = newMaxCount;
     });
-
-    const namespaces = [];
 
     const sendCounts = () => {
         if (currentCount < maxCount) {
