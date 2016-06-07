@@ -8,7 +8,8 @@ const getTimelines = function getTimelines(user, filtered, callback) {
         const data = projectManager.data;
         if (data) {
             if (filtered && typeof user !== "undefined") {
-                callback(projectManager.filterTimelines(data.users[user].pickedTimelines, data.cameraTimelines));
+                callback(projectManager.filterTimelines(
+                    data.users[user].pickedTimelines, data.cameraTimelines));
             } else {
                 callback(projectManager.data.cameraTimelines);
             }
