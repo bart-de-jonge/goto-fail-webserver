@@ -58,7 +58,18 @@ class timelinePicker {
         // TODO: redirect to right page for director and shotcallers
         
         if (event.detail.response.success) {
-            window.location.href = "/timeline";
+            if (this.user.jobType === 0) {
+                // camera operator
+                window.location.href = "/timeline";
+            } else if (this.user.jobType === 1) {
+                // Shotcaller
+                window.location.href = "/shot-caller";
+            } else if (this.user.jobType === 2) {
+                // Director
+                window.location.href = "/director";
+            } else {
+                // TODO: maybe some error handling for other jobtypes
+            }
         }
     }
 
