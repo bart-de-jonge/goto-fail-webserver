@@ -17,24 +17,26 @@
             }
 
             #background {
-                background-color: rgb(50,50,50);
+                background-color: white;
+            /*rgb(50,50,50);*/
                 height: 100%;
             }
 
             .timeline-header {
-                color: white;
+                color: black;
                 font-size: x-large;
                 font-weight: lighter;
                 vertical-align: middle;
                 line-height: 60px;
-                border-bottom: solid 1px white;
                 height: 60px;
-                padding-left: 20px;
-                opacity: 0.7;
+                padding-left: 16%;
+                opacity: 0.6;
             }
 
             .item-style {
-                color: white;
+                color: black;
+                padding-left: 14%;
+                padding-right: 14%;
             }
 
             .text-style {
@@ -44,15 +46,31 @@
                 font-weight: bold;
                 vertical-align: middle;
                 line-height: 100%;
-                color: white;
+                color: black;
                 opacity: 0.8;
             }
 
             .icon-style {
-                color: #FFC107;
+                color: #3F51B5;
                 vertical-align: middle;
                 --iron-icon-height: 20px;
                 --iron-icon-width: 20px;
+            }
+
+            .separator-horizontal {
+                width: 100%;
+                height: 1px;
+                min-height: 1px;
+                max-height: 1px;
+                background-color: black;
+                opacity: 0.1;
+                margin: 3px 0;
+            }
+
+            .filler-vertical {
+                width: 100%;
+                height: 10px;
+                background-color: transparent;
             }
 
         </style>
@@ -63,27 +81,36 @@
                 Goto Fail;
             </div>
 
-            <paper-listbox style="background-color: transparent;">
+            <paper-listbox style="background-color: transparent; padding-top: 0;">
+
+                <!--<div class="filler-vertical"></div>-->
+                <div class="separator-horizontal" style="margin-top: 0;"></div>
+                <div class="filler-vertical"></div>
+
                 <a href="/" tabindex="-1" style="text-decoration:none"> <paper-item  class="item-style">
-                    <paper-ripple style="color: #FFC107;"></paper-ripple>
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
                     <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">User selection</span>
                 </paper-item> </a>
 
+                <div class="filler-vertical"></div>
+                <div class="separator-horizontal"></div>
+                <div class="filler-vertical"></div>
+
                 <a href="/timeline" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #FFC107;"></paper-ripple>
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
                     <iron-icon class="icon-style" icon="image:camera"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">Timeline view</span>
                 </paper-item> </a>
 
                 <a href="/shot-caller" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #FFC107;"></paper-ripple>
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
                     <iron-icon class="icon-style" icon="image:timer"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">Shot calling view</span>
                 </paper-item> </a>
 
                 <a href="/director" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #FFC107;"></paper-ripple>
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
                     <iron-icon class="icon-style" icon="image:camera-alt"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">Director view</span>
                 </paper-item> </a>
