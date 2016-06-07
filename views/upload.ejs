@@ -3,7 +3,6 @@
     <head>
         <% include ./partials/head %>
         <link rel="import" href="../bower_components/polymer/polymer.html">
-        <link rel="import" href="../bower_components/file-upload/file-upload.html">
         <link rel="import" href="../bower_components/paper">
         <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
         <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
@@ -14,6 +13,7 @@
         <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
         <link rel="import" href="../bower_components/iron-icons/iron-icons.html/head">
         <link rel="import" href="../elements/gotofail-drawer.html">
+        <link rel="import" href="../elements/upload-file.html">
     </head>
 <body>
     <paper-drawer-panel peeking force-narrow left-drawer id="drawer-panel">
@@ -28,9 +28,7 @@
                 </paper-toolbar>
             </div>
 
-            <p>
-                <file-upload droppable="true" raised="true" method="post">Please Select A Project File</file-upload>
-            </p>
+            <upload-file></upload-file>
         </paper-header-panel>
     </paper-drawer-panel>
 </body>
