@@ -79,6 +79,10 @@
                 };
             }
 
+            /**
+             *  Confirm button tapped, proceed to add user
+             *  get all data from inputs
+             */
             addUserConfirmButtonTapped() {
                 if (this.$.newUserInput.value.length === 0) {
                     this.$.newUserInput.invalid = true;
@@ -102,10 +106,17 @@
                 }
             }
 
+            /**
+             * Open the dialog
+             */
             open() {
                 this.$.addUserDialog.open();
             }
 
+            /**
+             * Name input changed, validate input
+             * @param e - event
+             */
             nameInputChanged(e) {
                 if (e.target.value.length === 0) {
                     this.$.newUserInput.invalid = true;
@@ -114,6 +125,10 @@
                 }
             }
 
+            /**
+             * Tabs clicked, check what toggles should be disabled
+             * @param e - event
+             */
             paperTabsClicked(e) {
                 const toggles = Array.from(document.querySelectorAll("paper-toggle-button.newUserToggleButton"));
                 if (this.$.newUserTabs.selected === 0) {

@@ -162,37 +162,55 @@
                 };
             }
 
+            /**
+             * Add user button tapped, open the dialog
+             */
             addUserButtonClicked() {
                 this.$.addUserDialog.open();
             }
 
+            /**
+             * Delete user button tapped, open the dialog
+             */
             deleteUserButtonClicked(e) {
                 this.deleteUser = this.users[e.target.user];
                 this.$.deleteUserDialog.open();
             }
 
+            /**
+             * Get users of this object
+             */
             getUsers() {
                 return this.users;
             }
 
+            /**
+             * push user updates to server
+             */
             updateUsers() {
                 document.querySelector("#updateUsersPost").body = {users: this.users};
                 document.querySelector("#updateUsersPost").generateRequest();
             }
 
+            /**
+             * Response handler for ajax request for updating users
+             */
             handleUpdateUsersResponse(event) {
                 console.log(event.detail.response.success);
                 // TODO: error handling for updating users
             }
 
-            /*
+            /**
              * Helper method for handling ajax response when getting users
              */
             handleUsersResponse(event) {
                 this.users = event.detail.response.users;
             }
 
-            onListItemTap(e) {
+            /**
+             * List item tapped, update user in timelinepicker
+             */
+            onListItemTap() {
                 if (document.querySelector("paper-item[focused]")) {
                     this.$.picker.setUser(this.users[Number(document.querySelector("paper-item[focused]").user)]);
                     document.querySelector("#continue_button").disabled = false;
@@ -200,16 +218,29 @@
                 }
             }
 
+            /**
+             * Change username of a certain user
+             * @param id - the id of the user
+             * @param name - the new username
+             */
             changeUserName(id, name) {
                 this.users[id].name = name;
                 document.querySelector("#paperItem" + id + " > span").innerHTML = name;
             }
 
+            /**
+             * Add a user
+             * @param user - the user to add
+             */
             addUser(user) {
                 this.push("users", user);
                 this.updateUsers();
             }
 
+            /**
+             * Delete a user
+             * @param user - the user to delete
+             */
             deleteUserPush(user) {
                 const index = this.users.indexOf(user);
                 if (index >= 0) {
@@ -218,11 +249,18 @@
                 }
             }
 
+            /**
+             * Get the timelines of this object
+             * @returns {Array|*} - the timelines
+             */
             getTimelines() {
-                console.log("lakjdflkasdjf");
                 return document.querySelector("#picker").timelines;
             }
 
+            /**
+             * Response handler for timeline data
+             * @param event - event
+             */
             handleResponse(event) {
                 // Get data from ajax response
                 this.timelines = event.detail.response.cameraTimelines;

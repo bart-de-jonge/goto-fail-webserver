@@ -8,6 +8,10 @@ class timelinePicker {
         };
     }
 
+    /**
+     * Set the user on this timeline picker, update all data
+     * @param user - the user to set
+     */
     setUser(user) {
         this.user = user;
 
@@ -25,10 +29,18 @@ class timelinePicker {
         this.paperTabsClicked();
     }
 
+    /**
+     * Check whether a toggle should be checked
+     * @param index - the index of the toggle to check
+     * @returns {boolean} - boolean indicating if it should be checked or not
+     */
     computeChecked(index) {
         return this.user.pickedTimelines.indexOf(index) >= 0;
     }
 
+    /**
+     * Paper tabs clicked, recompute the toggles (disabled or not)
+     */
     paperTabsClicked() {
         if (this.$.userTypeTabs.selected !== 0) {
             const toggles = document.querySelectorAll("#toggles gotofail-togglebutton");
@@ -44,6 +56,9 @@ class timelinePicker {
         document.querySelector("#gotofailLogin").updateUsers();
     }
 
+    /**
+     * continue button clicked, push picked user to server
+     */
     buttonClicked() {
         document.querySelector("#gotofailLogin").updateUsers();
         const user = document.querySelector("paper-item.iron-selected").user;
@@ -51,12 +66,10 @@ class timelinePicker {
         document.querySelector("#pickedUserPost").generateRequest();
     }
 
-    /*
+    /**
      * Helper method to handle response when picked user is posted
      */
     handlePickedUserResponse(event) {
-        // TODO: redirect to right page for director and shotcallers
-        
         if (event.detail.response.success) {
             if (this.user.jobType === 0) {
                 // camera operator
@@ -73,15 +86,26 @@ class timelinePicker {
         }
     }
 
+    /**
+     * Name input on the timeline picker changed
+     */
     nameInputChanged(e) {
         this.user.name = e.target.value;
         document.querySelector("#gotofailLogin").changeUserName(this.user.id, this.user.name);
     }
 
+    /**
+     * Name input on the timeline picker lost focus
+     * Store new user name
+     */
     onNameInputBlur() {
         document.querySelector("#gotofailLogin").updateUsers();
     }
 
+    /**
+     * Enter pressed on the name input
+     * Store new user name
+     */
     onNameInputKeypress(e) {
         const code = e.keyCode;
         if (code === 13) {
