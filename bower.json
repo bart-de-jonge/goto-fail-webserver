@@ -26,6 +26,7 @@
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
     "page": "git://github.com/visionmedia/page.js.git#master",
     "velocity": "^1.2.3",
+    "file-upload": "^1.7.5",
     "iron-icons": "PolymerElements/iron-icons#^1.1.3"
   }
 }

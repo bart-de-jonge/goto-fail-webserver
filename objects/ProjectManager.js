@@ -74,7 +74,7 @@ class ProjectManager {
                     const directorTimeline = new DirectorTimeline(
                         directorTimelineXML.description[0]);
 
-                    if (directorTimeline.shotList) {
+                    if (directorTimelineXML.shotList[0]) {
                         directorTimelineXML.shotList[0].shot.forEach(shot => {
                             const directorShot = DirectorShot.fromXML(shot);
                             directorTimeline.addDirectorShot(directorShot);
@@ -150,6 +150,16 @@ class ProjectManager {
         resultingData.minCount = minMaxCount.minCount;
         resultingData.maxCount = minMaxCount.maxCount;
         return resultingData;
+    }
+
+    /*
+     * Reload Project File After New Upload
+     */
+    reloadProject(callback) {
+        this.initialized = false;
+        // Force a call to reload the file, then wait for loaded file
+        this.parseXML();
+        ProjectManager.waitForXML(callback);
     }
 
     /*
