@@ -3,14 +3,14 @@
 <dom-module id="upload-file">
     <template>
         <p>
-        <file-upload id="projectUpload" droppable="true" raised="true" method="post" manual-upload="true">Please Select A Project File</file-upload>
+        <file-upload id="projectUpload" accept=".scp" raised="true" method="post" multi="false" manual-upload="true">Please Select A Project File</file-upload>
         </p>
         <paper-button on-tap="confirmUpload" raised="true">Upload Project</paper-button>
         <paper-dialog id="confirmProjectUploadDialog" modal="true">
             <h2>Upload a new project file</h2>
             <p>Are you sure that you want to replace the current project file on the server (This is a permanent action)</p>
             <div class="buttons">
-                <paper-button dialog-dismiss>No</paper-button>
+                <paper-button on-tap="dismissUpload">No</paper-button>
                 <paper-button id="confirmProjectUploadButton" on-tap="uploadProjectFile">Yes, I'm Sure</paper-button>
             </div>
         </paper-dialog>
@@ -25,6 +25,11 @@
                 if (this.$.projectUpload.files.length > 0) {
                     this.$.confirmProjectUploadDialog.open();
                 }
+            }
+
+            dismissUpload() {
+                this.$.confirmProjectUploadDialog.close();
+                this.$.projectUpload.clear();
             }
 
             uploadProjectFile() {
