@@ -4,6 +4,7 @@
  */
 import socketio from "socket.io";
 import log4js from "log4js";
+import fs from "fs";
 import CameraOperatorSocket from "./CameraOperatorSocket";
 import ShotCallerSocket from "./ShotCallerSocket";
 import ProjectManager from "../../objects/ProjectManager.js";
@@ -26,6 +27,16 @@ const listen = (server) => {
 
     let maxCount = 12;
     let currentCount = 0;
+
+    // Watch Project File For Changes
+    fs.watch(`${__dirname}/../../project-scp-files/project.scp`, (event, filename) => {
+        logger.info(`${event} operation on ${filename}`);
+        getMaxCount(newMaxCount => {
+            logger.info(`Reset current count and load new max count: ${newMaxCount}`);
+            currentCount = 0;
+            maxCount = newMaxCount;
+        });
+    });
 
     getMaxCount(newMaxCount => {
         maxCount = newMaxCount;
