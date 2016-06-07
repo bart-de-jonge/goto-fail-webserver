@@ -48,17 +48,18 @@
 
             ready() {
                 this.addEventListener("change", function (e) {
-                    const id = document.querySelector("paper-item.iron-selected").id;
+                    const user = document.querySelector("#picker").user;
                     const login = document.querySelector("gotofail-login");
-                    const pickedTimelines = login.getUsers()[id].pickedTimelines;
+
                     if (e.target.checked) {
-                        pickedTimelines.push(e.target.value);
+                        user.pickedTimelines.push(e.target.value);
                     } else {
-                        const index = pickedTimelines.indexOf(e.target.value);
+                        const index = user.pickedTimelines.indexOf(e.target.value);
                         if (index > -1) {
-                            pickedTimelines.splice(index, 1);
+                            user.pickedTimelines.splice(index, 1);
                         }
                     }
+                    login.users[user.id] = user;
                     login.updateUsers();
                 });
             }

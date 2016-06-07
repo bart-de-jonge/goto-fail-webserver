@@ -69,13 +69,6 @@
             }
 
         </style>
-
-        <iron-ajax
-                auto
-                url="/timeline/timeline-data"
-                handle-as="json"
-                on-response="handleResponse"
-                id="ajax-timeline-data"></iron-ajax>
         <iron-ajax
                 id="pickedUserPost"
                 url="/picked-user"
@@ -91,7 +84,7 @@
         </paper-tabs>
 
         <div class="card-content shadowed">
-            <paper-input label="User name:"></paper-input>
+            <paper-input label="User name:" id="nameInput" on-input="nameInputChanged" disabled on-blur="onNameInputBlur" on-keypress="onNameInputKeypress"></paper-input>
         </div>
 
         <div class="horizontal-separator"></div>
@@ -109,7 +102,7 @@
         <div class="horizontal-separator"></div>
 
         <div class="card-content">
-            <paper-button on-click="buttonClicked">Continue</paper-button>
+            <paper-button on-click="buttonClicked" id="continue_button" disabled>Continue</paper-button>
         </div>
 
     </template>

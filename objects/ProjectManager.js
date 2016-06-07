@@ -91,7 +91,6 @@ class ProjectManager {
                     const flattenedTimelines = [];
 
                     if (typeof cameraTimelinesXML !== "undefined") {
-
                         // Insert shots in timeline which is pushed to timelinesarray
                         // and push to flattenedArray
                         cameraTimelinesXML.forEach((timeline) => {
