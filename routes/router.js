@@ -5,6 +5,7 @@ import users from "./users";
 import cameras from "./cameras";
 import shotCaller from "./shot-caller";
 import director from "./director";
+import cameraControl from "./camera-control";
 
 // Module used to attach all routes to the correct urls
 module.exports.addRoutes = (app) => {
@@ -13,6 +14,7 @@ module.exports.addRoutes = (app) => {
     app.use("/upload-scp", uploadScp);
     app.use("/", users);
     app.use("/cameras", cameras);
+    app.use("/camera-control", cameraControl);
     app.use("/shot-caller", shotCaller);
     app.use("/director", director);
 };

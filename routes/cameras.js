@@ -3,7 +3,7 @@ const router = new express.Router();
 import ProjectManager from "../objects/ProjectManager";
 import http from "http";
 
-const CAMERA_IP = "192.168.10.101";
+const CAMERA_IP = "192.168.0.13";
 
 // Get cameras from xml
 // Get timelines from xml
@@ -11,7 +11,8 @@ const getCameras = function getTimelines(callback) {
     ProjectManager.waitForXML((projectManager) => {
         const data = projectManager.data;
         if (data) {
-            callback(projectManager.data.cameraTimelines.cameraTimelines.map(timeline => timeline.camera));
+            callback(projectManager.data.cameraTimelines.cameraTimelines
+                .map(timeline => timeline.camera));
         } else {
             callback(null, true);
         }
@@ -59,14 +60,19 @@ router.get("/:id(\\d+)", (req, res) => {
 });
 
 router.post("/save", (req, res) => {
-    let id = req.body.preset;
-    if (id.length === 1) {
-        id = `0${id}`;
+    const id = req.body.preset;
+    let route;
+    if (Number(id) < 10) {
+        route = `/cgi-bin/aw_ptz?cmd=%23M00${id}&res=1`;
+    } else {
+        route = `/cgi-bin/aw_ptz?cmd=%23M${id}&res=1`;
     }
     http.get({
         host: CAMERA_IP,
-        path: `/cgi-bin/aw_ptz?cmd=%23M${id}&res=1`,
-    }, (response) => {
+        path: route,
+    }, (response, err) => {
+        response.setEncoding("utf8");
+        response.on("data", (chunk) => console.log(chunk));
         if (response.statusCode === 200) {
             res.status(200).json({
                 succeeded: true,
@@ -75,20 +81,26 @@ router.post("/save", (req, res) => {
         } else {
             res.status(504).json({
                 message: `Unable to save preset ${id}.`,
+                error: err,
             });
         }
     });
 });
 
 router.post("/recall", (req, res) => {
-    let id = req.body.preset;
-    if (id.length === 1) {
-        id = `0${id}`;
+    const id = req.body.preset;
+    let route;
+    if (Number(id) < 10) {
+        route = `/cgi-bin/aw_ptz?cmd=%23R0${id}&res=1`;
+    } else {
+        route = `/cgi-bin/aw_ptz?cmd=%23R${id}&res=1`;
     }
     http.get({
         host: CAMERA_IP,
-        path: `/cgi-bin/aw_ptz?cmd=%23R${id}&res=1`,
-    }, (response) => {
+        path: route,
+    }, (response, err) => {
+        response.setEncoding("utf8");
+        response.on("data", (chunk) => console.log(chunk));
         if (response.statusCode === 200) {
             res.status(200).json({
                 succeeded: true,
@@ -97,6 +109,7 @@ router.post("/recall", (req, res) => {
         } else {
             res.status(504).json({
                 message: `Unable to recall preset ${id}.`,
+                error: err,
             });
         }
     });
@@ -106,7 +119,7 @@ router.get("/stop", (req, res) => {
     http.get({
         host: CAMERA_IP,
         path: "/cgi-bin/aw_ptz?cmd=%23PTS5050&res=1",
-    }, (response) => {
+    }, (response, err) => {
         if (response.statusCode === 200) {
             res.status(200).json({
                 succeeded: true,
@@ -115,6 +128,7 @@ router.get("/stop", (req, res) => {
         } else {
             res.status(504).json({
                 message: "Unable to stop camera.",
+                error: err,
             });
         }
     });
@@ -144,7 +158,7 @@ router.post("/pan", (req, res) => {
     http.get({
         host: CAMERA_IP,
         path: `/cgi-bin/aw_ptz?cmd=%23P${speed}&res=1`,
-    }, (response) => {
+    }, (response, err) => {
         if (response.statusCode === 200) {
             res.status(200).json({
                 succeeded: true,
@@ -153,6 +167,7 @@ router.post("/pan", (req, res) => {
         } else {
             res.status(504).json({
                 message: "Unable to move camera.",
+                error: err,
             });
         }
     });
@@ -182,9 +197,9 @@ router.post("/tilt", (req, res) => {
 
     const speed = (body.direction.toLowerCase() === "down") ? 50 - body.speed : 50 + body.speed;
     http.get({
-        host: "CAMERA_IP",
+        host: CAMERA_IP,
         path: `/cgi-bin/aw_ptz?cmd=%23T${speed}&res=1`,
-    }, (response) => {
+    }, (response, err) => {
         if (response.statusCode === 200) {
             res.status(200).json({
                 succeeded: true,
@@ -193,6 +208,7 @@ router.post("/tilt", (req, res) => {
         } else {
             res.status(504).json({
                 message: "Unable to move camera.",
+                error: err,
             });
         }
     });

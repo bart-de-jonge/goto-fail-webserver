@@ -1,0 +1,176 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="timeline-element.html">
+<link rel="import" href="timeline-header.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<dom-module id="camera-controls">
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            :host {
+                display: block;
+            }
+
+            paper-button {
+                background-color: blue;
+                color: white;
+            }
+        </style>
+
+        <iron-ajax
+            id="ajaxMoveCamera"
+            method="POST"
+            handle-as="json"
+            content-type="application/json"
+            on-response="onMoveCamera"></iron-ajax>
+
+        <iron-ajax
+            id="ajaxStopCamera"
+            on-response="onStopCamera"></iron-ajax>
+
+        <iron-ajax
+            id="ajaxSavePreset"
+            method="POST"
+            handle-as="json"
+            content-type="application/json"
+            on-response="onSavePreset"></iron-ajax>
+
+        <iron-ajax
+            id="ajaxRecallPreset"
+            method="POST"
+            handle-as="json"
+            content-type="application/json"
+            on-response="onRecallPreset"></iron-ajax>
+
+        <div class="layout horizontal">
+            <div class="layout horizontal">
+                <paper-button on-down="_moveCameraLeft" on-up="stopCamera">left</paper-button>
+                <div class="layout vertical">
+                    <paper-button on-down="_moveCameraUp" on-up="stopCamera">up</paper-button>
+                    <paper-button on-down="_moveCameraDown" on-up="stopCamera">down</paper-button>   
+                </div>
+                <paper-button on-down="_moveCameraRight" on-up="stopCamera">right</paper-button>
+            </div>
+            <div class="flex"></div>
+            <div class="layout vertical">
+                <div>
+                    <paper-button on-tap="savePresetOne">savepreset 1</paper-button>
+                    <paper-button on-tap="recallPresetOne">recall preset 1</paper-button>
+                </div>
+                <div>
+                    <paper-button on-tap="savePresetTwo">savepreset 2</paper-button>
+                    <paper-button on-tap="recallPresetTwo">recall preset 2</paper-button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+            class cameraControls {
+                beforeRegister() {
+                    this.is = 'camera-controls';
+
+                    this.properties = {
+                    };
+                }
+
+                stopCamera() {
+                    this.$.ajaxStopCamera.url = "cameras/stop";
+                    this.$.ajaxStopCamera.generateRequest();
+                }
+
+                onStopCamera(e, request) {
+                    if (request.succeeded) {
+                        console.log(request.message);
+                    } else {
+                        console.log(request.message);
+                    }
+                }
+
+                panCamera(direction, speed) {
+                    this.$.ajaxMoveCamera.url = "cameras/pan";
+                    this.$.ajaxMoveCamera.body = {
+                        direction: direction,
+                        speed: speed,
+                    };
+                    this.$.ajaxMoveCamera.generateRequest();
+                }
+
+                tiltCamera(direction, speed) {
+                    this.$.ajaxMoveCamera.url = "cameras/tilt";
+                    this.$.ajaxMoveCamera.body = {
+                        direction: direction,
+                        speed: speed,
+                    };
+                    this.$.ajaxMoveCamera.generateRequest();
+                }
+
+                onMoveCamera(e, request) {
+                    if (request.succeeded) {
+                        console.log(request.message);
+                    } else {
+                        console.log(request.message);
+                    }
+                }
+
+                savePresetOne(e) {
+                    this.$.ajaxSavePreset.body = {
+                        preset: 1,
+                    }
+                    this.$.ajaxSavePreset.url = "cameras/save";
+                    this.$.ajaxSavePreset.generateRequest();
+                }
+
+                savePresetTwo(e) {
+                    this.$.ajaxSavePreset.body = {
+                        preset: 2,
+                    }
+                    this.$.ajaxSavePreset.url = "cameras/save";
+                    this.$.ajaxSavePreset.generateRequest();
+                }
+
+                recallPresetOne(e) {
+                    this.$.ajaxRecallPreset.body = {
+                        preset: 1,
+                    }
+                    this.$.ajaxRecallPreset.url = "cameras/recall";
+                    this.$.ajaxRecallPreset.generateRequest();
+                }
+
+                recallPresetTwo(e) {
+                    this.$.ajaxRecallPreset.body = {
+                        preset: 2,
+                    }
+                    this.$.ajaxRecallPreset.url = "cameras/recall";
+                    this.$.ajaxRecallPreset.generateRequest();
+                }
+
+                onSavePreset(e, request) {
+                    console.log(request);
+                }
+
+                onRecallPreset(e, request) {
+                    console.log(request);
+                }
+
+                _moveCameraUp() {
+                    this.tiltCamera("up", 25);
+                }
+                _moveCameraDown() {
+                    this.tiltCamera("down", 25);
+                }
+                _moveCameraRight() {
+                    this.panCamera("right", 25);
+                }
+                _moveCameraLeft() {
+                    this.panCamera("left", 25);
+                }
+            }
+            Polymer(cameraControls);
+        })();
+    </script>
+
+</dom-module>
