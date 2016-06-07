@@ -74,7 +74,7 @@ class ProjectManager {
                     const directorTimeline = new DirectorTimeline(
                         directorTimelineXML.description[0]);
 
-                    if (directorTimelineXML.shotList) {
+                    if (directorTimelineXML.shotList[0]) {
                         directorTimelineXML.shotList[0].shot.forEach(shot => {
                             const directorShot = DirectorShot.fromXML(shot);
                             directorTimeline.addDirectorShot(directorShot);
