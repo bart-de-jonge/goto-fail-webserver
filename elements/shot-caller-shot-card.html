@@ -5,20 +5,44 @@
     <template>
         <style include="iron-flex"></style>
         <style>
+            :host {
+                layout: flex;
+                flex-direction: column;
+                width: 100%;
+                margin: 24px;
+            }
+            paper-card {
+                background-color: white;
+                width: 100%;
+                height: auto;
+                flex: 1;
+
+                --paper-card-header: {
+                    border-top: 6px solid #303F9F;
+                };
+                --paper-card-header-color: white;
+                --paper-card-header-text: {
+                    font-size: medium;
+                    background-color: #3F51B5;
+                };
+            }
+
             paper-button {
                 background-color: gray;
                 color: white;
             }
         </style>
 
-        <paper-card>
-            <div class="shot-information" hidden$="{{!shot}}">
-                {{ shotType }} Shot: {{ shot.name }}
-                <p>{{ shot.description }}</p>
-                <p>Begin: {{ shot.beginCount }}</p>
-                <p>End: {{ shot.endCount }}</p>
+        <paper-card heading="{{ shotType }} shot" elevation="1">
+            <div class="card-content">
+                <div class="shot-information" hidden$="{{!shot}}">
+                    {{ shotType }} Shot: {{ shot.name }}
+                    <p>{{ shot.description }}</p>
+                    <p>Begin: {{ shot.beginCount }}</p>
+                    <p>End: {{ shot.endCount }}</p>
+                </div>
+                <p hidden$="{{shot}}">No {{ shotType }} Shot</p>
             </div>
-            <p hidden$="{{shot}}">No {{ shotType }} Shot</p>
         </paper-card>
     </template>
 

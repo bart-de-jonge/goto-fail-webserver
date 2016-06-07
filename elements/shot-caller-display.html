@@ -7,34 +7,55 @@
     <template>
         <style include="iron-flex"></style>
         <style>
-            paper-button {
-                background-color: gray;
-                color: white;
+            :host {
+                display: block;
             }
+
+            paper-button {
+            }
+
             paper-card {
-                @apply(--layout-horizontal);
+                background-color: white;
+                margin: 24px;
+                width: auto;
+                height: auto;
+
+                --paper-card-header: {
+                    border-top: 6px solid #303F9F;
+                };
+                --paper-card-header-color: white;
+                --paper-card-header-text: {
+                    font-size: medium;
+                    background-color: #3F51B5;
+                };
             }
 
             paper-card .card-content {
-                @apply(--layout-flex);
-                float: left;
+                /*@apply(--layout-flex);*/
+                /*float: left;*/
             }
+
             paper-card .card-header {
-                @apply(--paper-font-headline);
+                /*@apply(--paper-font-headline);*/
             }
         </style>
 
-        <paper-card>
-            <div class="card-content">
-                <paper-button on-tap="handleAdvanceTap">Advance Count</paper-button>
-                <span class="card-header">{{ currentCount }}</span>
+        <div class="layout vertical">
+            <paper-card heading="Score count" elevation="1">
+                <div class="card-content">
+                    <paper-button on-tap="handleAdvanceTap">Advance</paper-button>
+                    <span>{{ currentCount }}</span>
+                </div>
+            </paper-card>
+
+            <div class="layout horizontal" style="width: 100%;">
+                <shot-caller-shot-card shot-type="Current" shot="{{ currentShot }}"
+                    style="margin-right: 0px;"></shot-caller-shot-card>
+
+                <shot-caller-shot-card shot-type="Next" shot="{{ nextShot }}"></shot-caller-shot-card>
             </div>
-        </paper-card>
+        </div>
 
-
-
-        <shot-caller-shot-card shot-type="Current" shot="{{ currentShot }}"></shot-caller-shot-card>
-        <shot-caller-shot-card shot-type="Next" shot="{{ nextShot }}"></shot-caller-shot-card>
     </template>
 
     <script>
