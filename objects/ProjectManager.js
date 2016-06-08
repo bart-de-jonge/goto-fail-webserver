@@ -33,30 +33,12 @@ class ProjectManager {
         return projectManagerInstance;
     }
 
-    // Get max and mincount of an array of shots
-    getMaxAndMinCount(flattenedCameraTimelines) {
-        // Calculate minimum and maximum counts
-        let minCount = 0;
-        let maxCount = 0;
-        if (flattenedCameraTimelines.length > 0) {
-            minCount = Number(flattenedCameraTimelines[0].beginCount);
-            maxCount = Number(flattenedCameraTimelines[0].endCount);
-            flattenedCameraTimelines.forEach(shot => {
-                if (shot.beginCount < minCount) {
-                    minCount = Number(shot.beginCount);
-                }
-                if (shot.endCount > maxCount) {
-                    maxCount = Number(shot.endCount);
-                }
-            });
-        }
-        return { minCount, maxCount };
-    }
-
     generateXML() {
         const xml = deepCopy(this.data);
         xml.scriptingProject.directorTimeline = this.data.scriptingProject.directorTimeline.toXML();
         xml.scriptingProject.users = this.usersToXML(this.data.scriptingProject.users);
+        xml.scriptingProject["camera-centerarea"] = this.cameraTimelinesToXML(this.data.scriptingProject.cameraTimelines);
+        delete xml.scriptingProject.cameraTimelines;
 
         return xml;
     }
@@ -79,6 +61,7 @@ class ProjectManager {
                     // Add timelines to data object
                     this.data.scriptingProject.cameraTimelines = this.getCameraTimelinesFromXML(
                         result.scriptingProject["camera-centerarea"]);
+                    delete this.data.scriptingProject["camera-centerarea"];
                     this.initialized = true;
                 });
             }
@@ -97,6 +80,14 @@ class ProjectManager {
             });
         }
         return cameraTimelines;
+    }
+
+    cameraTimelinesToXML(cameraTimelines) {
+        const XMLObject = [{cameraTimeline: []}];
+        cameraTimelines.forEach((timeline) => {
+           XMLObject[0].cameraTimeline.push(timeline.toXML());
+        });
+        return XMLObject;
     }
 
     getUsersFromXML(XMLObject) {

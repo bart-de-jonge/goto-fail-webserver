@@ -5,11 +5,12 @@ import CameraShot from "../objects/CameraShot";
  * Class for storing a CameraTimeline
  */
 class CameraTimeline {
-    constructor(name, description, camera) {
+    constructor(name, description, camera, instance) {
         this.name = name;
         this.description = description;
         this.cameraShots = [];
         this.camera = camera;
+        this.instance = instance;
     }
 
     // Add a camerashot to this timeline
@@ -28,7 +29,7 @@ class CameraTimeline {
 
         // Make cameraTimeline
         const cameraTimeline = new CameraTimeline(
-            camera.name, camera.description, camera);
+            camera.name, camera.description, camera, XMLObject.instance[0]);
 
         // Parse and add shots
         if (typeof XMLObject.shotList[0].shot !== "undefined") {
@@ -36,8 +37,20 @@ class CameraTimeline {
                 cameraTimeline.addCameraShot(CameraShot.fromXML(shot));
             });
         }
-        
         return cameraTimeline;
+    }
+
+    toXML() {
+        const shotList = [{shot:[]}];
+        this.cameraShots.forEach((shot) => {
+           shotList[0].shot.push(shot.toXML());
+        });
+
+        return {
+            camera: this.camera.toXML(),
+            shotList: shotList,
+            instance: [this.instance],
+        }
     }
 }
 
