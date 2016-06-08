@@ -18,12 +18,17 @@
                 display: flex;
                 flex-direction: column;
             }
+
             paper-toggle-button {
                 margin-top: 20px;
             }
 
             paper-button {
                 color: #FFC107;
+            }
+
+            paper-button[disabled] {
+                background-color: transparent;
             }
 
             .horizontal-separator {
@@ -62,10 +67,6 @@
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
-
-            }
-
-            paper-toggle-button {
             }
 
         </style>
