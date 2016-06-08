@@ -5,6 +5,8 @@
 <link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="timeline-block.html">
+<link rel="import" href="../colors.html">
+
 <dom-module id="gotofail-drawer">
     <template>
         <style>
@@ -50,7 +52,8 @@
             }
 
             .icon-style {
-                color: #3F51B5;
+                /*color: var(--paper-indigo-500);*/
+                color: var(--main-color-500);
                 vertical-align: middle;
                 --iron-icon-height: 20px;
                 --iron-icon-width: 20px;
@@ -72,6 +75,10 @@
                 background-color: transparent;
             }
 
+            .ripple-style {
+                color: var(--main-color-500);
+            }
+
         </style>
 
         <div id="background">
@@ -86,13 +93,13 @@
                 <div class="filler-vertical"></div>
 
                 <a href="/" tabindex="-1" style="text-decoration:none"> <paper-item  class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <paper-ripple class="ripple-style"></paper-ripple>
                     <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">User selection</span>
                 </paper-item> </a>
 
                 <a href="/upload-scp" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <paper-ripple class="ripple-style"></paper-ripple>
                     <iron-icon class="icon-style" icon="icons:file-upload"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">Upload New Project</span>
                 </paper-item> </a>
@@ -102,19 +109,19 @@
                 <div class="filler-vertical"></div>
 
                 <a href="/timeline" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <paper-ripple class="ripple-style"></paper-ripple>
                     <iron-icon class="icon-style" icon="image:camera"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">Timeline view</span>
                 </paper-item> </a>
 
                 <a href="/shot-caller" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <paper-ripple class="ripple-style"></paper-ripple>
                     <iron-icon class="icon-style" icon="image:timer"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">Shot calling view</span>
                 </paper-item> </a>
 
                 <a href="/director" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <paper-ripple class="ripple-style"></paper-ripple>
                     <iron-icon class="icon-style" icon="image:camera-alt"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">Director view</span>
                 </paper-item> </a>

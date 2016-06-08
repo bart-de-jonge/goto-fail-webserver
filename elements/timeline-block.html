@@ -11,6 +11,7 @@
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../bower_components/paper-menu-button/paper-menu-button-animations.html">
+<link rel="import" href="../colors.html">
 
 <dom-module id="timeline-block">
     <template>
@@ -19,16 +20,16 @@
             paper-card {
                 height: 100%;
                 width: 100%;
-                border-bottom: 4px solid #303F9F;
+                border-bottom: 4px solid var(--main-color-300);
                 background-color: white;
                 color: #727272;
                 --paper-card-header: {
-                    border-top: 8px solid #303F9F;
+                    border-top: 8px solid var(--main-color-300);
                 };
                 --paper-card-header-color: white;
                 --paper-card-header-text: {
                     font-size: medium;
-                    background-color: #3F51B5;
+                    background-color: var(--main-color-500);
                 };
                 overflow: hidden;
             }

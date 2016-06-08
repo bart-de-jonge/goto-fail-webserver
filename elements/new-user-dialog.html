@@ -10,6 +10,7 @@
 <link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../colors.html">
 
 <dom-module id="new-user-dialog">
     // Template
@@ -35,24 +36,24 @@
             #head {
                 margin-top: 0;
                 margin-bottom: 0;
-                background-color: #3F51B5;
+                background-color: var(--main-color-500);
                 font-size: large;
                 color: white;
                 padding: 24px;
             }
 
-            #tabs {
+            #newUserTabs {
                 margin-top: 0;
             }
 
             paper-tabs {
-                background-color: #3F51B5;
+                background-color: var(--main-color-500);
                 color: white;
-                --paper-tabs-selection-bar-color: #FFC107;
+                --paper-tabs-selection-bar-color: var(--secondary-color-500);
             }
 
             paper-tab {
-                --paper-tab-ink: #448AFF;
+                --paper-tab-ink: var(--main-color-500);
             }
 
             .body {
@@ -70,7 +71,7 @@
 
             #body-bottom {
                 padding: 16px 24px;
-                color: #FFC107;
+                color: var(--secondary-color-500);
             }
 
             .content-header {
@@ -78,11 +79,11 @@
             }
 
             paper-toggle-button {
-                --paper-toggle-button-checked-bar-color:  #FFC107;
-                --paper-toggle-button-checked-button-color:  #FFC107;);
-                --paper-toggle-button-checked-ink-color: #FFC107;
+                --paper-toggle-button-checked-bar-color:  var(--secondary-color-500);
+                --paper-toggle-button-checked-button-color:  var(--secondary-color-500););
+                --paper-toggle-button-checked-ink-color: var(--secondary-color-500);
                 --paper-toggle-button-unchecked-bar-color:  rgba(0,0,0,0.3);
-                --paper-toggle-button-unchecked-ink-color: #FFC107;
+                --paper-toggle-button-unchecked-ink-color: var(--secondary-color-500);
                 text-align: center;
                 vertical-align: middle;
                 justify-content: center;
@@ -92,7 +93,6 @@
 
             #toggles {
                 display: flex;
-                /*flex-flow: row wrap;*/
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
@@ -103,7 +103,7 @@
         <paper-dialog id="addUserDialog" modal="true">
             <div id="head">Add a new user</div>
 
-            <paper-tabs id="tabs" on-click="paperTabsClicked" id="newUserTabs" selected="0">
+            <paper-tabs on-click="paperTabsClicked" id="newUserTabs" selected="0">
                 <paper-tab>Camera operator</paper-tab>
                 <paper-tab>Shotcaller</paper-tab>
                 <paper-tab>Director</paper-tab>
