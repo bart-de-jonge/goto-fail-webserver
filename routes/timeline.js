@@ -9,9 +9,9 @@ const getTimelines = function getTimelines(user, filtered, callback) {
         if (data) {
             if (filtered && typeof user !== "undefined") {
                 callback(projectManager.filterTimelines(
-                    data.users[user].pickedTimelines, data.cameraTimelines));
+                    data.scriptingProject.users[user].pickedTimelines, data));
             } else {
-                callback(projectManager.data.cameraTimelines);
+                callback(projectManager.data);
             }
         } else {
             callback(null, true);
@@ -29,9 +29,7 @@ router.get("/timeline-data", (req, res) => {
             });
         } else {
             res.json({
-                cameraTimelines: data.cameraTimelines,
-                minCount: data.minCount,
-                maxCount: data.maxCount,
+                cameraTimelines: data.scriptingProject.cameraTimelines,
             });
         }
     });
@@ -47,9 +45,7 @@ router.get("/timeline-filtered-data", (req, res) => {
             });
         } else {
             res.json({
-                cameraTimelines: data.cameraTimelines,
-                minCount: data.minCount,
-                maxCount: data.maxCount,
+                cameraTimelines: data.scriptingProject.cameraTimelines,
             });
         }
     });
