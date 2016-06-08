@@ -18,7 +18,6 @@
 
             #background {
                 background-color: white;
-            /*rgb(50,50,50);*/
                 height: 100%;
             }
 
@@ -83,7 +82,6 @@
 
             <paper-listbox style="background-color: transparent; padding-top: 0;">
 
-                <!--<div class="filler-vertical"></div>-->
                 <div class="separator-horizontal" style="margin-top: 0;"></div>
                 <div class="filler-vertical"></div>
 
@@ -91,6 +89,12 @@
                     <paper-ripple style="color: #3F51B5;"></paper-ripple>
                     <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">User selection</span>
+                </paper-item> </a>
+
+                <a href="/upload-scp" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <iron-icon class="icon-style" icon="icons:file-upload"></iron-icon>
+                    <span class="text-style" style="padding-left: 10px;">Upload New Project</span>
                 </paper-item> </a>
 
                 <div class="filler-vertical"></div>
@@ -114,6 +118,7 @@
                     <iron-icon class="icon-style" icon="image:camera-alt"></iron-icon>
                     <span class="text-style" style="padding-left: 10px;">Director view</span>
                 </paper-item> </a>
+
             </paper-listbox>
 
         </div>

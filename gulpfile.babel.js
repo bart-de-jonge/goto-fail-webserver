@@ -7,13 +7,14 @@ import babel from "gulp-babel";
 import injectModules from "gulp-inject-modules";
 import istanbul from "gulp-babel-istanbul";
 import eslint from "gulp-eslint";
+import bower from "gulp-bower";
 
 const paths = {
     client_scripts: ["client_app/**/*.js"],
     client_js_dest: "public/",
 };
 
-gulp.task("develop", () => {
+gulp.task("develop", ["bower", "compile"], () => {
     nodemon({
         script: "server.js",
         execMap: {
@@ -34,6 +35,8 @@ gulp.task("compile", () => {
         }))
         .pipe(gulp.dest(paths.client_js_dest));
 });
+
+gulp.task("bower", () => bower());
 
 gulp.task("lint", () =>
     // ESLint ignores files with "node_modules" paths.
