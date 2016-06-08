@@ -7,20 +7,14 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../elements/gotofail-drawer.html">
 <link rel="import" href="../elements/gotofail-login.html">
 
-<link rel="import" href="../colors.html">
+<link rel="import" href="../public/colors.html">
 
 <dom-module id="user-view">
     <template>
         <style>
-
-            :host {
-                height: 100%;
-                width: 100%;
-            }
 
             paper-toolbar {
                 background-color: var(--main-color-500);
@@ -41,7 +35,6 @@
             <gotofail-drawer drawer></gotofail-drawer>
 
             <paper-header-panel main>
-
                 <div class="paper-header">
                     <paper-toolbar justify="left" id="head" style="height: 60px;">
                         <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
@@ -53,11 +46,12 @@
                                 style="background-color: rgb(240,240,240); height: 100%;"
                                 id="gotofailLogin">
                 </gotofail-login>
-
             </paper-header-panel>
+
         </paper-drawer-panel>
 
     </template>
+
     <script>
         (function() {
             'use strict';
@@ -69,5 +63,6 @@
             Polymer(userView);
         })();
     </script>
+
     <script src="/socket.io/socket.io.js" type="text/javascript"></script>
 </dom-module>

@@ -1,0 +1,91 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html/head">
+<link rel="import" href="../elements/timeline-grid.html">
+<link rel="import" href="../elements/timeline-headers.html">
+<link rel="import" href="../elements/timeline-toast.html">
+<link rel="import" href="../elements/gotofail-drawer.html">
+
+<link rel="import" href="../public/colors.html">
+
+<dom-module id="timeline-view">
+    <template>
+        <style>
+
+            paper-toolbar {
+                background-color: var(--main-color-500);
+                color: white !important;
+                box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
+            }
+
+            paper-drawer-panel {
+                --paper-drawer-panel-scrim: {
+                    background-color: transparent;
+                };
+            }
+
+            #bottom-indicator {
+                background-color:  var(--main-color-500);
+                text-align: center;
+                vertical-align: middle;
+                font-size: large;
+                font-weight: 100;
+                color: white;
+                line-height: 40px;
+                height: 40px;
+                width: 100%;
+                margin: auto;
+                box-shadow: 0px -3px 4px rgba(0,0,0,0.25);
+            }
+
+        </style>
+
+        <paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking left-drawer id="drawer-panel">
+
+            <gotofail-drawer drawer id="drawer"></gotofail-drawer>
+
+            <paper-header-panel main mode="waterfall" style="overflow: hidden;">
+
+                <div class="paper-header" style="background-color: rgb(240,240,240);">
+                    <paper-toolbar justify="left" id="head" style="height: 60px;">
+                        <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                        <h2 style="font-weight: lighter">Timeline view</h2>
+                    </paper-toolbar>
+                    <timeline-headers></timeline-headers>
+                </div>
+
+                <div style="background-color: rgb(240,240,240);">
+                    <timeline-grid></timeline-grid>
+                    <timeline-toast id="timelinetoastcontent"></timeline-toast>
+                </div>
+
+                <div id="bottom-indicator">
+                    end of timeline
+                </div>
+
+            </paper-header-panel>
+
+        </paper-drawer-panel>
+
+    </template>
+
+    <script>
+        (function() {
+            'use strict';
+            class timelineView {
+                beforeRegister() {
+                    this.is = 'timeline-view';
+                }
+            }
+            Polymer(timelineView);
+        })();
+    </script>
+
+    <script src="/js/timeline.js"></script>
+</dom-module>
