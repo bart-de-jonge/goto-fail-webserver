@@ -1,15 +1,15 @@
 import fs from "fs";
+import xml2js from "xml2js";
+const parser = new xml2js.Parser();
+import deepCopy from "deepcopy";
+
+
 import CameraShot from "../objects/CameraShot";
 import CameraTimeline from "../objects/CameraTimeline";
 import DirectorTimeline from "../objects/DirectorTimeline.js";
 import DirectorShot from "../objects/DirectorShot.js";
-import xml2js from "xml2js";
 import Camera from "./Camera";
 import User from "./User";
-
-import util from "util";
-
-const parser = new xml2js.Parser();
 
 // Singleton Object
 let projectManagerInstance = null;
@@ -55,8 +55,10 @@ class ProjectManager {
     }
 
     generateXML() {
-        const xml = ProjectManager.data;
-        xml.scriptingProject.directorTimeline = [this.data.scriptingProject.directorTimeline.toXML()];
+        const xml = deepCopy(this.data);
+        xml.scriptingProject.directorTimeline = this.data.scriptingProject.directorTimeline.toXML();
+        xml.scriptingProject.users = this.usersToXML(this.data.scriptingProject.users);
+
         return xml;
     }
 
@@ -72,15 +74,8 @@ class ProjectManager {
                     const directorTimelineXML = result.scriptingProject.directorTimeline[0];
                     this.data.scriptingProject.directorTimeline = DirectorTimeline.fromXML(directorTimelineXML);
 
-                    // console.log(result);
-                    // console.log(result.scriptingProject.directorTimeline[0].shotList[0].shot[0]);
+                    this.data.scriptingProject.users = this.getUsers(result.scriptingProject.users);
 
-                    // if (typeof result.scriptingProject.users !== "undefined") {
-                    //     const users = this.getUsers(result.scriptingProject.users[0].user);
-                    //     this.data.users = users;
-                    // } else {
-                    //     this.data.users = [];
-                    // }
                     //
                     // // Read director timeline from xml
 
@@ -126,13 +121,27 @@ class ProjectManager {
     }
 
     getUsers(XMLObject) {
-        const users = [];
         if (typeof XMLObject !== "undefined") {
-            XMLObject.forEach((user, index) => {
-                users.push(User.fromXML(user, index));
-            });
+            const usersXML = XMLObject[0].user;
+            const users = [];
+            if (typeof usersXML !== "undefined") {
+                usersXML.forEach((user, index) => {
+                    users.push(User.fromXML(user, index));
+                });
+            }
+            return users;
+        } else {
+            return [];
         }
-        return users;
+    }
+
+    usersToXML(users) {
+        const usersXML = [];
+        users.forEach((user) => {
+            usersXML.push(user.toXML());
+        });
+
+        return [{user: usersXML}];
     }
 
     filterTimelines(pickedTimelines, data) {

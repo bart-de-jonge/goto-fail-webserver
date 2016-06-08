@@ -18,6 +18,19 @@ class User {
 
         return new User(id, XMLObject.name[0], pickedTimelines, Number(XMLObject.roleValue[0]));
     }
+
+    toXML() {
+        const chosenTimelines = [];
+        this.pickedTimelines.forEach((pickedTimeline) => {
+           chosenTimelines.push(String(pickedTimeline));
+        });
+
+        return {
+            name: [this.name],
+            roleValue: [this.jobType],
+            chosenTimelines: [{chosenTimeline: chosenTimelines}],
+        };
+    }
 }
 
 export default User;
