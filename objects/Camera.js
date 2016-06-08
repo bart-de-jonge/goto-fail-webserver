@@ -13,10 +13,10 @@ class Camera {
 
     static fromXML(XMLObject) {
         return new Camera(
-            XMLObject.name[0],
-            XMLObject.description[0],
-            CameraType.fromXML(XMLObject.cameraType[0]),
-            XMLObject.movementMargin[0]
+            XMLObject[0].name[0],
+            XMLObject[0].description[0],
+            CameraType.fromXML(XMLObject[0].cameraType[0]),
+            XMLObject[0].movementMargin[0]
         );
     }
 }

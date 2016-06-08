@@ -1,3 +1,6 @@
+import Camera from "./Camera";
+import CameraShot from "../objects/CameraShot";
+
 /*
  * Class for storing a CameraTimeline
  */
@@ -17,6 +20,24 @@ class CameraTimeline {
     // Get the list of cameraShots
     getCameraShots() {
         return this.cameraShots;
+    }
+    
+    static fromXML(XMLObject) {
+        // Get camera
+        const camera = Camera.fromXML(XMLObject.camera);
+
+        // Make cameraTimeline
+        const cameraTimeline = new CameraTimeline(
+            camera.name, camera.description, camera);
+
+        // Parse and add shots
+        if (typeof XMLObject.shotList[0].shot !== "undefined") {
+            XMLObject.shotList[0].shot.forEach(shot => {
+                cameraTimeline.addCameraShot(CameraShot.fromXML(shot));
+            });
+        }
+        
+        return cameraTimeline;
     }
 }
 
