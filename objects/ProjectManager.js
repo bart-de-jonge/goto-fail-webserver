@@ -7,6 +7,8 @@ import xml2js from "xml2js";
 import Camera from "./Camera";
 import User from "./User";
 
+import util from "util";
+
 const parser = new xml2js.Parser();
 
 // Singleton Object
@@ -52,6 +54,12 @@ class ProjectManager {
         return { minCount, maxCount };
     }
 
+    generateXML() {
+        const xml = ProjectManager.data;
+        xml.scriptingProject.directorTimeline = [this.data.scriptingProject.directorTimeline.toXML()];
+        return xml;
+    }
+
     parseXML() {
         fs.readFile(`${__dirname}/../project-scp-files/project.scp`, (err, data) => {
             if (err) {
@@ -60,64 +68,57 @@ class ProjectManager {
                 this.initialized = true;
             } else {
                 parser.parseString(data, (err, result) => {
-                    this.data = {};
-
-                    if (typeof result.scriptingProject.users !== "undefined") {
-                        const users = this.getUsers(result.scriptingProject.users[0].user);
-                        this.data.users = users;
-                    } else {
-                        this.data.users = [];
-                    }
-
-                    // Read director timeline from xml
+                    this.data = result;
                     const directorTimelineXML = result.scriptingProject.directorTimeline[0];
-                    const directorTimeline = new DirectorTimeline(
-                        directorTimelineXML.description[0]);
+                    this.data.scriptingProject.directorTimeline = DirectorTimeline.fromXML(directorTimelineXML);
 
-                    if (directorTimelineXML.shotList[0]) {
-                        directorTimelineXML.shotList[0].shot.forEach(shot => {
-                            const directorShot = DirectorShot.fromXML(shot);
-                            directorTimeline.addDirectorShot(directorShot);
-                        });
-                    }
+                    // console.log(result);
+                    // console.log(result.scriptingProject.directorTimeline[0].shotList[0].shot[0]);
 
-                    this.data.directorTimeline = directorTimeline;
+                    // if (typeof result.scriptingProject.users !== "undefined") {
+                    //     const users = this.getUsers(result.scriptingProject.users[0].user);
+                    //     this.data.users = users;
+                    // } else {
+                    //     this.data.users = [];
+                    // }
+                    //
+                    // // Read director timeline from xml
 
-                    // Read timelines from xml
-                    const cameraTimelinesXML =
-                        result.scriptingProject["camera-centerarea"][0].cameraTimeline;
-
-                    const cameraTimelines = [];
-                    const flattenedTimelines = [];
-
-                    if (typeof cameraTimelinesXML !== "undefined") {
-                        // Insert shots in timeline which is pushed to timelinesarray
-                        // and push to flattenedArray
-                        cameraTimelinesXML.forEach((timeline) => {
-                            // Get camera
-                            const camera = Camera.fromXML(timeline.camera[0]);
-
-                            // Make cameraTimeline
-                            const cameraTimeline = new CameraTimeline(
-                                camera.name, camera.description, camera);
-
-                            // Parse and add shots
-                            if (typeof timeline.shotList[0].shot !== "undefined") {
-                                timeline.shotList[0].shot.forEach(shot => {
-                                    const cameraShot = new CameraShot(shot.beginCount[0],
-                                        shot.endCount[0], shot.name[0], shot.description[0]);
-                                    cameraTimeline.addCameraShot(cameraShot);
-                                    flattenedTimelines.push(cameraShot);
-                                });
-                            }
-                            cameraTimelines.push(cameraTimeline);
-                        });
-                    }
-                    const minMaxCount = this.getMaxAndMinCount(flattenedTimelines);
-                    // Add timelines to data object
-                    this.data.cameraTimelines = { cameraTimelines,
-                        minCount: minMaxCount.minCount,
-                        maxCount: minMaxCount.maxCount };
+                    // // Read timelines from xml
+                    // const cameraTimelinesXML =
+                    //     result.scriptingProject["camera-centerarea"][0].cameraTimeline;
+                    //
+                    // const cameraTimelines = [];
+                    // const flattenedTimelines = [];
+                    //
+                    // if (typeof cameraTimelinesXML !== "undefined") {
+                    //     // Insert shots in timeline which is pushed to timelinesarray
+                    //     // and push to flattenedArray
+                    //     cameraTimelinesXML.forEach((timeline) => {
+                    //         // Get camera
+                    //         const camera = Camera.fromXML(timeline.camera[0]);
+                    //
+                    //         // Make cameraTimeline
+                    //         const cameraTimeline = new CameraTimeline(
+                    //             camera.name, camera.description, camera);
+                    //
+                    //         // Parse and add shots
+                    //         if (typeof timeline.shotList[0].shot !== "undefined") {
+                    //             timeline.shotList[0].shot.forEach(shot => {
+                    //                 const cameraShot = new CameraShot(shot.beginCount[0],
+                    //                     shot.endCount[0], shot.name[0], shot.description[0]);
+                    //                 cameraTimeline.addCameraShot(cameraShot);
+                    //                 flattenedTimelines.push(cameraShot);
+                    //             });
+                    //         }
+                    //         cameraTimelines.push(cameraTimeline);
+                    //     });
+                    // }
+                    // const minMaxCount = this.getMaxAndMinCount(flattenedTimelines);
+                    // // Add timelines to data object
+                    // this.data.cameraTimelines = { cameraTimelines,
+                    //     minCount: minMaxCount.minCount,
+                    //     maxCount: minMaxCount.maxCount };
                     this.initialized = true;
                 });
             }
@@ -176,6 +177,16 @@ class ProjectManager {
             }
         }
         xmlWait();
+    }
+
+    /*
+     * Helper method for ensuring that XML has been parsed before
+     * reading ProjectManager data
+     */
+    static waitForGenerateXML(callback) {
+        const projectManager = new ProjectManager();
+        const xmlJSON = projectManager.generateXML();
+        return xmlJSON;
     }
 }
 
