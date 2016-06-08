@@ -1,5 +1,6 @@
 import app from "../../../app.js";
 import socketApp from "../../../routes/sockets/sockets.js";
+import ProjectManager from "../../../objects/ProjectManager.js";
 import socketClient from "socket.io-client";
 import http from "http";
 import { expect } from "chai";
@@ -22,9 +23,8 @@ describe("Routes: ShotCaller Sockets", () => {
         socketServer = socketApp(server);
         server.listen(3000, () => {
             client = socketClient.connect(socketURL, options);
-            client.on("connect_error", err => console.log(err));
             client.on("connect", data => {
-                console.log("CONNECTED");
+                client.on("connect", () => {});
                 done();
             });
         });
@@ -35,6 +35,51 @@ describe("Routes: ShotCaller Sockets", () => {
         client.on("next_count", data => {
             expect(data.newCount).to.exist;
             done();
+        });
+    });
+
+    it("Should Be Able To Request The Current Shot", done => {
+        client.on("current_director_shot", data => {
+            expect(data).to.have.property("currentShot");
+            // Ensure running only once for subsequent tests
+            client.removeListener("current_director_shot");
+            done();
+        });
+        client.emit("get_current_shot");
+    });
+
+    it("Should Be Able To Request Current Shot If No Data Present", done => {
+        ProjectManager.waitForXML(projectManager => {
+            const tempData = projectManager.data;
+            projectManager.data = null;
+            client.on("current_director_shot", data => {
+                expect(data).to.have.property("currentShot");
+                projectManager.data = tempData;
+                done();
+            });
+            client.emit("get_current_shot");
+        });
+    });
+
+    it("Should Be Able To Request The Next Shot", done => {
+        client.emit("get_next_shot");
+        client.on("next_director_shot", data => {
+            expect(data).to.have.property("nextShot");
+            // Ensure running only once for subsequent tests
+            client.removeListener("next_director_shot");
+            done();
+        });
+    });
+
+    it("Should Be Able To Request Next Shot If No Data Present", done => {
+        ProjectManager.waitForXML(projectManager => {
+            const tempData = projectManager.data;
+            projectManager.data = null;
+            client.on("next_director_shot", data => {
+                expect(data).to.have.property("nextShot");
+                done();
+            });
+            client.emit("get_next_shot");
         });
     });
 
