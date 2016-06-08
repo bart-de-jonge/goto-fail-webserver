@@ -10,4 +10,13 @@ header {
 a {
   color: #00B7FF; }
 
+#drawer {
+  z-index: 4;
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.2) !important;
+}
+
+.narrow-layout > #drawer {
+  margin-top: 60px;
+}
+
 /*# sourceMappingURL=style.css.map */

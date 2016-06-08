@@ -5,40 +5,11 @@
     <% include ./partials/head %>
     <link rel="stylesheet" href="/stylesheets/users.css">
     <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-    <link rel="import" href="../bower_components/polymer/polymer.html">
-    <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-    <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
-    <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
-    <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
-    <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-    <link rel="import" href="../bower_components/paper-button/paper-button.html">
-    <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
-    <link rel="import" href="../bower_components/iron-icons/iron-icons.html/head">
-    <link rel="import" href="../elements/gotofail-drawer.html">
-    <link rel="import" href="../elements/gotofail-login.html">
+    <link rel="import" href="../elements/user-view.html">
   </head>
   <body class="fit vertical layout">
 
-    <paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking id="drawer-panel">
-
-        <gotofail-drawer drawer id="drawer"></gotofail-drawer>
-
-        <paper-header-panel main>
-
-            <div class="paper-header">
-                <paper-toolbar justify="left" id="head" style="height: 60px;">
-                    <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-                    <h2 style="font-weight: lighter">User selection</h2>
-                </paper-toolbar>
-            </div>
-
-            <gotofail-login class="flex"
-                            style="background-color: rgb(240,240,240); height: 100%;"
-                            id="gotofailLogin">
-            </gotofail-login>
-
-        </paper-header-panel>
-    </paper-drawer-panel>
+    <user-view></user-view>
 
   </body>
 </html>

@@ -9,8 +9,8 @@ html, body {
     background-color: #3F51B5;
 }
 
-paper-drawer-panel {
-    /*background-color: rgb(240,240,240);*/
+::-webkit-scrollbar {
+    display: none;
 }
 
 paper-toolbar {

@@ -1,0 +1,73 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
+<link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../elements/gotofail-drawer.html">
+<link rel="import" href="../elements/gotofail-login.html">
+
+<link rel="import" href="../colors.html">
+
+<dom-module id="user-view">
+    <template>
+        <style>
+
+            :host {
+                height: 100%;
+                width: 100%;
+            }
+
+            paper-toolbar {
+                background-color: var(--main-color-500);
+                color: white !important;
+                box-shadow: 0px 2px 5px rgba(0,0,0,0.4);
+            }
+
+            paper-drawer-panel {
+                --paper-drawer-panel-scrim: {
+                    background-color: transparent;
+                };
+            }
+
+        </style>
+
+        <paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking id="drawer-panel">
+
+            <gotofail-drawer drawer></gotofail-drawer>
+
+            <paper-header-panel main>
+
+                <div class="paper-header">
+                    <paper-toolbar justify="left" id="head" style="height: 60px;">
+                        <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
+                        <h2 style="font-weight: lighter">User selection</h2>
+                    </paper-toolbar>
+                </div>
+
+                <gotofail-login class="flex"
+                                style="background-color: rgb(240,240,240); height: 100%;"
+                                id="gotofailLogin">
+                </gotofail-login>
+
+            </paper-header-panel>
+        </paper-drawer-panel>
+
+    </template>
+    <script>
+        (function() {
+            'use strict';
+            class userView {
+                beforeRegister() {
+                    this.is = 'user-view';
+                }
+            }
+            Polymer(userView);
+        })();
+    </script>
+    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+</dom-module>
