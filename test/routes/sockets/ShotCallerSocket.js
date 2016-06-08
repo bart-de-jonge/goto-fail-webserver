@@ -24,7 +24,7 @@ describe("Routes: ShotCaller Sockets", () => {
         server.listen(3000, () => {
             client = socketClient.connect(socketURL, options);
             client.on("connect", data => {
-                client.on("connect", () => {});
+                client.removeListener("connect");
                 done();
             });
         });
@@ -86,8 +86,8 @@ describe("Routes: ShotCaller Sockets", () => {
     after(function (done) {
         this.timeout(0);
         client.close();
-        server.close(() => {
-            done();
-        });
+        server.close();
+        setImmediate(() => server.emit("close"));
+        done();
     });
 });
