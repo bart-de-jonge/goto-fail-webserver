@@ -16,20 +16,26 @@
                 outline: 0;
             }
 
-            .timeline-header {
+            #background {
                 background-color: white;
-                color: rgba(0,0,0,0.6);
+                height: 100%;
+            }
+
+            .timeline-header {
+                color: black;
                 font-size: x-large;
                 font-weight: lighter;
                 vertical-align: middle;
-                line-height: 59px;
-                border-bottom: solid 1px rgba(0,0,0,0.2);
-                height: 59px;
-                padding-left: 20px;
+                line-height: 60px;
+                height: 60px;
+                padding-left: 16%;
+                opacity: 0.6;
             }
 
             .item-style {
-                color: rgba(0,0,0,0.6);
+                color: black;
+                padding-left: 14%;
+                padding-right: 14%;
             }
 
             .text-style {
@@ -39,53 +45,83 @@
                 font-weight: bold;
                 vertical-align: middle;
                 line-height: 100%;
+                color: black;
+                opacity: 0.8;
             }
 
             .icon-style {
-                color: #303F9F;
+                color: #3F51B5;
                 vertical-align: middle;
                 --iron-icon-height: 20px;
                 --iron-icon-width: 20px;
             }
 
+            .separator-horizontal {
+                width: 100%;
+                height: 1px;
+                min-height: 1px;
+                max-height: 1px;
+                background-color: black;
+                opacity: 0.1;
+                margin: 3px 0;
+            }
+
+            .filler-vertical {
+                width: 100%;
+                height: 10px;
+                background-color: transparent;
+            }
+
         </style>
 
-        <div class="timeline-header">
-            Goto Fail;
+        <div id="background">
+
+            <div class="timeline-header">
+                Goto Fail;
+            </div>
+
+            <paper-listbox style="background-color: transparent; padding-top: 0;">
+
+                <div class="separator-horizontal" style="margin-top: 0;"></div>
+                <div class="filler-vertical"></div>
+
+                <a href="/" tabindex="-1" style="text-decoration:none"> <paper-item  class="item-style">
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
+                    <span class="text-style" style="padding-left: 10px;">User selection</span>
+                </paper-item> </a>
+
+                <a href="/upload-scp" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <iron-icon class="icon-style" icon="icons:file-upload"></iron-icon>
+                    <span class="text-style" style="padding-left: 10px;">Upload New Project</span>
+                </paper-item> </a>
+
+                <div class="filler-vertical"></div>
+                <div class="separator-horizontal"></div>
+                <div class="filler-vertical"></div>
+
+                <a href="/timeline" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <iron-icon class="icon-style" icon="image:camera"></iron-icon>
+                    <span class="text-style" style="padding-left: 10px;">Timeline view</span>
+                </paper-item> </a>
+
+                <a href="/shot-caller" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <iron-icon class="icon-style" icon="image:timer"></iron-icon>
+                    <span class="text-style" style="padding-left: 10px;">Shot calling view</span>
+                </paper-item> </a>
+
+                <a href="/director" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
+                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <iron-icon class="icon-style" icon="image:camera-alt"></iron-icon>
+                    <span class="text-style" style="padding-left: 10px;">Director view</span>
+                </paper-item> </a>
+
+            </paper-listbox>
+
         </div>
-
-        <paper-listbox>
-            <a href="/" tabindex="-1" style="text-decoration:none"> <paper-item  class="item-style">
-                <paper-ripple style="color: #3F51B5;"></paper-ripple>
-                <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
-                <span class="text-style" style="padding-left: 10px;">User selection</span>
-            </paper-item> </a>
-
-            <a href="/timeline" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                <paper-ripple style="color: #3F51B5;"></paper-ripple>
-                <iron-icon class="icon-style" icon="image:camera"></iron-icon>
-                <span class="text-style" style="padding-left: 10px;">Timeline view</span>
-            </paper-item> </a>
-
-            <a href="/shot-caller" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                <paper-ripple style="color: #3F51B5;"></paper-ripple>
-                <iron-icon class="icon-style" icon="image:timer"></iron-icon>
-                <span class="text-style" style="padding-left: 10px;">Shot calling view</span>
-            </paper-item> </a>
-
-            <a href="/director" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                <paper-ripple style="color: #3F51B5;"></paper-ripple>
-                <iron-icon class="icon-style" icon="image:camera-alt"></iron-icon>
-                <span class="text-style" style="padding-left: 10px;">Director view</span>
-            </paper-item> </a>
-
-            <a href="/upload-scp" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                <paper-ripple style="color: #3F51B5;"></paper-ripple>
-                <iron-icon class="icon-style" icon="icons:file-upload"></iron-icon>
-                <span class="text-style" style="padding-left: 10px;">Upload New Project</span>
-            </paper-item> </a>
-        </paper-listbox>
-
     </template>
     <script>
     (function() {

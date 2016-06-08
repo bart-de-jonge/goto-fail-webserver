@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <% include ./partials/head %>
+    <link rel="stylesheet" href="/stylesheets/shotCaller.css">
     <link rel="import" href="../bower_components/polymer/polymer.html">
     <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
     <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
@@ -15,7 +16,7 @@
 </head>
 <body>
 
-<paper-drawer-panel peeking force-narrow left-drawer id="drawer-panel">
+<paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking left-drawer id="drawer-panel">
 
     <gotofail-drawer drawer id="drawer"></gotofail-drawer>
 
@@ -28,7 +29,9 @@
             </paper-toolbar>
         </div>
 
-        <shot-caller-display></shot-caller-display>
+        <shot-caller-display class="flex" style="background-color: rgb(240,240,240); height: 100%;">
+
+        </shot-caller-display>
 
     </paper-header-panel>
 </paper-drawer-panel>

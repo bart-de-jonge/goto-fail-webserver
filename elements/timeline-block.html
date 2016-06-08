@@ -43,33 +43,37 @@
                 margin: auto;
                 opacity: 0.1;
                 width: 100%;
+                margin: 1px 0;
             }
 
             .card-content-deep {
+                background-color: transparent;
                 font-size: small;
                 box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.5);
             }
 
             iron-icon {
                 color: rgba(0,0,0,0.4);
+                float: right;
             }
 
         </style>
 
-        <paper-card onclick="toast1.open()"
+        <paper-card on-tap="openTimelineToast"
                     elevation="1"
                     heading="{{block_data.name}}"
                     style="visibility: {{block_data.visible}};">
+            <paper-ripple></paper-ripple>
             <div class="card-content card-content-deep">
                 <paper-ripple></paper-ripple>
-                <iron-icon icon="device:access-time" style="float: right;"></iron-icon>
+                <iron-icon icon="device:access-time"></iron-icon>
                 <div class="content-header">Count</div>
                 <span>{{block_data.beginCount}} - {{block_data.endCount}}</span>
             </div>
             <div class="timeline-separator"></div>
-            <div class="card-content" style="height: 100%">
+            <div class="card-content" style="background-color: transparent; height: 100%">
                 <paper-ripple></paper-ripple>
-                <iron-icon icon="icons:description" style="float: right;"></iron-icon>
+                <iron-icon icon="icons:description"></iron-icon>
                 <div class="content-header">Description</div>
                 <span>{{block_data.description}}</span>
             </div>
@@ -86,6 +90,11 @@
             this.properties = {
                 block_data: Object
             };
+        }
+
+        openTimelineToast(e) {
+            timelinetoast.open();
+            timelinetoastcontent.block_data = this.block_data;
         }
     }
     Polymer(timelineBlock);

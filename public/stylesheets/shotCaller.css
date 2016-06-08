@@ -6,7 +6,11 @@
 html, body {
     height: 100%;
     width: 100%;
-    background-color: rgb(240,240,240);
+    background-color: #3F51B5;
+}
+
+paper-drawer-panel {
+    /*background-color: rgb(240,240,240);*/
 }
 
 paper-toolbar {
@@ -17,8 +21,14 @@ paper-toolbar {
 
 #drawer {
     z-index: 4;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.2) !important;
+}
+
+.narrow-layout > #drawer {
+    margin-top: 60px;
 }
 
 #scrim {
     z-index: 4 !important;
+    background-color: transparent !important;
 }

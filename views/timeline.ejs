@@ -6,6 +6,7 @@
     <link rel="import" href="../bower_components/polymer/polymer.html">
     <link rel="import" href="../elements/timeline-grid.html">
     <link rel="import" href="../elements/timeline-headers.html">
+    <link rel="import" href="../elements/timeline-toast.html">
     <link rel="import" href="../elements/gotofail-drawer.html">
     <link rel="import" href="../bower_components/paper-header-panel/paper-header-panel.html">
     <link rel="import" href="../bower_components/paper-drawer-panel/paper-drawer-panel.html">
@@ -17,13 +18,13 @@
 
 <body class ="fit vertical layout">
 
-    <paper-drawer-panel peeking force-narrow left-drawer id="drawer-panel">
+    <paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking left-drawer id="drawer-panel">
 
         <gotofail-drawer drawer id="drawer"></gotofail-drawer>
 
         <paper-header-panel main mode="waterfall">
 
-            <div class="paper-header">
+            <div class="paper-header" style="background-color: rgb(240,240,240)">
                 <paper-toolbar justify="left" id="head" style="height: 60px;">
                     <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
                     <h2 style="font-weight: lighter">Timeline view</h2>
@@ -31,13 +32,9 @@
                 <timeline-headers></timeline-headers>
             </div>
 
-            <div class="fit">
-                <paper-toast style="width: 100%; text-align: center;" duration="0" id="toast1">
-                    <paper-button onclick="toast1.toggle()">
-                        Close me for pete's sake!
-                    </paper-button>
-                </paper-toast>
+            <div class="fit" style="background-color: rgb(240,240,240);">
                 <timeline-grid></timeline-grid>
+                <timeline-toast id="timelinetoastcontent"></timeline-toast>
             </div>
 
             <div id="bottom-indicator">
@@ -45,6 +42,7 @@
             </div>
 
         </paper-header-panel>
+
     </paper-drawer-panel>
 
     <script src="/js/timeline.js"></script>
