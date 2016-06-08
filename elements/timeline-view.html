@@ -26,7 +26,8 @@
 
             paper-drawer-panel {
                 --paper-drawer-panel-scrim: {
-                    background-color: transparent;
+                    margin-top: 60px !important;
+                    background-color: rgba(0,0,0,0.15);
                 };
             }
 
@@ -81,11 +82,24 @@
             class timelineView {
                 beforeRegister() {
                     this.is = 'timeline-view';
+
+                    const socket = io("/cameraOperators"); // eslint-disable-line no-undef
+
+                    socket.on("next_count", (countData) => {
+                        // TODO: Add Data Manipulation Here
+
+                        document.getElementsByTagName("timeline-grid")[0]
+                            .setAttribute("current-count", countData.newCount);
+                    });
+
+                    document.addEventListener("advanceCount", () => {
+                        socket.emit("advance_count", {});
+                    });
                 }
             }
             Polymer(timelineView);
         })();
     </script>
 
-    <script src="/js/timeline.js"></script>
+    <!--<script src="/js/timeline.js"></script>-->
 </dom-module>
