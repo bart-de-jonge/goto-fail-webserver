@@ -27,7 +27,7 @@ class User {
 
         return {
             name: [this.name],
-            roleValue: [this.jobType],
+            roleValue: [String(this.jobType)],
             chosenTimelines: [{chosenTimeline: chosenTimelines}],
         };
     }
