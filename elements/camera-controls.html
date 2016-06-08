@@ -93,6 +93,7 @@
                 }
 
                 onStopCamera(e, request) {
+                    // TODO: Expand error handling
                     if (request.succeeded) {
                         console.log(request.message);
                     } else {
@@ -135,6 +136,7 @@
                 }
 
                 onMoveCamera(e, request) {
+                    // TODO: Expand error handling
                     if (request.succeeded) {
                         console.log(request.message);
                     } else {
@@ -143,10 +145,12 @@
                 }
 
                 onSavePreset(e, request) {
+                    // TODO: Expand error handling
                     console.log(request);
                 }
 
                 onRecallPreset(e, request) {
+                    // TODO: Expand error handling
                     console.log(request);
                 }
 
