@@ -45,23 +45,23 @@
 
         <div class="layout horizontal">
             <div class="layout horizontal">
-                <paper-button on-down="_moveCameraLeft" on-up="stopCamera">left</paper-button>
-                <div class="layout vertical">
-                    <paper-button on-down="_moveCameraUp" on-up="stopCamera">up</paper-button>
-                    <paper-button on-down="_moveCameraDown" on-up="stopCamera">down</paper-button>   
+                <div class="flex">
+                    <paper-button on-down="_moveCameraLeft" on-up="stopCamera">left</paper-button>
+                    <div class="layout vertical">
+                        <paper-button on-down="_moveCameraUp" on-up="stopCamera">up</paper-button>
+                        <paper-button on-down="_moveCameraDown" on-up="stopCamera">down</paper-button>   
+                    </div>
+                    <paper-button on-down="_moveCameraRight" on-up="stopCamera">right</paper-button>
                 </div>
-                <paper-button on-down="_moveCameraRight" on-up="stopCamera">right</paper-button>
             </div>
             <div class="flex"></div>
             <div class="layout vertical">
-                <div>
-                    <paper-button on-tap="savePresetOne">savepreset 1</paper-button>
-                    <paper-button on-tap="recallPresetOne">recall preset 1</paper-button>
-                </div>
-                <div>
-                    <paper-button on-tap="savePresetTwo">savepreset 2</paper-button>
-                    <paper-button on-tap="recallPresetTwo">recall preset 2</paper-button>
-                </div>
+                <template is="dom-repeat" items="{{presets}}">
+                    <div>
+                        <paper-button id="{{item}}" on-tap="savePreset">savepreset {{item}}</paper-button>
+                        <paper-button id="{{item}}" on-tap="recallPreset">recall preset {{item}}</paper-button>
+                    </div>
+                </template>
             </div>
         </div>
     </template>
@@ -74,6 +74,16 @@
                     this.is = 'camera-controls';
 
                     this.properties = {
+                        presets: {
+                            type: Object,
+                            value: function() {
+                                var list = [];
+                                for (var i = 1; i <= 99; i++) {
+                                    list.push(i);
+                                }
+                                return list;
+                            }
+                        }
                     };
                 }
 
@@ -88,6 +98,22 @@
                     } else {
                         console.log(request.message);
                     }
+                }
+
+                savePreset(e, detail) {
+                    this.$.ajaxSavePreset.body = {
+                        preset: e.target.id,
+                    }
+                    this.$.ajaxSavePreset.url = "cameras/save";
+                    this.$.ajaxSavePreset.generateRequest();
+                }
+
+                recallPreset(e) {
+                    this.$.ajaxRecallPreset.body = {
+                        preset: e.target.id,
+                    }
+                    this.$.ajaxRecallPreset.url = "cameras/recall";
+                    this.$.ajaxRecallPreset.generateRequest();
                 }
 
                 panCamera(direction, speed) {
@@ -116,38 +142,6 @@
                     }
                 }
 
-                savePresetOne(e) {
-                    this.$.ajaxSavePreset.body = {
-                        preset: 1,
-                    }
-                    this.$.ajaxSavePreset.url = "cameras/save";
-                    this.$.ajaxSavePreset.generateRequest();
-                }
-
-                savePresetTwo(e) {
-                    this.$.ajaxSavePreset.body = {
-                        preset: 2,
-                    }
-                    this.$.ajaxSavePreset.url = "cameras/save";
-                    this.$.ajaxSavePreset.generateRequest();
-                }
-
-                recallPresetOne(e) {
-                    this.$.ajaxRecallPreset.body = {
-                        preset: 1,
-                    }
-                    this.$.ajaxRecallPreset.url = "cameras/recall";
-                    this.$.ajaxRecallPreset.generateRequest();
-                }
-
-                recallPresetTwo(e) {
-                    this.$.ajaxRecallPreset.body = {
-                        preset: 2,
-                    }
-                    this.$.ajaxRecallPreset.url = "cameras/recall";
-                    this.$.ajaxRecallPreset.generateRequest();
-                }
-
                 onSavePreset(e, request) {
                     console.log(request);
                 }
@@ -157,16 +151,16 @@
                 }
 
                 _moveCameraUp() {
-                    this.tiltCamera("up", 25);
+                    this.tiltCamera("up", 30);
                 }
                 _moveCameraDown() {
-                    this.tiltCamera("down", 25);
+                    this.tiltCamera("down", 30);
                 }
                 _moveCameraRight() {
-                    this.panCamera("right", 25);
+                    this.panCamera("right", 30);
                 }
                 _moveCameraLeft() {
-                    this.panCamera("left", 25);
+                    this.panCamera("left", 30);
                 }
             }
             Polymer(cameraControls);
