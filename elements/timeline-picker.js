@@ -53,7 +53,7 @@ class timelinePicker {
                 toggles[i].disabled = false;
             }
         }
-        document.querySelector("#gotofailLogin").updateUsers();
+        document.querySelector("#gotofailLogin").changeUserJobType(this.user.id, this.$.userTypeTabs.selected);
     }
 
     /**

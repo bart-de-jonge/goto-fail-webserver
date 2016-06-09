@@ -49,8 +49,6 @@ class ProjectManager {
                 // todo something with err
                 throw err;
             }
-
-            console.log("succesfully written and shit!");
             callback();
         });
     }
