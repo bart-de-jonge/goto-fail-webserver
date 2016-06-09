@@ -11,14 +11,13 @@ npm install -g bower
 npm install -g gulp
 bower install
 ```
-Then make a folder in the root directory of the local clone with the name "project-scp-files" which can remain empty (this is to ensure the project upload from the scripting application works).
 
 # Reports instructions:
 Using the command:
 ```
 gulp travisBuild
 ```
-The javascript linter (eslint), our tests and coverage tool are run. The coverage output should be stored on a webpage in the "coverage" folder.
+The javascript linter (eslint), our tests and coverage tool are run. The coverage output should be stored on a webpage in the "coverage" folder. N.B. A project should be uploaded to the server before testing to ensure proper coverage reports.
 
 # Run instructions:
 ```

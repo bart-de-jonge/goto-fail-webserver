@@ -14,4 +14,10 @@ describe("Routes: Upload", () => {
             })
             .end(err => done(err));
     });
+
+    it("GET /upload-scp", done => {
+        request.get("/upload-scp")
+            .expect(200)
+            .end(err => done(err));
+    });
 });
