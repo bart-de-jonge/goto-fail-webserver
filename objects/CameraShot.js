@@ -26,7 +26,7 @@ class CameraShot {
             description: [this.description],
             colliding: [this.colliding],
             instance: [this.instance],
-        }
+        };
     }
 }
 

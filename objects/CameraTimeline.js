@@ -22,7 +22,7 @@ class CameraTimeline {
     getCameraShots() {
         return this.cameraShots;
     }
-    
+
     static fromXML(XMLObject) {
         // Get camera
         const camera = Camera.fromXML(XMLObject.camera);
@@ -41,16 +41,16 @@ class CameraTimeline {
     }
 
     toXML() {
-        const shotList = [{shot:[]}];
+        const shotList = [{ shot: [] }];
         this.cameraShots.forEach((shot) => {
-           shotList[0].shot.push(shot.toXML());
+            shotList[0].shot.push(shot.toXML());
         });
 
         return {
             camera: this.camera.toXML(),
-            shotList: shotList,
+            shotList,
             instance: [this.instance],
-        }
+        };
     }
 }
 

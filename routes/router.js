@@ -7,15 +7,6 @@ import shotCaller from "./shot-caller";
 import director from "./director";
 import cameraControl from "./camera-control";
 
-import fs from "fs";
-import DirectorTimeline from "../objects/DirectorTimeline.js";
-import xml2js from "xml2js";
-import util from "util";
-
-import ProjectManager from "../objects/ProjectManager";
-
-const parser = new xml2js.Parser();
-
 // Module used to attach all routes to the correct urls
 module.exports.addRoutes = (app) => {
     app.use("/", index);

@@ -3,12 +3,8 @@ import xml2js from "xml2js";
 const parser = new xml2js.Parser();
 const builder = new xml2js.Builder();
 import deepCopy from "deepcopy";
-
-
-import CameraShot from "../objects/CameraShot";
 import CameraTimeline from "../objects/CameraTimeline";
 import DirectorTimeline from "../objects/DirectorTimeline.js";
-import DirectorShot from "../objects/DirectorShot.js";
 import User from "./User";
 
 // Singleton Object
@@ -63,9 +59,11 @@ class ProjectManager {
                 parser.parseString(data, (err, result) => {
                     this.data = result;
                     const directorTimelineXML = result.scriptingProject.directorTimeline[0];
-                    this.data.scriptingProject.directorTimeline = DirectorTimeline.fromXML(directorTimelineXML);
+                    this.data.scriptingProject.directorTimeline =
+                        DirectorTimeline.fromXML(directorTimelineXML);
 
-                    this.data.scriptingProject.users = this.getUsersFromXML(result.scriptingProject.users);
+                    this.data.scriptingProject.users =
+                        this.getUsersFromXML(result.scriptingProject.users);
 
 
                     // Add timelines to data object
@@ -93,9 +91,9 @@ class ProjectManager {
     }
 
     cameraTimelinesToXML(cameraTimelines) {
-        const XMLObject = [{cameraTimeline: []}];
+        const XMLObject = [{ cameraTimeline: [] }];
         cameraTimelines.forEach((timeline) => {
-           XMLObject[0].cameraTimeline.push(timeline.toXML());
+            XMLObject[0].cameraTimeline.push(timeline.toXML());
         });
         return XMLObject;
     }
@@ -110,9 +108,8 @@ class ProjectManager {
                 });
             }
             return users;
-        } else {
-            return [];
         }
+        return [];
     }
 
     usersToXML(users) {
@@ -121,7 +118,7 @@ class ProjectManager {
             usersXML.push(user.toXML());
         });
 
-        return [{user: usersXML}];
+        return [{ user: usersXML }];
     }
 
     filterTimelines(pickedTimelines, data) {

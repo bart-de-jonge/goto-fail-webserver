@@ -38,7 +38,10 @@ class DirectorTimeline {
             directorShotsXML.push(shot.toXML());
         });
 
-        return {description: this.description, shotList: {shot: directorShotsXML}};
+        return {
+            description: this.description,
+            shotList: { shot: directorShotsXML },
+        };
     }
 }
 

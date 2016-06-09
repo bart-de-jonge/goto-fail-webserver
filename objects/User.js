@@ -22,13 +22,13 @@ class User {
     toXML() {
         const chosenTimelines = [];
         this.pickedTimelines.forEach((pickedTimeline) => {
-           chosenTimelines.push(String(pickedTimeline));
+            chosenTimelines.push(String(pickedTimeline));
         });
 
         return {
             name: [this.name],
             roleValue: [String(this.jobType)],
-            chosenTimelines: [{chosenTimeline: chosenTimelines}],
+            chosenTimelines: [{ chosenTimeline: chosenTimelines }],
         };
     }
 
