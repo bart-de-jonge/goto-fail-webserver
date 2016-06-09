@@ -1,5 +1,6 @@
 import express from "express";
 import ProjectManager from "../objects/ProjectManager";
+import User from "../objects/User";
 const router = express.Router(); // eslint-disable-line new-cap
 
 // Set picked user
@@ -24,8 +25,17 @@ router.get("/get-users", (req, res) => {
 router.post("/update-users", (req, res) => {
     ProjectManager.waitForXML((projectManager) => {
         const data = projectManager.data;
-        data.scriptingProject.users = req.body.users;
-        res.json({ success: true });
+        const newUsers = [];
+
+        req.body.users.forEach((user) => {
+            newUsers.push(User.parseFromJson(user));
+        });
+
+        data.scriptingProject.users = newUsers;
+
+        ProjectManager.waitForWriteXML(() => {
+            res.json({ success: true });
+        });
     });
 });
 

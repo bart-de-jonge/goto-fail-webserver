@@ -31,6 +31,10 @@ class User {
             chosenTimelines: [{chosenTimeline: chosenTimelines}],
         };
     }
+
+    static parseFromJson(json) {
+        return new User(json.id, json.name, json.pickedTimelines, json.jobType);
+    }
 }
 
 export default User;

@@ -50,11 +50,9 @@ class ProjectManager {
                 throw err;
             }
 
-            console.log("succes!");
+            console.log("succesfully written and shit!");
             callback();
         });
-
-        callback();
     }
 
     parseXML() {
@@ -170,13 +168,20 @@ class ProjectManager {
     }
 
     /*
-     * Helper method for ensuring that XML has been parsed before
-     * reading ProjectManager data
+     * Helper method for ensuring that XML has been written
      */
-    static waitForGenerateXML(callback) {
+    static waitForWriteXML(callback) {
         const projectManager = new ProjectManager();
-        const xmlJSON = projectManager.generateXML();
-        return xmlJSON;
+        function xmlWait() {
+            if (!projectManager.initialized) {
+                setTimeout(xmlWait, 10);
+            } else {
+                projectManager.writeXML(() => {
+                    callback();
+                });
+            }
+        }
+        xmlWait();
     }
 }
 
