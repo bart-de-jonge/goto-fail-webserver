@@ -1,13 +1,15 @@
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../elements/gotofail-togglebutton.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
-<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html.html">
-<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="gotofail-togglebutton.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../colors.html">
+
 <dom-module id="timeline-picker">
     // Template
     <template>
@@ -24,11 +26,23 @@
             }
 
             paper-button {
-                color: #FFC107;
+                color: var(--secondary-color-500);
+            }
+
+            #userTypeTabs {
+                margin-top: 0px;
+                padding-left: 16px;
+                padding-right: 16px;
+                --paper-tabs-selection-bar: {
+                    height: 3px;
+                    bottom: 0px;
+                };
             }
 
             paper-button[disabled] {
                 background-color: transparent;
+                color: black;
+                opacity: 0.4;
             }
 
             .horizontal-separator {
@@ -40,13 +54,13 @@
             }
 
             paper-tabs {
-                background-color: #3F51B5;
+                background-color: var(--main-color-500);
                 color: white;
-                --paper-tabs-selection-bar-color: #FFC107;
+                --paper-tabs-selection-bar-color: var(--secondary-color-500);
             }
 
             paper-tab {
-                --paper-tab-ink: #448AFF;
+                --paper-tab-ink: var(--main-color-500);
             }
 
             paper-input {
@@ -58,12 +72,13 @@
             }
 
             .shadowed {
-                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.5);
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.4);
+                margin-top: 0px;
+                padding-top: 8px;
             }
 
             #toggles {
                 display: flex;
-                /*flex-flow: row wrap;*/
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;
