@@ -30,13 +30,12 @@ describe("Routes: ShotCaller Sockets", () => {
         });
     });
 
-    it("Should Be Able To Advance The Count", function (done) {
-        this.timeout(0);
-        client.emit("advance_count");
+    it("Should Be Able To Advance The Count", done => {
         client.on("next_count", data => {
             expect(data.newCount).to.exist;
             done();
         });
+        client.emit("advance_count");
     });
 
     it("Should Be Able To Request The Current Shot", done => {
