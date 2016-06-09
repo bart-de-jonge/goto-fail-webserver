@@ -20,7 +20,7 @@
                 padding: 0 0px;
             }
 
-            .timeline-separator {
+            .horizontal-separator {
                 background-color: black;
                 opacity: 0.1;
                 margin: 0px 4px;
@@ -38,10 +38,10 @@
         </iron-ajax>
 
         <div class="layout horizontal timelines">
-            <div class="timeline-separator"></div>
+            <div class="horizontal-separator"></div>
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
                 <timeline-header timeline_data="{{item}}" class="flex"></timeline-header>
-                <div class="timeline-separator"></div>
+                <div class="horizontal-separator"></div>
             </template>
         </div>
     </template>

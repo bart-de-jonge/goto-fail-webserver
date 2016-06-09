@@ -14,7 +14,7 @@
                 margin: 0 24px;
             }
 
-            .timeline-separator {
+            .horizontal-separator {
                 background-color: black;
                 opacity: 0.1;
                 margin: 0px 4px;
@@ -40,10 +40,10 @@
 
         <div class="layout horizontal">
             <span id="scrolling-box"></span>
-            <div class="timeline-separator"></div>
+            <div class="horizontal-separator"></div>
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
                 <timeline-element timeline_data="{{item}}" class="flex"></timeline-element>
-                <div class="timeline-separator"></div>
+                <div class="horizontal-separator"></div>
             </template>
         </div>
     </template>
