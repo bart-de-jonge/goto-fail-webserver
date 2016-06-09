@@ -24,8 +24,13 @@ router.get("/get-users", (req, res) => {
 router.post("/update-users", (req, res) => {
     ProjectManager.waitForXML((projectManager) => {
         const data = projectManager.data;
-        data.users = req.body.users;
-        res.json({ success: true });
+        // Check if data exists
+        if (data) {
+            data.users = req.body.users;
+            res.json({ success: true });
+        } else {
+            res.json({ success: false });
+        }
     });
 });
 
