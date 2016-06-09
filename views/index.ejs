@@ -19,7 +19,7 @@
   </head>
   <body class="fit vertical layout">
 
-    <paper-drawer-panel peeking force-narrow left-drawer id="drawer-panel">
+    <paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking id="drawer-panel">
 
         <gotofail-drawer drawer id="drawer"></gotofail-drawer>
 
@@ -32,7 +32,10 @@
                 </paper-toolbar>
             </div>
 
-            <gotofail-login class="flex" id="gotofailLogin"></gotofail-login>
+            <gotofail-login class="flex"
+                            style="background-color: rgb(240,240,240); height: 100%;"
+                            id="gotofailLogin">
+            </gotofail-login>
 
         </paper-header-panel>
     </paper-drawer-panel>

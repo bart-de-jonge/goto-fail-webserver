@@ -19,55 +19,122 @@
             .horizontal-separator {
                 background-color: black;
                 height: 1px;
-                margin: auto;
+                margin: 1px 0;
                 opacity: 0.1;
-                width: 100%;
+                width: auto;
             }
 
             #newUserInput {
                 margin-bottom: 20px;
             }
 
-            #toggles {
-                display: flex;
-                flex-flow: row wrap;
-            }
-
             paper-toggle-button {
                 flex-basis: 50%;
             }
+
+            #head {
+                margin-top: 0;
+                margin-bottom: 0;
+                background-color: #3F51B5;
+                font-size: large;
+                color: white;
+                padding: 24px;
+            }
+
+            #tabs {
+                margin-top: 0;
+            }
+
+            paper-tabs {
+                background-color: #3F51B5;
+                color: white;
+                --paper-tabs-selection-bar-color: #FFC107;
+            }
+
+            paper-tab {
+                --paper-tab-ink: #448AFF;
+            }
+
+            .body {
+                margin: 1px 0;
+                padding: 24px;
+            }
+
+            #body-top {
+                margin-top: 0px;
+                margin-bottom: 0px;
+                padding-top: 8px;
+                padding-bottom: 0px;
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.5);
+            }
+
+            #body-bottom {
+                padding: 16px 24px;
+                color: #FFC107;
+            }
+
+            .content-header {
+                color: gray;
+            }
+
+            paper-toggle-button {
+                --paper-toggle-button-checked-bar-color:  #FFC107;
+                --paper-toggle-button-checked-button-color:  #FFC107;);
+                --paper-toggle-button-checked-ink-color: #FFC107;
+                --paper-toggle-button-unchecked-bar-color:  rgba(0,0,0,0.3);
+                --paper-toggle-button-unchecked-ink-color: #FFC107;
+                text-align: center;
+                vertical-align: middle;
+                justify-content: center;
+                flex-basis: 200px;
+                margin: 16px 0;
+            }
+
+            #toggles {
+                display: flex;
+                /*flex-flow: row wrap;*/
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
         </style>
 
         <paper-dialog id="addUserDialog" modal="true">
-            <h2>Add a new user</h2>
-            <div>
+            <div id="head">Add a new user</div>
 
+            <paper-tabs id="tabs" on-click="paperTabsClicked" id="newUserTabs" selected="0">
+                <paper-tab>Camera operator</paper-tab>
+                <paper-tab>Shotcaller</paper-tab>
+                <paper-tab>Director</paper-tab>
+            </paper-tabs>
 
-                <paper-tabs on-click="paperTabsClicked" id="newUserTabs" selected="0">
-                    <paper-tab>Camera operator</paper-tab>
-                    <paper-tab>Shotcaller</paper-tab>
-                    <paper-tab>Director</paper-tab>
-                </paper-tabs>
-
+            <div class="body" id="body-top">
                 <paper-input on-input="nameInputChanged" error-message="Username required" label="User name:" id="newUserInput"></paper-input>
+            </div>
 
-                <div class="horizontal-separator"></div>
+            <div class="horizontal-separator"></div>
 
-                <div class="card-content">
+            <div class="body">
+                <div class="card-content" style="alignment: center; width: 100%;">
                     <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
-                    <div id="toggles" class="layout horizontal flex">
+                    <div id="toggles">
                         <template is="dom-repeat" items="{{timelines}}">
                             <paper-toggle-button value="{{index}}" class="newUserToggleButton">{{item.name}}</paper-toggle-button>
                         </template>
                     </div>
                 </div>
-
             </div>
-            <div class="buttons">
+
+            <div class="horizontal-separator"></div>
+
+            <div class="body buttons" id="body-bottom">
                 <paper-button dialog-dismiss>Cancel</paper-button>
                 <paper-button id="addUserConfirmButton" on-tap="addUserConfirmButtonTapped">Add user</paper-button>
             </div>
+
         </paper-dialog>
+
     </template>
     <script>
         class newUserDialog {

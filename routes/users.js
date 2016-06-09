@@ -25,17 +25,21 @@ router.get("/get-users", (req, res) => {
 router.post("/update-users", (req, res) => {
     ProjectManager.waitForXML((projectManager) => {
         const data = projectManager.data;
-        const newUsers = [];
+        // Check if data exists
+        if (data) {
+            const newUsers = [];
+            req.body.users.forEach((user) => {
+                newUsers.push(User.parseFromJson(user));
+            });
 
-        req.body.users.forEach((user) => {
-            newUsers.push(User.parseFromJson(user));
-        });
+            data.scriptingProject.users = newUsers;
 
-        data.scriptingProject.users = newUsers;
-
-        ProjectManager.waitForWriteXML(() => {
-            res.json({ success: true });
-        });
+            ProjectManager.waitForWriteXML(() => {
+                res.json({ success: true });
+            });
+        } else {
+            res.json({ success: false });
+        }
     });
 });
 

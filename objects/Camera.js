@@ -4,12 +4,14 @@ import CameraType from "./CameraType.js";
  * Class for storing a CameraTimeline
  */
 class Camera {
-    constructor(name, description, cameraType, movementMargin, instance) {
+<<<<<<< HEAD
+    constructor(name, description, cameraType, movementMargin, instance, ip) {
         this.name = name;
         this.description = description;
         this.cameraType = cameraType;
         this.movementMargin = movementMargin;
         this.instance = instance;
+        this.ip = ip;
     }
 
 
@@ -20,7 +22,8 @@ class Camera {
             XMLObject[0].description[0],
             CameraType.fromXML(XMLObject[0].cameraType),
             XMLObject[0].movementMargin[0],
-            XMLObject[0].instance[0]
+            XMLObject[0].instance[0],
+            "",
         );
     }
 

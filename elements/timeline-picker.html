@@ -18,12 +18,17 @@
                 display: flex;
                 flex-direction: column;
             }
+
             paper-toggle-button {
                 margin-top: 20px;
             }
 
             paper-button {
                 color: #FFC107;
+            }
+
+            paper-button[disabled] {
+                background-color: transparent;
             }
 
             .horizontal-separator {
@@ -56,6 +61,14 @@
                 box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.5);
             }
 
+            #toggles {
+                display: flex;
+                /*flex-flow: row wrap;*/
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
         </style>
         <iron-ajax
                 id="pickedUserPost"
@@ -79,7 +92,7 @@
 
         <div class="card-content">
             <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
-            <div id="toggles" class="layout horizontal flex">
+            <div id="toggles">
                 <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
                         <gotofail-togglebutton number="{{index}}" name="{{item.name}}" disabled></gotofail-togglebutton>
                 </template>
