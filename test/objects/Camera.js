@@ -33,7 +33,7 @@ describe("Camera", () => {
         expect(camera.description).to.equal("Used for panning shots");
         expect(camera.movementMargin).to.equal(1);
         expect(camera.cameraType).to.be.instanceOf(CameraType);
-        expect(camera.ip).to.equal("");
+        expect(camera.ip).to.equal("testip");
         done();
     })
 });
