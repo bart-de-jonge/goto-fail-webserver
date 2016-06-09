@@ -8,6 +8,7 @@ import injectModules from "gulp-inject-modules";
 import istanbul from "gulp-babel-istanbul";
 import eslint from "gulp-eslint";
 import bower from "gulp-bower";
+import exit from "gulp-exit";
 
 const paths = {
     client_scripts: ["client_app/**/*.js"],
@@ -57,7 +58,8 @@ gulp.task("lint", () =>
 
 gulp.task("test", () =>
     gulp.src("test/**/*.js")
-        .pipe(mocha()));
+        .pipe(mocha())
+        .pipe(exit()));
 
 gulp.task("preTravisBuild", () =>
          gulp.src(["client_app/**/*.js", "elements/**/*.js", "objects/**/*.js",
@@ -68,12 +70,15 @@ gulp.task("preTravisBuild", () =>
 
 // THIS RUNS WHEN TRAVIS BUILDS
 gulp.task("travisBuild", ["preTravisBuild"], (cb) => {
-    gulp.src("test/**/*.js")
+    let stream = gulp.src("test/**/*.js")
         .pipe(babel())
         .pipe(injectModules())
         .pipe(mocha())
         .pipe(istanbul.writeReports())
-        .on("end", cb);
+        .on("end", () => {
+            cb();
+            stream.pipe(exit());
+         });
 });
 
 gulp.task("default", ["lint", "compile", "test"], () => {
