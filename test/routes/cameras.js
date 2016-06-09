@@ -2,6 +2,9 @@ import supertest from "supertest";
 import app from "../../app.js";
 import ProjectManager from "../../objects/ProjectManager.js";
 import fs from "fs";
+import sinon from "sinon";
+import http from "http";
+import { PassThrough } from "stream";
 import { expect } from "chai";
 
 const request = supertest(app);
@@ -132,6 +135,150 @@ describe("Routes: Cameras", () => {
                 .end(err => done(err));
         });
 
+        it("POST /pan left", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Success");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/pan")
+                .send({ direction: "left", speed: 23})
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.true;
+                    expect(res.body.message).to.equal("Camera moving left at speed 23.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /pan right", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Success");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/pan")
+                .send({ direction: "right", speed: 23})
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.true;
+                    expect(res.body.message).to.equal("Camera moving right at speed 23.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /pan Unreachable Camera", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Failed");
+            response.statusCode = 404;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/pan")
+                .send({ direction: "left", speed: 23})
+                .expect(404)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.false;
+                    expect(res.body.message).to.equal("Unable to reach camera.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /tilt up", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Success");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/tilt")
+                .send({ direction: "up", speed: 23})
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.true;
+                    expect(res.body.message).to.equal("Camera moving up at speed 23.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /tilt down", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Success");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/tilt")
+                .send({ direction: "down", speed: 23})
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.true;
+                    expect(res.body.message).to.equal("Camera moving down at speed 23.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /tilt Unreachable Camera", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Failed");
+            response.statusCode = 404;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/tilt")
+                .send({ direction: "down", speed: 23})
+                .expect(404)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.false;
+                    expect(res.body.message).to.equal("Unable to reach camera.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
         it("POST /tilt No Body", done => {
             request.post("/cameras/tilt")
                 .expect(400)
@@ -184,6 +331,244 @@ describe("Routes: Cameras", () => {
                     expect(res.body.succeeded).to.be.false;
                 })
                 .end(err => done(err));
+        });
+
+        it("POST /save", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("S");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/save")
+                .send({ preset: 1 })
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.true;
+                    expect(res.body.message).to.equal("Saved preset 1.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /save high ID", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("S");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/save")
+                .send({ preset: 15 })
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.true;
+                    expect(res.body.message).to.equal("Saved preset 15.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /save Response Error", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Failed");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/save")
+                .send({ preset: 15 })
+                .expect(504)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.false;
+                    expect(res.body.message).to.equal("Error while saving camera position");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /save Unreachable Camera", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Failed");
+            response.statusCode = 404;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/save")
+                .send({ preset: 15 })
+                .expect(404)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.false;
+                    expect(res.body.message).to.equal("Unable to reach camera.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /recall", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("S");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/recall")
+                .send({ preset: 1 })
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.true;
+                    expect(res.body.message).to.equal("Recalled preset 1.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /recall high ID", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("S");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/recall")
+                .send({ preset: 15 })
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.true;
+                    expect(res.body.message).to.equal("Recalled preset 15.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /save Response Error", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Failed");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/recall")
+                .send({ preset: 15 })
+                .expect(504)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.false;
+                    expect(res.body.message).to.equal("Error while recalling camera position");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("POST /recall Unreachable Camera", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Failed");
+            response.statusCode = 404;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.post("/cameras/recall")
+                .send({ preset: 15 })
+                .expect(404)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.false;
+                    expect(res.body.message).to.equal("Unable to reach camera.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("GET /stop", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Stopped");
+            response.statusCode = 200;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.get("/cameras/stop")
+                .expect(200)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.true;
+                    expect(res.body.message).to.equal("Stopped camera");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
+        });
+
+        it("GET /stop Unreachable Camera", done => {
+            const get = sinon.stub(http, "get");
+            const response = new PassThrough();
+            response.write("Failed");
+            response.statusCode = 404;
+            response.end();
+
+            const req = new PassThrough();
+            get.callsArgWith(1, response)
+                .returns(req);
+
+            request.get("/cameras/stop")
+                .expect(404)
+                .expect(res => {
+                    expect(res.body.succeeded).to.be.false;
+                    expect(res.body.message).to.equal("Unable to reach camera.");
+                })
+                .end(err => {
+                    http.get.restore();
+                    done(err);
+                });
         });
     }
 });
