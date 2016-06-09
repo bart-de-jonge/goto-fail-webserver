@@ -24,23 +24,4 @@ module.exports.addRoutes = (app) => {
     app.use("/camera", camera);
     app.use("/shot-caller", shotCaller);
     app.use("/director", director);
-
-    app.get("/testing", (req, res) => {
-
-        fs.readFile(`${__dirname}/../project-scp-files/project.scp`, (err, data) => {
-            if (err) {
-                // TODO something with the error
-                this.data = null;
-                this.initialized = true;
-            } else {
-                parser.parseString(data, (err, result) => {
-                    const data = result;
-                    const directorTimelineXML = result.scriptingProject.directorTimeline[0];
-                    data.scriptingProject.directorTimeline = DirectorTimeline.fromXML(directorTimelineXML);
-
-                    res.json({result: result, data: ProjectManager.waitForGenerateXML()});
-                });
-            }
-        });
-    });
 };

@@ -1,6 +1,7 @@
 import fs from "fs";
 import xml2js from "xml2js";
 const parser = new xml2js.Parser();
+const builder = new xml2js.Builder();
 import deepCopy from "deepcopy";
 
 
@@ -34,18 +35,30 @@ class ProjectManager {
         return projectManagerInstance;
     }
 
-    generateXML() {
+    writeXML(callback) {
         const xml = deepCopy(this.data);
         xml.scriptingProject.directorTimeline = this.data.scriptingProject.directorTimeline.toXML();
         xml.scriptingProject.users = this.usersToXML(this.data.scriptingProject.users);
-        xml.scriptingProject["camera-centerarea"] = this.cameraTimelinesToXML(this.data.scriptingProject.cameraTimelines);
+        xml.scriptingProject["camera-centerarea"] = this.cameraTimelinesToXML(
+            this.data.scriptingProject.cameraTimelines);
         delete xml.scriptingProject.cameraTimelines;
 
-        return xml;
+        const xmlObj = builder.buildObject(xml);
+        fs.writeFile(filepath, xmlObj, "utf8", (err) => {
+            if (err) {
+                // todo something with err
+                throw err;
+            }
+
+            console.log("succes!");
+            callback();
+        });
+
+        callback();
     }
 
     parseXML() {
-        fs.readFile(filename, (err, data) => {
+        fs.readFile(filepath, (err, data) => {
             if (err) {
                 // TODO something with the error
                 this.data = null;
@@ -71,7 +84,7 @@ class ProjectManager {
 
     getCameraTimelinesFromXML(XMLObject) {
         // Read timelines from xml
-        const cameraTimelinesXML =  XMLObject[0].cameraTimeline;
+        const cameraTimelinesXML = XMLObject[0].cameraTimeline;
         const cameraTimelines = [];
 
         if (typeof cameraTimelinesXML !== "undefined") {
