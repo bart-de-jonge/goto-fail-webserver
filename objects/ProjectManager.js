@@ -12,6 +12,7 @@ import User from "./User";
 
 // Singleton Object
 let projectManagerInstance = null;
+const filepath = `${__dirname}/../project-scp-files/project.scp`;
 
 /*
  * Class for storing a Project
@@ -44,7 +45,7 @@ class ProjectManager {
     }
 
     parseXML() {
-        fs.readFile(`${__dirname}/../project-scp-files/project.scp`, (err, data) => {
+        fs.readFile(filename, (err, data) => {
             if (err) {
                 // TODO something with the error
                 this.data = null;
