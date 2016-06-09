@@ -16,6 +16,7 @@
             </cameraType>
             <description>tetet</description>
             <instance>0</instance>
+            <ip></ip>
             <movementMargin>4.0</movementMargin>
             <name>Camera #1</name>
         </camera>
@@ -27,6 +28,7 @@
             </cameraType>
             <description>tetet</description>
             <instance>1</instance>
+            <ip></ip>
             <movementMargin>4.0</movementMargin>
             <name>Camera #2</name>
         </camera>
@@ -38,6 +40,7 @@
             </cameraType>
             <description>tetet</description>
             <instance>2</instance>
+            <ip></ip>
             <movementMargin>4.0</movementMargin>
             <name>Camera #3</name>
         </camera>
@@ -49,6 +52,7 @@
             </cameraType>
             <description>tetet</description>
             <instance>3</instance>
+            <ip></ip>
             <movementMargin>4.0</movementMargin>
             <name>Camera #4</name>
         </camera>
@@ -60,6 +64,7 @@
             </cameraType>
             <description>tetet</description>
             <instance>4</instance>
+            <ip></ip>
             <movementMargin>4.0</movementMargin>
             <name>Camera #5</name>
         </camera>
@@ -71,6 +76,7 @@
             </cameraType>
             <description>tetet</description>
             <instance>5</instance>
+            <ip></ip>
             <movementMargin>4.0</movementMargin>
             <name>Camera #6</name>
         </camera>

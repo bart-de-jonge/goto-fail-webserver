@@ -24,6 +24,10 @@
                 width: auto;
             }
 
+            paper-dialog {
+                overflow: hidden;
+            }
+
             #newUserInput {
                 margin-bottom: 20px;
             }
@@ -41,7 +45,7 @@
                 padding: 24px;
             }
 
-            #tabs {
+            #newUserTabs {
                 margin-top: 0;
             }
 
@@ -103,7 +107,7 @@
         <paper-dialog id="addUserDialog" modal="true">
             <div id="head">Add a new user</div>
 
-            <paper-tabs id="tabs" on-click="paperTabsClicked" id="newUserTabs" selected="0">
+            <paper-tabs on-click="paperTabsClicked" id="newUserTabs" selected="0">
                 <paper-tab>Camera operator</paper-tab>
                 <paper-tab>Shotcaller</paper-tab>
                 <paper-tab>Director</paper-tab>
@@ -155,7 +159,12 @@
                     this.$.newUserInput.invalid = true;
                 } else {
                     const users = document.querySelector("gotofail-login").users;
-                    const id = users[users.length - 1].id + 1;
+
+                    let id = 0;
+                    if(users.length > 0) {
+                        id = users[users.length - 1].id + 1;
+                    }
+
                     const pickedTimelines = [];
                     const name = this.$.newUserInput.value;
                     const jobType = Number(this.$.newUserTabs.selected);

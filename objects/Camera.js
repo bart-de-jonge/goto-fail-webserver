@@ -21,7 +21,7 @@ class Camera {
             CameraType.fromXML(XMLObject[0].cameraType),
             XMLObject[0].movementMargin[0],
             XMLObject[0].instance[0],
-            ""
+            XMLObject[0].ip[0]
         );
     }
 
@@ -32,6 +32,7 @@ class Camera {
             instance: [this.id],
             movementMargin: [this.movementMargin],
             name: [this.name],
+            ip: [this.ip],
         }];
     }
 }
