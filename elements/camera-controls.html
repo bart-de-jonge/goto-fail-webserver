@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="timeline-element.html">
 <link rel="import" href="timeline-header.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
@@ -18,30 +19,10 @@
             }
         </style>
 
-        <iron-ajax
-            id="ajaxMoveCamera"
-            method="POST"
-            handle-as="json"
-            content-type="application/json"
-            on-response="onMoveCamera"></iron-ajax>
-
-        <iron-ajax
-            id="ajaxStopCamera"
-            on-response="onStopCamera"></iron-ajax>
-
-        <iron-ajax
-            id="ajaxSavePreset"
-            method="POST"
-            handle-as="json"
-            content-type="application/json"
-            on-response="onSavePreset"></iron-ajax>
-
-        <iron-ajax
-            id="ajaxRecallPreset"
-            method="POST"
-            handle-as="json"
-            content-type="application/json"
-            on-response="onRecallPreset"></iron-ajax>
+        <iron-ajax id="ajaxStopCamera" on-response="onStopCamera"></iron-ajax>
+        <iron-ajax id="ajaxMoveCamera" method="POST" handle-as="json" content-type="application/json" on-response="onMoveCamera"></iron-ajax>
+        <iron-ajax id="ajaxSavePreset" method="POST" handle-as="json" content-type="application/json" on-response="onSavePreset"></iron-ajax>
+        <iron-ajax id="ajaxRecallPreset" method="POST" handle-as="json" content-type="application/json" on-response="onRecallPreset"></iron-ajax>
 
         <div class="layout horizontal">
             <div class="layout horizontal">
@@ -56,12 +37,17 @@
             </div>
             <div class="flex"></div>
             <div class="layout vertical">
-                <template is="dom-repeat" items="{{presets}}">
+                <template id="presets" is="dom-repeat" items="{{presets}}">
                     <div>
-                        <paper-button id="{{item}}" on-tap="savePreset">savepreset {{item}}</paper-button>
-                        <paper-button id="{{item}}" on-tap="recallPreset">recall preset {{item}}</paper-button>
+                        <paper-button id="{{item.id}}" on-tap="savePreset">savepreset {{item.name}}</paper-button>
+                        <paper-button id="{{item.id}}" on-tap="recallPreset">recall preset {{item.name}}</paper-button>
                     </div>
                 </template>
+					<div>
+				        <paper-input id="presetName" label="name"></paper-input>
+				        <paper-input id="presetDescription" label="description"></paper-input>
+						<paper-button on-tap="addPreset">Add a camera preset</paper-button>
+					</div>
             </div>
         </div>
     </template>
@@ -75,17 +61,24 @@
 
                     this.properties = {
                         presets: {
-                            type: Object,
-                            value: function() {
-                                var list = [];
-                                for (var i = 1; i <= 99; i++) {
-                                    list.push(i);
-                                }
-                                return list;
-                            }
-                        }
+							type: Array,
+							value: []
+						},
+						lowest: {
+							type: Number,
+							value: 1
+						}
                     };
                 }
+
+				addPreset() {
+					this.push('presets', {
+						id: this.lowest,
+						name: this.$.presetName.value,
+						description: this.$.presetDescription.value
+					});
+					this.lowest += 1;
+				}
 
                 stopCamera() {
                     this.$.ajaxStopCamera.url = "cameras/stop";
