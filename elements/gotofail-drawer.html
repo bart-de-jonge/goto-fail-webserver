@@ -49,6 +49,7 @@
                 line-height: 100%;
                 color: black;
                 opacity: 0.8;
+                padding-left: 10px;
             }
 
             .icon-style {
@@ -74,7 +75,7 @@
                 background-color: transparent;
             }
 
-            .ripple-style {
+            paper-ripple {
                 color: var(--secondary-color-700);
             }
 
@@ -92,15 +93,15 @@
                 <div class="filler-vertical"></div>
 
                 <a href="/" tabindex="-1" style="text-decoration:none"> <paper-item  class="item-style">
-                    <paper-ripple class="ripple-style"></paper-ripple>
+                    <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px;">User selection</span>
+                    <span class="text-style">User selection</span>
                 </paper-item> </a>
 
                 <a href="/upload-scp" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple class="ripple-style"></paper-ripple>
+                    <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="icons:file-upload"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px;">Upload Project</span>
+                    <span class="text-style">Upload Project</span>
                 </paper-item> </a>
 
                 <div class="filler-vertical"></div>
@@ -108,21 +109,20 @@
                 <div class="filler-vertical"></div>
 
                 <a href="/timeline" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple class="ripple-style"></paper-ripple>
+                    <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="image:camera"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px;">Timeline view</span>
+                    <span class="text-style">Timeline view</span>
                 </paper-item> </a>
 
                 <a href="/shot-caller" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple class="ripple-style"></paper-ripple>
+                    <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="image:timer"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px;">Shot calling view</span>
+                    <span class="text-style">Shot calling view</span>
                 </paper-item> </a>
 
                 <a tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <!--<paper-ripple class="ripple-style"></paper-ripple>-->
                     <iron-icon class="icon-style" style="color: rgb(200,200,200); opacity: 0.6;" icon="image:camera-alt"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px; color: rgb(200,200,200);">Director view</span>
+                    <span class="text-style" style="color: rgb(200,200,200);">Director view</span>
                 </paper-item> </a>
 
             </paper-listbox>
