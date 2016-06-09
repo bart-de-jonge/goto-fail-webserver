@@ -1,17 +1,18 @@
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../elements/timeline-picker.html">
-<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../elements/new-user-dialog.html">
-<link rel="import" href="../elements/delete-user-dialog.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="timeline-picker.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="new-user-dialog.html">
+<link rel="import" href="delete-user-dialog.html">
+<link rel="import" href="../colors.html">
 
 <dom-module id="gotofail-login">
     // Template
@@ -30,7 +31,7 @@
                 --paper-card-header-color: white;
                 --paper-card-header-text: {
                     font-size: medium;
-                    background-color: #3F51B5;
+                    background-color: var(--main-color-500);
                 };
             }
 
@@ -70,11 +71,11 @@
             }
 
             paper-button#add-button {
-                color: #FFC107;
+                color: var(--secondary-color-500);
             }
 
             paper-button.remove-button {
-                color: #FFC107;
+                color: var(--secondary-color-500);
                 font-size: smaller;
                 display: none;
             }
@@ -92,7 +93,7 @@
             }
 
             .shadowed {
-                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.5);
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.4);
             }
 
         </style>

@@ -1,15 +1,16 @@
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="../elements/timeline-picker.html">
-<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="timeline-picker.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../colors.html">
 
 <dom-module id="new-user-dialog">
     // Template
@@ -39,7 +40,7 @@
             #head {
                 margin-top: 0;
                 margin-bottom: 0;
-                background-color: #3F51B5;
+                background-color: var(--main-color-500);
                 font-size: large;
                 color: white;
                 padding: 24px;
@@ -47,16 +48,20 @@
 
             #newUserTabs {
                 margin-top: 0;
+                --paper-tabs-selection-bar: {
+                    height: 3px;
+                    bottom: 0px;
+                };
             }
 
             paper-tabs {
-                background-color: #3F51B5;
+                background-color: var(--main-color-500);
                 color: white;
-                --paper-tabs-selection-bar-color: #FFC107;
+                --paper-tabs-selection-bar-color: var(--secondary-color-500);
             }
 
             paper-tab {
-                --paper-tab-ink: #448AFF;
+                --paper-tab-ink: var(--main-color-500);
             }
 
             .body {
@@ -74,7 +79,7 @@
 
             #body-bottom {
                 padding: 16px 24px;
-                color: #FFC107;
+                color: var(--secondary-color-500);
             }
 
             .content-header {
@@ -82,11 +87,11 @@
             }
 
             paper-toggle-button {
-                --paper-toggle-button-checked-bar-color:  #FFC107;
-                --paper-toggle-button-checked-button-color:  #FFC107;);
-                --paper-toggle-button-checked-ink-color: #FFC107;
+                --paper-toggle-button-checked-bar-color:  var(--secondary-color-500);
+                --paper-toggle-button-checked-button-color:  var(--secondary-color-500););
+                --paper-toggle-button-checked-ink-color: var(--secondary-color-500);
                 --paper-toggle-button-unchecked-bar-color:  rgba(0,0,0,0.3);
-                --paper-toggle-button-unchecked-ink-color: #FFC107;
+                --paper-toggle-button-unchecked-ink-color: var(--secondary-color-500);
                 text-align: center;
                 vertical-align: middle;
                 justify-content: center;
@@ -96,7 +101,6 @@
 
             #toggles {
                 display: flex;
-                /*flex-flow: row wrap;*/
                 flex-direction: row;
                 flex-wrap: wrap;
                 justify-content: center;

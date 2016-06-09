@@ -1,7 +1,10 @@
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="./shot-caller-shot-card.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="shot-caller-shot-card.html">
+<link rel="import" href="../colors.html">
 
 <dom-module id="shot-caller-display">
     <template>
@@ -11,40 +14,51 @@
                 display: block;
             }
 
-            paper-button {
-            }
-
             paper-card {
                 background-color: white;
                 margin: 24px;
                 width: auto;
                 height: auto;
 
-                --paper-card-header: {
-                    /*border-top: 6px solid #303F9F;*/
-                };
                 --paper-card-header-color: white;
                 --paper-card-header-text: {
                     font-size: medium;
-                    background-color: #3F51B5;
+                    background-color: var(--main-color-500);
                 };
             }
 
-            paper-card .card-content {
-                /*@apply(--layout-flex);*/
-                /*float: left;*/
+            #button {
+                height: 100%;
+                margin-top: auto;
+                margin-bottom: auto;
+                color: var(--secondary-color-500);
+                font-size: medium;
+                vertical-align: middle;
             }
 
-            paper-card .card-header {
-                /*@apply(--paper-font-headline);*/
+            #count {
+                height: 100%;
+                line-height: 100%;
+                margin-top: auto;
+                margin-bottom: auto;
+                margin-left: 40px;
+                font-size: medium;
+                vertical-align: middle;
+            }
+
+            .shadowed {
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.4);
             }
         </style>
 
         <div class="layout vertical">
             <paper-card heading="Score count" elevation="1">
-                <div class="card-content">
-                    <paper-button on-tap="handleAdvanceTap">Advance</paper-button>
-                    <span>{{ currentCount }}</span>
+                <div class="card-content shadowed">
+                    <paper-button id="button" on-tap="handleAdvanceTap">
+                        <iron-icon  icon="av:play-arrow"></iron-icon>
+                        Advance count
+                    </paper-button>
+                    <span id="count">{{ currentCount }}</span>
                 </div>
             </paper-card>
 

@@ -190,7 +190,7 @@ router.post("/tilt", (req, res) => {
             buildMessageResponse(res, 200,
                 `Camera moving ${body.direction} at speed ${body.speed}.`);
         } else {
-            buildMessageResponse(res, 504, "Unable to reach camera.");
+            buildMessageResponse(res, 404, "Unable to reach camera.");
         }
     });
 });

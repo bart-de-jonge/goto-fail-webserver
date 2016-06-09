@@ -4,7 +4,9 @@
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
-<link rel="import" href="timeline-block.html">
+<link rel="import" href="timeline-view/timeline-block.html">
+<link rel="import" href="../colors.html">
+
 <dom-module id="gotofail-drawer">
     <template>
         <style>
@@ -33,7 +35,7 @@
             }
 
             .item-style {
-                color: black;
+                color: transparent;
                 padding-left: 14%;
                 padding-right: 14%;
             }
@@ -42,15 +44,16 @@
                 text-decoration:none;
                 text-underline: none;
                 font-size: small;
-                font-weight: bold;
+                font-weight: 400;
                 vertical-align: middle;
                 line-height: 100%;
                 color: black;
                 opacity: 0.8;
+                padding-left: 10px;
             }
 
             .icon-style {
-                color: #3F51B5;
+                color: var(--secondary-color-700);
                 vertical-align: middle;
                 --iron-icon-height: 20px;
                 --iron-icon-width: 20px;
@@ -72,6 +75,10 @@
                 background-color: transparent;
             }
 
+            paper-ripple {
+                color: var(--secondary-color-700);
+            }
+
         </style>
 
         <div id="background">
@@ -86,15 +93,15 @@
                 <div class="filler-vertical"></div>
 
                 <a href="/" tabindex="-1" style="text-decoration:none"> <paper-item  class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px;">User selection</span>
+                    <span class="text-style">User selection</span>
                 </paper-item> </a>
 
                 <a href="/upload-scp" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="icons:file-upload"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px;">Upload New Project</span>
+                    <span class="text-style">Upload Project</span>
                 </paper-item> </a>
 
                 <div class="filler-vertical"></div>
@@ -102,21 +109,20 @@
                 <div class="filler-vertical"></div>
 
                 <a href="/timeline" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="image:camera"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px;">Timeline view</span>
+                    <span class="text-style">Timeline view</span>
                 </paper-item> </a>
 
                 <a href="/shot-caller" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
+                    <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="image:timer"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px;">Shot calling view</span>
+                    <span class="text-style">Shot calling view</span>
                 </paper-item> </a>
 
-                <a href="/director" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
-                    <paper-ripple style="color: #3F51B5;"></paper-ripple>
-                    <iron-icon class="icon-style" icon="image:camera-alt"></iron-icon>
-                    <span class="text-style" style="padding-left: 10px;">Director view</span>
+                <a tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
+                    <iron-icon class="icon-style" style="color: rgb(200,200,200); opacity: 0.6;" icon="image:camera-alt"></iron-icon>
+                    <span class="text-style" style="color: rgb(200,200,200);">Director view</span>
                 </paper-item> </a>
 
             </paper-listbox>
