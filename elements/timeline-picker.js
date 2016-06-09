@@ -46,6 +46,7 @@ class timelinePicker {
             const toggles = document.querySelectorAll("#toggles gotofail-togglebutton");
             for (let i = 0; i < toggles.length; i++) {
                 toggles[i].disabled = true;
+                toggles[i].checked = false;
             }
         } else {
             const toggles = document.querySelectorAll("#toggles gotofail-togglebutton");
