@@ -23,7 +23,7 @@ describe("Camera", () => {
                     movementMargin: [ 2 ],
                 },
             ],
-            ip: [ "testip" ]
+            ip: [ "127.0.0.1" ]
         }];
 
         const camera = Camera.fromXML(xml);
@@ -33,7 +33,7 @@ describe("Camera", () => {
         expect(camera.description).to.equal("Used for panning shots");
         expect(camera.movementMargin).to.equal(1);
         expect(camera.cameraType).to.be.instanceOf(CameraType);
-        expect(camera.ip).to.equal("testip");
+        expect(camera.ip).to.equal("127.0.0.1");
         done();
     })
 });
