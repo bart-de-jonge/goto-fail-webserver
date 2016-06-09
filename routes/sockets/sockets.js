@@ -42,7 +42,9 @@ const listen = (server) => {
     });
 
     getMaxCount(newMaxCount => {
-        maxCount = newMaxCount;
+        if (newMaxCount) {
+            maxCount = newMaxCount;
+        }
     });
 
     const sendCounts = () => {
