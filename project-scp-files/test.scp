@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<scriptingProject>
+    <cameraTypes>
+        <description>tetet</description>
+        <movementMargin>4.0</movementMargin>
+        <name>tetet</name>
+    </cameraTypes>
+    <name>tetet</name>
+    <description>tet</description>
+    <cameraList>
+        <camera>
+            <cameraType>
+                <description>tetet</description>
+                <movementMargin>4.0</movementMargin>
+                <name>tetet</name>
+            </cameraType>
+            <description>tetet</description>
+            <instance>0</instance>
+            <movementMargin>4.0</movementMargin>
+            <name>Camera #1</name>
+        </camera>
+        <camera>
+            <cameraType>
+                <description>tetet</description>
+                <movementMargin>4.0</movementMargin>
+                <name>tetet</name>
+            </cameraType>
+            <description>tetet</description>
+            <instance>1</instance>
+            <movementMargin>4.0</movementMargin>
+            <name>Camera #2</name>
+        </camera>
+        <camera>
+            <cameraType>
+                <description>tetet</description>
+                <movementMargin>4.0</movementMargin>
+                <name>tetet</name>
+            </cameraType>
+            <description>tetet</description>
+            <instance>2</instance>
+            <movementMargin>4.0</movementMargin>
+            <name>Camera #3</name>
+        </camera>
+        <camera>
+            <cameraType>
+                <description>tetet</description>
+                <movementMargin>4.0</movementMargin>
+                <name>tetet</name>
+            </cameraType>
+            <description>tetet</description>
+            <instance>3</instance>
+            <movementMargin>4.0</movementMargin>
+            <name>Camera #4</name>
+        </camera>
+        <camera>
+            <cameraType>
+                <description>tetet</description>
+                <movementMargin>4.0</movementMargin>
+                <name>tetet</name>
+            </cameraType>
+            <description>tetet</description>
+            <instance>4</instance>
+            <movementMargin>4.0</movementMargin>
+            <name>Camera #5</name>
+        </camera>
+        <camera>
+            <cameraType>
+                <description>tetet</description>
+                <movementMargin>4.0</movementMargin>
+                <name>tetet</name>
+            </cameraType>
+            <description>tetet</description>
+            <instance>5</instance>
+            <movementMargin>4.0</movementMargin>
+            <name>Camera #6</name>
+        </camera>
+    </cameraList>
+    <directorTimeline>
+        <shotList>
+            <shot>
+                <beginCount>5.0</beginCount>
+                <colliding>false</colliding>
+                <description>This is the very first director shot</description>
+                <endCount>10.0</endCount>
+                <name>Director shot #1</name>
+                <cameraShots>
+                    <beginCount>3.0</beginCount>
+                    <colliding>false</colliding>
+                    <description>This is the very first director shot</description>
+                    <endCount>12.0</endCount>
+                    <name>Director shot #1</name>
+                    <instance>1</instance>
+                </cameraShots>
+                <cameraShots>
+                    <beginCount>3.0</beginCount>
+                    <colliding>false</colliding>
+                    <description>This is the very first director shot</description>
+                    <endCount>12.0</endCount>
+                    <name>Director shot #1</name>
+                    <instance>0</instance>
+                </cameraShots>
+                <cameraShots>
+                    <beginCount>3.0</beginCount>
+                    <colliding>false</colliding>
+                    <description>This is the very first director shot</description>
+                    <endCount>12.0</endCount>
+                    <name>Director shot #1</name>
+                    <instance>2</instance>
+                </cameraShots>
+                <endShotPadding>2.0</endShotPadding>
+                <frontShotPadding>2.0</frontShotPadding>
+                <timelineIndices>0</timelineIndices>
+                <timelineIndices>3</timelineIndices>
+                <timelineIndices>4</timelineIndices>
+            </shot>
+            <shot>
+                <beginCount>10.0</beginCount>
+                <colliding>false</colliding>
+                <description>This is the very second director shot</description>
+                <endCount>20.0</endCount>
+                <name>Director shot #2</name>
+                <cameraShots>
+                    <beginCount>8.0</beginCount>
+                    <colliding>false</colliding>
+                    <description>This is the very second director shot</description>
+                    <endCount>22.0</endCount>
+                    <name>Director shot #2</name>
+                    <instance>3</instance>
+                </cameraShots>
+                <endShotPadding>2.0</endShotPadding>
+                <frontShotPadding>2.0</frontShotPadding>
+                <timelineIndices>1</timelineIndices>
+            </shot>
+        </shotList>
+        <description>tetet</description>
+    </directorTimeline>
+    <camera-centerarea>
+        <cameraTimeline>
+            <camera>
+                <cameraType>
+                    <description>tetet</description>
+                    <movementMargin>4.0</movementMargin>
+                    <name>tetet</name>
+                </cameraType>
+                <description>tetet</description>
+                <instance>0</instance>
+                <movementMargin>4.0</movementMargin>
+                <name>Camera #1</name>
+            </camera>
+            <shotList>
+                <shot>
+                    <beginCount>3.0</beginCount>
+                    <colliding>false</colliding>
+                    <description>This is the very first director shot</description>
+                    <endCount>12.0</endCount>
+                    <name>Director shot #1</name>
+                    <instance>0</instance>
+                </shot>
+            </shotList>
+            <instance>0</instance>
+        </cameraTimeline>
+        <cameraTimeline>
+            <camera>
+                <cameraType>
+                    <description>tetet</description>
+                    <movementMargin>4.0</movementMargin>
+                    <name>tetet</name>
+                </cameraType>
+                <description>tetet</description>
+                <instance>1</instance>
+                <movementMargin>4.0</movementMargin>
+                <name>Camera #2</name>
+            </camera>
+            <shotList>
+                <shot>
+                    <beginCount>8.0</beginCount>
+                    <colliding>false</colliding>
+                    <description>This is the very second director shot</description>
+                    <endCount>22.0</endCount>
+                    <name>Director shot #2</name>
+                    <instance>3</instance>
+                </shot>
+            </shotList>
+            <instance>1</instance>
+        </cameraTimeline>
+        <cameraTimeline>
+            <camera>
+                <cameraType>
+                    <description>tetet</description>
+                    <movementMargin>4.0</movementMargin>
+                    <name>tetet</name>
+                </cameraType>
+                <description>tetet</description>
+                <instance>2</instance>
+                <movementMargin>4.0</movementMargin>
+                <name>Camera #3</name>
+            </camera>
+            <shotList/>
+            <instance>2</instance>
+        </cameraTimeline>
+        <cameraTimeline>
+            <camera>
+                <cameraType>
+                    <description>tetet</description>
+                    <movementMargin>4.0</movementMargin>
+                    <name>tetet</name>
+                </cameraType>
+                <description>tetet</description>
+                <instance>3</instance>
+                <movementMargin>4.0</movementMargin>
+                <name>Camera #4</name>
+            </camera>
+            <shotList>
+                <shot>
+                    <beginCount>3.0</beginCount>
+                    <colliding>false</colliding>
+                    <description>This is the very first director shot</description>
+                    <endCount>12.0</endCount>
+                    <name>Director shot #1</name>
+                    <instance>1</instance>
+                </shot>
+            </shotList>
+            <instance>3</instance>
+        </cameraTimeline>
+        <cameraTimeline>
+            <camera>
+                <cameraType>
+                    <description>tetet</description>
+                    <movementMargin>4.0</movementMargin>
+                    <name>tetet</name>
+                </cameraType>
+                <description>tetet</description>
+                <instance>4</instance>
+                <movementMargin>4.0</movementMargin>
+                <name>Camera #5</name>
+            </camera>
+            <shotList>
+                <shot>
+                    <beginCount>3.0</beginCount>
+                    <colliding>false</colliding>
+                    <description>This is the very first director shot</description>
+                    <endCount>12.0</endCount>
+                    <name>Director shot #1</name>
+                    <instance>2</instance>
+                </shot>
+            </shotList>
+            <instance>4</instance>
+        </cameraTimeline>
+        <cameraTimeline>
+            <camera>
+                <cameraType>
+                    <description>tetet</description>
+                    <movementMargin>4.0</movementMargin>
+                    <name>tetet</name>
+                </cameraType>
+                <description>tetet</description>
+                <instance>5</instance>
+                <movementMargin>4.0</movementMargin>
+                <name>Camera #6</name>
+            </camera>
+            <shotList/>
+            <instance>5</instance>
+        </cameraTimeline>
+    </camera-centerarea>
+    <users/>
+    <secondsPerCount>4.0</secondsPerCount>
+    <filePath>/Users/Mark/Desktop/test.scp</filePath>
+    <changed>false</changed>
+</scriptingProject>
