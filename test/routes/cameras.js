@@ -24,7 +24,7 @@ describe("Routes: Cameras", () => {
         });
 
         it("GET /cameras/:id", done => {
-            request.get("/cameras/1")
+            request.get("/cameras/0")
                 .expect(200)
                 .expect(res => {
                     expect(res.body.succeeded).to.be.true;
