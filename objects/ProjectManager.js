@@ -6,6 +6,7 @@ import deepCopy from "deepcopy";
 import CameraTimeline from "../objects/CameraTimeline";
 import DirectorTimeline from "../objects/DirectorTimeline.js";
 import User from "./User";
+import Preset from "./Preset";
 
 // Singleton Object
 let projectManagerInstance = null;
@@ -39,6 +40,14 @@ class ProjectManager {
     getPresets(callback) {
         this.presets = [];
         // TODO get prestes from benine api
+
+        this.presets.push(new Preset(0, "Preset #1", "The first preset",
+            "localhost:1234/a/route/0", 0));
+        this.presets.push(new Preset(1, "Preset #2", "The second preset",
+            "localhost:1234/a/route/1", 0));
+        this.presets.push(new Preset(2, "Preset #3", "The third preset",
+            "localhost:1234/a/route/2", 1));
+
         callback();
     }
 
@@ -199,7 +208,7 @@ class ProjectManager {
             } else {
                 if (existingProjectManager) {
                     projectManager.getPresets(() => {
-                       callback();
+                        callback(projectManager);
                     });
                 }
             }
