@@ -46,6 +46,7 @@ class timelinePicker {
             const toggles = document.querySelectorAll("#toggles gotofail-togglebutton");
             for (let i = 0; i < toggles.length; i++) {
                 toggles[i].disabled = true;
+                toggles[i].checked = false;
             }
         } else {
             const toggles = document.querySelectorAll("#toggles gotofail-togglebutton");
@@ -53,7 +54,8 @@ class timelinePicker {
                 toggles[i].disabled = false;
             }
         }
-        document.querySelector("#gotofailLogin").updateUsers();
+        document.querySelector("#gotofailLogin").changeUserJobType(
+            this.user.id, this.$.userTypeTabs.selected);
     }
 
     /**

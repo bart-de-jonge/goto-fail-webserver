@@ -18,7 +18,8 @@
     "node-sass-middleware": "0.8.0",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.4.6",
-    "xml2js": "latest"
+    "xml2js": "latest",
+    "deepcopy": "latest"
   },
   "devDependencies": {
     "babel-eslint": "^6.0.4",

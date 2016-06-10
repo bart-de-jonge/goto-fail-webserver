@@ -11,7 +11,7 @@ const getCameras = function getCameras(callback) {
     ProjectManager.waitForXML((projectManager) => {
         const data = projectManager.data;
         if (data) {
-            callback(projectManager.data.cameraTimelines.cameraTimelines
+            callback(projectManager.data.scriptingProject.cameraTimelines
                 .map(timeline => timeline.camera));
         } else {
             callback(null, true);

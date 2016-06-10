@@ -25,6 +25,10 @@
                 width: auto;
             }
 
+            paper-dialog {
+                overflow: hidden;
+            }
+
             #newUserInput {
                 margin-bottom: 20px;
             }
@@ -159,7 +163,12 @@
                     this.$.newUserInput.invalid = true;
                 } else {
                     const users = document.querySelector("gotofail-login").users;
-                    const id = users[users.length - 1].id + 1;
+
+                    let id = 0;
+                    if(users.length > 0) {
+                        id = users[users.length - 1].id + 1;
+                    }
+
                     const pickedTimelines = [];
                     const name = this.$.newUserInput.value;
                     const jobType = Number(this.$.newUserTabs.selected);

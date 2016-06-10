@@ -48,8 +48,8 @@ describe("ProjectManager Async", () => {
 
         it("Should be able to filter timelines", done => {
             const projectManager = new ProjectManager();
-            const filteredTimelines = projectManager.filterTimelines([0], projectManager.data.cameraTimelines);
-            expect(filteredTimelines.cameraTimelines).to.not.be.empty;
+            const filteredTimelines = projectManager.filterTimelines([0], projectManager.data);
+            expect(filteredTimelines.scriptingProject.cameraTimelines).to.not.be.empty;
             done();
         });
     } catch (e) {

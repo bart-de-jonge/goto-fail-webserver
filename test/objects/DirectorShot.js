@@ -17,8 +17,12 @@ describe("DirectorShot", () => {
             endCount: [3],
             frontShotPadding: [0.5],
             endShotPadding: [0.5],
+            colliding: [0],
+            camerashots: [[]],
+            timelineIndices: [[]],
         };
         const directorShot = DirectorShot.fromXML(xmlObject);
+        console.log(directorShot);
 
         expect(directorShot.name).to.equal("Main Panning Shot");
         expect(directorShot.description).to.equal("Of Audience");

@@ -70,7 +70,7 @@ gulp.task("preTravisBuild", () =>
 
 // THIS RUNS WHEN TRAVIS BUILDS
 gulp.task("travisBuild", ["preTravisBuild"], (cb) => {
-    let stream = gulp.src("test/**/*.js")
+    const stream = gulp.src("test/**/*.js")
         .pipe(babel())
         .pipe(injectModules())
         .pipe(mocha())

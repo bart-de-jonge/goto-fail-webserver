@@ -227,6 +227,16 @@
             }
 
             /**
+             * Change jobtype of a certain user
+             * @param id - the id of the user
+             * @param jobType - the new jobtype
+             */
+            changeUserJobType(id, jobType) {
+                this.users[id].jobType = jobType;
+                this.updateUsers();
+            }
+
+            /**
              * Add a user
              * @param user - the user to add
              */

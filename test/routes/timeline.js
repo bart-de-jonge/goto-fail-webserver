@@ -21,8 +21,6 @@ describe("Routes: Timeline", () => {
                 .expect(200)
                 .expect(res => {
                     expect(res.body.cameraTimelines).to.exist;
-                    expect(res.body.minCount).to.exist;
-                    expect(res.body.maxCount).to.exist;
                 })
                 .end(err => done(err));
         });
@@ -33,8 +31,6 @@ describe("Routes: Timeline", () => {
                 .expect(200)
                 .expect(res => {
                     expect(res.body.cameraTimelines).to.exist;
-                    expect(res.body.minCount).to.exist;
-                    expect(res.body.maxCount).to.exist;
                 })
                 .end(err => done(err));
         });

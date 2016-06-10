@@ -10,10 +10,18 @@ class CameraType {
 
     static fromXML(XMLObject) {
         return new CameraType(
-            XMLObject.name[0],
-            XMLObject.description[0],
-            XMLObject.movementMargin[0]
+            XMLObject[0].name[0],
+            XMLObject[0].description[0],
+            XMLObject[0].movementMargin[0]
         );
+    }
+
+    toXML() {
+        return [{
+            description: [this.description],
+            movementMargin: [this.movementMargin],
+            name: [this.name],
+        }];
     }
 }
 
