@@ -26,12 +26,8 @@ router.post("/update-users", (req, res) => {
         const data = projectManager.data;
         // Check if data exists
         if (data) {
-            const newUsers = [];
-            req.body.users.forEach((user) => {
-                newUsers.push(User.parseFromJson(user));
-            });
-
-            data.scriptingProject.users = newUsers;
+            data.scriptingProject.users =
+                req.body.users.map((user) => User.parseFromJson(user));
 
             ProjectManager.waitForWriteXML(() => {
                 res.json({ success: true });

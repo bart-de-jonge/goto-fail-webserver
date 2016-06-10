@@ -33,11 +33,7 @@ class DirectorTimeline {
     }
 
     toXML() {
-        const directorShotsXML = [];
-        this.directorShots.forEach((shot) => {
-            directorShotsXML.push(shot.toXML());
-        });
-
+        const directorShotsXML = this.directorShots.map((shot) => shot.toXML());
         return {
             description: this.description,
             shotList: { shot: directorShotsXML },
