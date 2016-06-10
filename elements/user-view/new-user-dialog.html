@@ -165,7 +165,7 @@
                     const users = document.querySelector("gotofail-login").users;
 
                     let id = 0;
-                    if(users.length > 0) {
+                    if(users && users.length > 0) {
                         id = users[users.length - 1].id + 1;
                     }
 
@@ -173,8 +173,8 @@
                     const name = this.$.newUserInput.value;
                     const jobType = Number(this.$.newUserTabs.selected);
 
-                    Array.from(document.querySelectorAll("paper-toggle-button.newUserToggleButton[checked]")).forEach(function(user) {
-                       pickedTimelines.push(user.value);
+                    Array.from(document.querySelectorAll("paper-toggle-button.newUserToggleButton[checked]")).forEach(function(toggle) {
+                       pickedTimelines.push(toggle.value);
                     });
 
                     const newUser = {id: id,
