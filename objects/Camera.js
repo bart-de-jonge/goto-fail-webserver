@@ -14,7 +14,6 @@ class Camera {
     }
 
     static fromXML(XMLObject) {
-        // TODO: replace ip
         return new Camera(
             XMLObject[0].name[0],
             XMLObject[0].description[0],
