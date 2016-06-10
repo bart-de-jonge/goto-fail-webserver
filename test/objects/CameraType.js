@@ -9,11 +9,11 @@ describe("CameraType", () => {
     });
 
     it("Should Create CameraType Object from valid XML", done => {
-        const xml = {
+        const xml = [{
             name: ["70D"],
             description: ["Canon"],
             movementMargin: [2],
-        };
+        }];
 
         const cameraType = CameraType.fromXML(xml);
         expect(cameraType).to.not.be.null;

@@ -1,0 +1,116 @@
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+<link rel="import" href="shot-caller-shot-card.html">
+<link rel="import" href="../colors.html">
+
+<dom-module id="shot-caller-display">
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            :host {
+                display: block;
+            }
+
+            paper-card {
+                background-color: white;
+                margin: 24px;
+                width: auto;
+                height: auto;
+
+                --paper-card-header-color: white;
+                --paper-card-header-text: {
+                    font-size: medium;
+                    background-color: var(--main-color-500);
+                };
+            }
+
+            #button {
+                height: 100%;
+                margin-top: auto;
+                margin-bottom: auto;
+                color: var(--secondary-color-500);
+                font-size: medium;
+                vertical-align: middle;
+            }
+
+            #count {
+                height: 100%;
+                line-height: 100%;
+                margin-top: auto;
+                margin-bottom: auto;
+                margin-left: 40px;
+                font-size: medium;
+                vertical-align: middle;
+            }
+
+            .shadowed {
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.4);
+            }
+        </style>
+
+        <div class="layout vertical">
+            <paper-card heading="Score count" elevation="1">
+                <div class="card-content shadowed">
+                    <paper-button id="button" on-tap="handleAdvanceTap">
+                        <iron-icon  icon="av:play-arrow"></iron-icon>
+                        Advance count
+                    </paper-button>
+                    <span id="count">{{ currentCount }}</span>
+                </div>
+            </paper-card>
+
+            <div class="layout horizontal" style="width: 100%;">
+                <shot-caller-shot-card shot-type="Current" shot="{{ currentShot }}"
+                    style="margin-right: 0px;"></shot-caller-shot-card>
+
+                <shot-caller-shot-card shot-type="Next" shot="{{ nextShot }}"></shot-caller-shot-card>
+            </div>
+        </div>
+
+    </template>
+
+    <script>
+        (function () {
+            class shotCallerDisplay {
+                beforeRegister() {
+                    this.is = "shot-caller-display";
+
+                    this.properties = {
+                        currentCount: {
+                            type: Number,
+                            value: 0,
+                            notify: true,
+                            observer: "_countChanged",
+                        },
+                        currentShot: Object,
+                        nextShot: Object,
+                    }
+                }
+
+                handleAdvanceTap() {
+                    const advanceCountEvent = new Event("advanceCount");
+                    document.dispatchEvent(advanceCountEvent);
+                }
+
+                _countChanged() {
+                    if (this.currentShot) {
+                        if (this.currentCount >= this.currentShot.endCount) {
+                            const fetchNewShotsEvent = new Event("fetchNewShots");
+                            document.dispatchEvent(fetchNewShotsEvent);
+                        }
+                    } else if (this.nextShot) {
+                        if (this.currentCount >= this.nextShot.beginCount) {
+                            const fetchNewShotsEvent = new Event("fetchNewShots");
+                            document.dispatchEvent(fetchNewShotsEvent);
+                        }
+                    }
+                }
+            }
+
+            Polymer(shotCallerDisplay);
+        })();
+    </script>
+</dom-module>

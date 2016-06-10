@@ -1,8 +1,9 @@
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../colors.html">
 
 
 <dom-module id="gotofail-togglebutton">
@@ -10,15 +11,15 @@
     <template>
         <style>
             :host {
-                margin: 5px;
-                flex: 1;
+                margin: 16px 0px;
+                flex-basis: 200px;
             }
             paper-toggle-button {
-                --paper-toggle-button-checked-bar-color:  #FFC107;
-                --paper-toggle-button-checked-button-color:  #FFC107;);
-                --paper-toggle-button-checked-ink-color: #FFC107;
+                --paper-toggle-button-checked-bar-color:  var(--secondary-color-500);
+                --paper-toggle-button-checked-button-color:  var(--secondary-color-500);
+                --paper-toggle-button-checked-ink-color: var(--secondary-color-500);
                 --paper-toggle-button-unchecked-bar-color:  rgba(0,0,0,0.3);
-                --paper-toggle-button-unchecked-ink-color: #FFC107;
+                --paper-toggle-button-unchecked-ink-color: var(--secondary-color-500);
                 text-align: center;
                 vertical-align: middle;
             }
@@ -48,17 +49,18 @@
 
             ready() {
                 this.addEventListener("change", function (e) {
-                    const id = document.querySelector("paper-item.iron-selected").id;
+                    const user = document.querySelector("#picker").user;
                     const login = document.querySelector("gotofail-login");
-                    const pickedTimelines = login.getUsers()[id].pickedTimelines;
+
                     if (e.target.checked) {
-                        pickedTimelines.push(e.target.value);
+                        user.pickedTimelines.push(e.target.value);
                     } else {
-                        const index = pickedTimelines.indexOf(e.target.value);
+                        const index = user.pickedTimelines.indexOf(e.target.value);
                         if (index > -1) {
-                            pickedTimelines.splice(index, 1);
+                            user.pickedTimelines.splice(index, 1);
                         }
                     }
+                    login.users[user.id] = user;
                     login.updateUsers();
                 });
             }

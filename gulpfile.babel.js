@@ -7,13 +7,15 @@ import babel from "gulp-babel";
 import injectModules from "gulp-inject-modules";
 import istanbul from "gulp-babel-istanbul";
 import eslint from "gulp-eslint";
+import bower from "gulp-bower";
+import exit from "gulp-exit";
 
 const paths = {
     client_scripts: ["client_app/**/*.js"],
     client_js_dest: "public/",
 };
 
-gulp.task("develop", () => {
+gulp.task("develop", ["bower", "compile"], () => {
     nodemon({
         script: "server.js",
         execMap: {
@@ -35,6 +37,8 @@ gulp.task("compile", () => {
         .pipe(gulp.dest(paths.client_js_dest));
 });
 
+gulp.task("bower", () => bower());
+
 gulp.task("lint", () =>
     // ESLint ignores files with "node_modules" paths.
     // So, it's best to have gulp ignore the directory as well.
@@ -54,7 +58,8 @@ gulp.task("lint", () =>
 
 gulp.task("test", () =>
     gulp.src("test/**/*.js")
-        .pipe(mocha()));
+        .pipe(mocha())
+        .pipe(exit()));
 
 gulp.task("preTravisBuild", () =>
          gulp.src(["client_app/**/*.js", "elements/**/*.js", "objects/**/*.js",
@@ -65,12 +70,15 @@ gulp.task("preTravisBuild", () =>
 
 // THIS RUNS WHEN TRAVIS BUILDS
 gulp.task("travisBuild", ["preTravisBuild"], (cb) => {
-    gulp.src("test/**/*.js")
+    const stream = gulp.src("test/**/*.js")
         .pipe(babel())
         .pipe(injectModules())
         .pipe(mocha())
         .pipe(istanbul.writeReports())
-        .on("end", cb);
+        .on("end", () => {
+            cb();
+            stream.pipe(exit());
+         });
 });
 
 gulp.task("default", ["lint", "compile", "test"], () => {

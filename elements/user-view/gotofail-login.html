@@ -1,0 +1,282 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="timeline-picker.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="new-user-dialog.html">
+<link rel="import" href="delete-user-dialog.html">
+<link rel="import" href="../colors.html">
+
+<dom-module id="gotofail-login">
+    // Template
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            :host {
+                display: block;
+            }
+
+            paper-card {
+                background-color: white;
+                margin: 24px;
+                width: auto;
+                height: auto;
+                --paper-card-header-color: white;
+                --paper-card-header-text: {
+                    font-size: medium;
+                    background-color: var(--main-color-500);
+                };
+            }
+
+            paper-card#left {
+                width: 30%;
+                margin-right: 0px;
+                display: flex;
+                flex-direction: column;
+            }
+
+            paper-card#right {
+                width: 70%;
+            }
+
+            paper-listbox {
+                margin-right: 50px;
+                padding: 0;
+            }
+
+            paper-listbox {
+                overflow: hidden;
+                background-color: white;
+                width: 100%;
+            }
+
+            paper-item > span {
+                overflow: hidden;
+                white-space: nowrap;
+                -ms-text-overflow: ellipsis;
+                text-overflow: ellipsis;
+                max-width: 100%;
+            }
+
+            paper-item:hover {
+                background-color: rgb(245,245,245);
+                cursor: pointer;
+            }
+
+            paper-button#add-button {
+                color: var(--secondary-color-500);
+            }
+
+            paper-button.remove-button {
+                color: var(--secondary-color-500);
+                font-size: smaller;
+                display: none;
+            }
+            
+            paper-item:hover .remove-button {
+                display: block;
+            }
+
+            .horizontal-separator {
+                background-color: black;
+                height: 1px;
+                margin: auto;
+                opacity: 0.1;
+                width: 100%;
+            }
+
+            .shadowed {
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.4);
+            }
+
+        </style>
+        <iron-ajax
+                auto
+                url="/get-users"
+                handle-as="json"
+                on-response="handleUsersResponse"
+                id="ajax-users"></iron-ajax>
+        <iron-ajax
+                auto
+                url="/timeline/timeline-data"
+                handle-as="json"
+                on-response="handleResponse"
+                id="ajax-timeline-data"></iron-ajax>
+        <iron-ajax
+                id="updateUsersPost"
+                url="/update-users"
+                handle-as="json"
+                method = "POST"
+                content-type="application/json"
+                on-response="handleUpdateUsersResponse"></iron-ajax>
+
+        <div class="layout horizontal">
+
+            <paper-card id="left" heading="Please select your account" elevation="1">
+                <div class="shadowed" style="flex: 1;"></div>
+                <div class="card-content">
+                    <paper-listbox id="listbox">
+                        <template is="dom-repeat" items="{{users}}" id="usersRepeat">
+                            <paper-item user="{{item.id}}" id="paperItem{{item.id}}" on-tap="onListItemTap" class="layout horizontal"><span class="flex">{{item.name}}</span>
+                                <paper-ripple></paper-ripple>
+                                <paper-button class="remove-button" user="{{item.id}}" on-tap="deleteUserButtonClicked">remove user</paper-button>
+                            </paper-item>
+                        </template>
+                    </paper-listbox>
+                </div>
+                <div style="flex: 1;"></div>
+                <div class="horizontal-separator"></div>
+                <div class="card-content">
+                    <paper-button id="add-button" on-tap="addUserButtonClicked">Add user</paper-button>
+                </div>
+            </paper-card>
+
+            <paper-card id="right" heading="Account information" elevation="1">
+                <timeline-picker id="picker" class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
+            </paper-card>
+
+        </div>
+
+        <new-user-dialog id="addUserDialog" timelines="{{timelines}}"></new-user-dialog>
+        <delete-user-dialog id="deleteUserDialog" user="{{deleteUser}}"></delete-user-dialog>
+    </template>
+    <script>
+        class gotofailLogin {
+            beforeRegister() {
+                this.is = "gotofail-login";
+
+                this.properties = {
+                    users: Object,
+                    cameras: Array,
+                    timelines: Array,
+                    deleteName: String,
+                };
+            }
+
+            /**
+             * Add user button tapped, open the dialog
+             */
+            addUserButtonClicked() {
+                this.$.addUserDialog.open();
+            }
+
+            /**
+             * Delete user button tapped, open the dialog
+             */
+            deleteUserButtonClicked(e) {
+                this.deleteUser = this.users[e.target.user];
+                this.$.deleteUserDialog.open();
+            }
+
+            /**
+             * Get users of this object
+             */
+            getUsers() {
+                return this.users;
+            }
+
+            /**
+             * push user updates to server
+             */
+            updateUsers() {
+                document.querySelector("#updateUsersPost").body = {users: this.users};
+                document.querySelector("#updateUsersPost").generateRequest();
+            }
+
+            /**
+             * Response handler for ajax request for updating users
+             */
+            handleUpdateUsersResponse(event) {
+                console.log(event.detail.response.success);
+                // TODO: error handling for updating users
+            }
+
+            /**
+             * Helper method for handling ajax response when getting users
+             */
+            handleUsersResponse(event) {
+                this.users = event.detail.response.users;
+            }
+
+            /**
+             * List item tapped, update user in timelinepicker
+             */
+            onListItemTap() {
+                if (document.querySelector("paper-item[focused]")) {
+                    this.$.picker.setUser(this.users[Number(document.querySelector("paper-item[focused]").user)]);
+                    document.querySelector("#continue_button").disabled = false;
+                    document.querySelector("#nameInput").disabled = false;
+                }
+            }
+
+            /**
+             * Change username of a certain user
+             * @param id - the id of the user
+             * @param name - the new username
+             */
+            changeUserName(id, name) {
+                this.users[id].name = name;
+                document.querySelector("#paperItem" + id + " > span").innerHTML = name;
+            }
+
+            /**
+             * Change jobtype of a certain user
+             * @param id - the id of the user
+             * @param jobType - the new jobtype
+             */
+            changeUserJobType(id, jobType) {
+                this.users[id].jobType = jobType;
+                this.updateUsers();
+            }
+
+            /**
+             * Add a user
+             * @param user - the user to add
+             */
+            addUser(user) {
+                this.push("users", user);
+                this.updateUsers();
+            }
+
+            /**
+             * Delete a user
+             * @param user - the user to delete
+             */
+            deleteUserPush(user) {
+                const index = this.users.indexOf(user);
+                if (index >= 0) {
+                    this.splice("users", index, 1);
+                    this.updateUsers();
+                }
+            }
+
+            /**
+             * Get the timelines of this object
+             * @returns {Array|*} - the timelines
+             */
+            getTimelines() {
+                return document.querySelector("#picker").timelines;
+            }
+
+            /**
+             * Response handler for timeline data
+             * @param event - event
+             */
+            handleResponse(event) {
+                // Get data from ajax response
+                this.timelines = event.detail.response.cameraTimelines;
+                this.$.picker.timelines = this.timelines;
+            }
+        }
+        // eslint-disable-next-line
+        Polymer(gotofailLogin);
+    </script>
+
+</dom-module>

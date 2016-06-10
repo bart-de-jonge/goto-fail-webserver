@@ -8,9 +8,10 @@ const getTimelines = function getTimelines(user, filtered, callback) {
         const data = projectManager.data;
         if (data) {
             if (filtered && typeof user !== "undefined") {
-                callback(projectManager.filterTimelines(data.users[user].pickedTimelines, data.cameraTimelines));
+                callback(projectManager.filterTimelines(
+                    data.scriptingProject.users[user].pickedTimelines, data));
             } else {
-                callback(projectManager.data.cameraTimelines);
+                callback(projectManager.data);
             }
         } else {
             callback(null, true);
@@ -18,6 +19,7 @@ const getTimelines = function getTimelines(user, filtered, callback) {
     });
 };
 
+// Get timeline data
 router.get("/timeline-data", (req, res) => {
     getTimelines(req.session.pickedTimelines, false, (data, err) => {
         if (err) {
@@ -27,14 +29,13 @@ router.get("/timeline-data", (req, res) => {
             });
         } else {
             res.json({
-                cameraTimelines: data.cameraTimelines,
-                minCount: data.minCount,
-                maxCount: data.maxCount,
+                cameraTimelines: data.scriptingProject.cameraTimelines,
             });
         }
     });
 });
 
+// Get timeline data, but filtered (only some timelines)
 router.get("/timeline-filtered-data", (req, res) => {
     getTimelines(req.session.pickedUser, true, (data, err) => {
         if (err) {
@@ -44,9 +45,7 @@ router.get("/timeline-filtered-data", (req, res) => {
             });
         } else {
             res.json({
-                cameraTimelines: data.cameraTimelines,
-                minCount: data.minCount,
-                maxCount: data.maxCount,
+                cameraTimelines: data.scriptingProject.cameraTimelines,
             });
         }
     });
@@ -59,6 +58,7 @@ router.get("/", (req, res) => {
     res.render("timeline");
 });
 
+// Set picked timelines
 router.post("/picked-timelines", (req, res) => {
     // eslint-disable-next-line
     req.session.pickedTimelines = req.body.pickedTimelines;

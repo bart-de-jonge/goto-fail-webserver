@@ -11,7 +11,8 @@ describe("Camera", () => {
     });
 
     it("Should Create Camera Object from valid XML", done => {
-        const xml = {
+        const xml = [{
+            instance: [ 1 ],
             name: [ "Left of Center" ],
             description: [ "Used for panning shots" ],
             movementMargin: [ 1 ],
@@ -21,15 +22,18 @@ describe("Camera", () => {
                     description: [ "Canon" ],
                     movementMargin: [ 2 ],
                 },
-            ]
-        };
+            ],
+            ip: [ "127.0.0.1" ]
+        }];
 
         const camera = Camera.fromXML(xml);
         expect(camera).to.not.be.null;
+        expect(camera.id).to.equal(1);
         expect(camera.name).to.equal("Left of Center");
         expect(camera.description).to.equal("Used for panning shots");
         expect(camera.movementMargin).to.equal(1);
         expect(camera.cameraType).to.be.instanceOf(CameraType);
+        expect(camera.ip).to.equal("127.0.0.1");
         done();
     })
 });

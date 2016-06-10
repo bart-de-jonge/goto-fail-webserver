@@ -1,0 +1,231 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="timeline-picker.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../colors.html">
+
+<dom-module id="new-user-dialog">
+    // Template
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            .horizontal-separator {
+                background-color: black;
+                height: 1px;
+                margin: 1px 0;
+                opacity: 0.1;
+                width: auto;
+            }
+
+            paper-dialog {
+                overflow: hidden;
+            }
+
+            #newUserInput {
+                margin-bottom: 20px;
+            }
+
+            paper-toggle-button {
+                flex-basis: 50%;
+            }
+
+            #head {
+                margin-top: 0;
+                margin-bottom: 0;
+                background-color: var(--main-color-500);
+                font-size: large;
+                color: white;
+                padding: 24px;
+            }
+
+            #newUserTabs {
+                margin-top: 0;
+                --paper-tabs-selection-bar: {
+                    height: 3px;
+                    bottom: 0px;
+                };
+            }
+
+            paper-tabs {
+                background-color: var(--main-color-500);
+                color: white;
+                --paper-tabs-selection-bar-color: var(--secondary-color-500);
+            }
+
+            paper-tab {
+                --paper-tab-ink: var(--main-color-500);
+            }
+
+            .body {
+                margin: 1px 0;
+                padding: 24px;
+            }
+
+            #body-top {
+                margin-top: 0px;
+                margin-bottom: 0px;
+                padding-top: 8px;
+                padding-bottom: 0px;
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.5);
+            }
+
+            #body-bottom {
+                padding: 16px 24px;
+                color: var(--secondary-color-500);
+            }
+
+            .content-header {
+                color: gray;
+            }
+
+            paper-toggle-button {
+                --paper-toggle-button-checked-bar-color:  var(--secondary-color-500);
+                --paper-toggle-button-checked-button-color:  var(--secondary-color-500););
+                --paper-toggle-button-checked-ink-color: var(--secondary-color-500);
+                --paper-toggle-button-unchecked-bar-color:  rgba(0,0,0,0.3);
+                --paper-toggle-button-unchecked-ink-color: var(--secondary-color-500);
+                text-align: center;
+                vertical-align: middle;
+                justify-content: center;
+                flex-basis: 200px;
+                margin: 16px 0;
+            }
+
+            #toggles {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+        </style>
+
+        <paper-dialog id="addUserDialog" modal="true">
+            <div id="head">Add a new user</div>
+
+            <paper-tabs on-click="paperTabsClicked" id="newUserTabs" selected="0">
+                <paper-tab>Camera operator</paper-tab>
+                <paper-tab>Shotcaller</paper-tab>
+                <paper-tab>Director</paper-tab>
+            </paper-tabs>
+
+            <div class="body" id="body-top">
+                <paper-input on-input="nameInputChanged" error-message="Username required" label="User name:" id="newUserInput"></paper-input>
+            </div>
+
+            <div class="horizontal-separator"></div>
+
+            <div class="body">
+                <div class="card-content" style="alignment: center; width: 100%;">
+                    <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
+                    <div id="toggles">
+                        <template is="dom-repeat" items="{{timelines}}">
+                            <paper-toggle-button value="{{index}}" class="newUserToggleButton">{{item.name}}</paper-toggle-button>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <div class="horizontal-separator"></div>
+
+            <div class="body buttons" id="body-bottom">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button id="addUserConfirmButton" on-tap="addUserConfirmButtonTapped">Add user</paper-button>
+            </div>
+
+        </paper-dialog>
+
+    </template>
+    <script>
+        class newUserDialog {
+            beforeRegister() {
+                this.is = "new-user-dialog";
+
+                this.properties = {
+                    timelines: Array,
+                };
+            }
+
+            /**
+             *  Confirm button tapped, proceed to add user
+             *  get all data from inputs
+             */
+            addUserConfirmButtonTapped() {
+                if (this.$.newUserInput.value.length === 0) {
+                    this.$.newUserInput.invalid = true;
+                } else {
+                    const users = document.querySelector("gotofail-login").users;
+
+                    let id = 0;
+                    if(users && users.length > 0) {
+                        id = users[users.length - 1].id + 1;
+                    }
+
+                    const pickedTimelines = [];
+                    const name = this.$.newUserInput.value;
+                    const jobType = Number(this.$.newUserTabs.selected);
+
+                    Array.from(document.querySelectorAll("paper-toggle-button.newUserToggleButton[checked]")).forEach(function(toggle) {
+                       pickedTimelines.push(toggle.value);
+                    });
+
+                    const newUser = {id: id,
+                                    name: name,
+                                    pickedTimelines: pickedTimelines,
+                                    jobType: jobType};
+                    document.querySelector("gotofail-login").addUser(newUser);
+                    this.$.addUserDialog.close();
+                }
+            }
+
+            /**
+             * Open the dialog
+             */
+            open() {
+                this.$.addUserDialog.open();
+            }
+
+            /**
+             * Name input changed, validate input
+             * @param e - event
+             */
+            nameInputChanged(e) {
+                if (e.target.value.length === 0) {
+                    this.$.newUserInput.invalid = true;
+                } else {
+                    this.$.newUserInput.invalid = false;
+                }
+            }
+
+            /**
+             * Tabs clicked, check what toggles should be disabled
+             * @param e - event
+             */
+            paperTabsClicked(e) {
+                const toggles = Array.from(document.querySelectorAll("paper-toggle-button.newUserToggleButton"));
+                if (this.$.newUserTabs.selected === 0) {
+                    // Camera operator
+                    toggles.forEach(function(toggle) {
+                        toggle.disabled = false;
+                    })
+                } else {
+                    toggles.forEach(function(toggle) {
+                        toggle.disabled = true;
+                        toggle.checked = false;
+                    });
+                }
+            }
+        }
+        // eslint-disable-next-line
+        Polymer(newUserDialog);
+    </script>
+
+</dom-module>
