@@ -165,7 +165,7 @@
                     const users = document.querySelector("gotofail-login").users;
 
                     let id = 0;
-                    if(users.length > 0) {
+                    if(users && users.length > 0) {
                         id = users[users.length - 1].id + 1;
                     }
 
