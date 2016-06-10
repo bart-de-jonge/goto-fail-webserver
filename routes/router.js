@@ -3,6 +3,7 @@ import timeline from "./timeline";
 import uploadScp from "./upload-scp";
 import users from "./users";
 import presets from "./presets";
+import cameras from "./cameras";
 import shotCaller from "./shot-caller";
 import director from "./director";
 import cameraControl from "./camera-control";
@@ -17,4 +18,5 @@ module.exports.addRoutes = (app) => {
     app.use("/camera-control", cameraControl);
     app.use("/shot-caller", shotCaller);
     app.use("/director", director);
+    app.use("/cameras", cameras);
 };

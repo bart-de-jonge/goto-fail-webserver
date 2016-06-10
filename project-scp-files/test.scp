@@ -161,6 +161,7 @@
                     <endCount>12.0</endCount>
                     <name>Director shot #1</name>
                     <instance>0</instance>
+                    <presetId>-1</presetId>
                 </shot>
             </shotList>
             <instance>0</instance>
@@ -185,6 +186,7 @@
                     <endCount>22.0</endCount>
                     <name>Director shot #2</name>
                     <instance>3</instance>
+                    <presetId>-1</presetId>
                 </shot>
             </shotList>
             <instance>1</instance>
@@ -224,6 +226,7 @@
                     <endCount>12.0</endCount>
                     <name>Director shot #1</name>
                     <instance>1</instance>
+                    <presetId>-1</presetId>
                 </shot>
             </shotList>
             <instance>3</instance>
@@ -248,6 +251,7 @@
                     <endCount>12.0</endCount>
                     <name>Director shot #1</name>
                     <instance>2</instance>
+                    <presetId>-1</presetId>
                 </shot>
             </shotList>
             <instance>4</instance>
