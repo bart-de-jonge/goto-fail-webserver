@@ -22,13 +22,24 @@ class ProjectManager {
 
             this.initialized = false;
             if (typeof this.data === "undefined") {
-                this.parseXML();
+                this.parseXML(() => {
+                    this.getPresets(() => {
+                        this.initialized = true;
+                    });
+                });
             } else {
-                this.initialized = true;
+                this.getPresets(() => {
+                    this.initialized = true;
+                });
             }
         }
-
         return projectManagerInstance;
+    }
+
+    getPresets(callback) {
+        this.presets = [];
+        // TODO get prestes from benine api
+        callback();
     }
 
     writeXML(callback) {
@@ -49,12 +60,12 @@ class ProjectManager {
         });
     }
 
-    parseXML() {
+    parseXML(callback) {
         fs.readFile(filepath, (err, data) => {
             if (err) {
                 // TODO something with the error
                 this.data = null;
-                this.initialized = true;
+                callback();
             } else {
                 parser.parseString(data, (err, result) => {
                     this.data = result;
@@ -70,7 +81,7 @@ class ProjectManager {
                     this.data.scriptingProject.cameraTimelines = this.getCameraTimelinesFromXML(
                         result.scriptingProject["camera-centerarea"]);
                     delete this.data.scriptingProject["camera-centerarea"];
-                    this.initialized = true;
+                    callback();
                 });
             }
         });
@@ -177,6 +188,23 @@ class ProjectManager {
             }
         }
         xmlWait();
+    }
+
+    static waitForPresetUpdates(callback) {
+        const projectManager = new ProjectManager();
+        const existingProjectManager = projectManager.initialized;
+        function presetWait() {
+            if (!projectManager.initialized) {
+                setTimeout(presetWait, 10);
+            } else {
+                if (existingProjectManager) {
+                    projectManager.getPresets(() => {
+                       callback();
+                    });
+                }
+            }
+        }
+        presetWait();
     }
 }
 
