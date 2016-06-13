@@ -22,7 +22,6 @@ describe("DirectorShot", () => {
             timelineIndices: [[]],
         };
         const directorShot = DirectorShot.fromXML(xmlObject);
-        console.log(directorShot);
 
         expect(directorShot.name).to.equal("Main Panning Shot");
         expect(directorShot.description).to.equal("Of Audience");
