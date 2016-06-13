@@ -17,8 +17,16 @@ class CameraShot {
     }
 
     static fromXML(XMLObject) {
-        const instruments = XMLObject.instruments.map(
-            instrument => Instrument.fromXML(instrument));
+        const instruments = [];
+
+        if (XMLObject.instruments) {
+            XMLObject.instruments.forEach((instrument) => {
+                if (instrument.instrument) {
+                    instruments.push(Instrument.fromXML(instrument));
+                }
+            });
+        }
+
         return new CameraShot(XMLObject.beginCount[0],
             XMLObject.endCount[0], XMLObject.name[0],
             XMLObject.description[0], XMLObject.colliding[0],
