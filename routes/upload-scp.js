@@ -5,6 +5,11 @@ import multipart from "connect-multiparty";
 import ProjectManager from "../objects/ProjectManager.js";
 const multipartMiddleware = multipart();
 
+const successfulUpload = function successfulUpload(res) {
+    res.json({ succes: true,
+        message: "Project successfully uploaded!" });
+};
+
 router.post("/", multipartMiddleware, (req, res) => {
     const newPath = `${__dirname}/../project-scp-files/project.scp`;
 
@@ -20,13 +25,12 @@ router.post("/", multipartMiddleware, (req, res) => {
                 fs.createReadStream(projectObject.path).pipe(fs.createWriteStream(newPath));
                 fs.unlink(projectObject.path, (error) => {
                     if (error) {
-                        res.status(500).json({succes: false,
+                        res.status(500).json({ succes: false,
                             message: "Some error occurred, please try again later!" });
                     } else {
                         ProjectManager.waitForXML((projectManager) => {
                             projectManager.reloadProject(() => {
-                                res.json({ succes: true,
-                                    message: "Project successfully uploaded!" });
+                                successfulUpload(res);
                             });
                         });
                     }
@@ -34,7 +38,7 @@ router.post("/", multipartMiddleware, (req, res) => {
             } else {
                 ProjectManager.waitForXML((projectManager) => {
                     projectManager.reloadProject(() => {
-                        res.json({ succes: true, message: "Project successfully uploaded!" });
+                        successfulUpload(res);
                     });
                 });
             }
