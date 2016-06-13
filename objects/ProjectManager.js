@@ -90,7 +90,9 @@ class ProjectManager {
                     this.data.scriptingProject.cameraTimelines = this.getCameraTimelinesFromXML(
                         result.scriptingProject["camera-centerarea"]);
                     delete this.data.scriptingProject["camera-centerarea"];
-                    callback();
+                    if (callback) {
+                        callback();
+                    }
                 });
             }
         });
@@ -162,7 +164,9 @@ class ProjectManager {
     reloadProject(callback) {
         this.initialized = false;
         // Force a call to reload the file, then wait for loaded file
-        this.parseXML();
+        this.parseXML(() => {
+            this.initialized = true;
+        });
         ProjectManager.waitForXML(callback);
     }
 
