@@ -17,18 +17,30 @@ router.post("/", multipartMiddleware, (req, res) => {
     if (projectObject && projectObject.name.endsWith(".scp")) {
         fs.rename(projectObject.path, newPath, (err) => {
             if (err) {
-                res.json({
-                    succes: false, message: "Some error occurred, please try again later!" });
+                fs.createReadStream(projectObject.path).pipe(fs.createWriteStream(newPath));
+                fs.unlink(projectObject.path, (error) => {
+                    if (error) {
+                        res.status(500).json({succes: false,
+                            message: "Some error occurred, please try again later!" });
+                    } else {
+                        ProjectManager.waitForXML((projectManager) => {
+                            projectManager.reloadProject(() => {
+                                res.json({ succes: true,
+                                    message: "Project successfully uploaded!" });
+                            });
+                        });
+                    }
+                });
             } else {
                 ProjectManager.waitForXML((projectManager) => {
                     projectManager.reloadProject(() => {
-                        res.json({ succes: true, message: "Project successfully uploaden!" });
+                        res.json({ succes: true, message: "Project successfully uploaded!" });
                     });
                 });
             }
         });
     } else {
-        res.json({ succes: false, message: "Please upload a .scp file." });
+        res.status(400).json({ succes: false, message: "Please upload a .scp file." });
     }
 });
 
