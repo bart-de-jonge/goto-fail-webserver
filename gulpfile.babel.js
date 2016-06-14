@@ -78,7 +78,7 @@ gulp.task("travisBuild", ["preTravisBuild"], (cb) => {
         .on("end", () => {
             cb();
             stream.pipe(exit());
-         });
+        });
 });
 
 gulp.task("default", ["lint", "compile", "test"], () => {

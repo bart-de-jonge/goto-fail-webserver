@@ -7,7 +7,7 @@ const request = supertest(app);
 describe("Routes: Upload", () => {
     it("Incorrect POST /upload-scp", done => {
         request.post("/upload-scp")
-            .expect(200)
+            .expect(400)
             .expect(res => {
                 expect(res.body.succes).to.be.false;
                 expect(res.body.message).to.exist;

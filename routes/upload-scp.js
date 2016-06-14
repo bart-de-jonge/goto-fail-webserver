@@ -5,6 +5,11 @@ import multipart from "connect-multiparty";
 import ProjectManager from "../objects/ProjectManager.js";
 const multipartMiddleware = multipart();
 
+const successfulUpload = function successfulUpload(res) {
+    res.json({ succes: true,
+        message: "Project successfully uploaded!" });
+};
+
 router.post("/", multipartMiddleware, (req, res) => {
     const newPath = `${__dirname}/../project-scp-files/project.scp`;
 
@@ -17,18 +22,29 @@ router.post("/", multipartMiddleware, (req, res) => {
     if (projectObject && projectObject.name.endsWith(".scp")) {
         fs.rename(projectObject.path, newPath, (err) => {
             if (err) {
-                res.json({
-                    succes: false, message: "Some error occurred, please try again later!" });
+                fs.createReadStream(projectObject.path).pipe(fs.createWriteStream(newPath));
+                fs.unlink(projectObject.path, (error) => {
+                    if (error) {
+                        res.status(500).json({ succes: false,
+                            message: "Some error occurred, please try again later!" });
+                    } else {
+                        ProjectManager.waitForXML((projectManager) => {
+                            projectManager.reloadProject(() => {
+                                successfulUpload(res);
+                            });
+                        });
+                    }
+                });
             } else {
                 ProjectManager.waitForXML((projectManager) => {
                     projectManager.reloadProject(() => {
-                        res.json({ succes: true, message: "Project successfully uploaden!" });
+                        successfulUpload(res);
                     });
                 });
             }
         });
     } else {
-        res.json({ succes: false, message: "Please upload a .scp file." });
+        res.status(400).json({ succes: false, message: "Please upload a .scp file." });
     }
 });
 
