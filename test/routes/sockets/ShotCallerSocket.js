@@ -95,7 +95,11 @@ describe("Routes: ShotCaller Sockets", () => {
             const directorTimeline = new DirectorTimeline("Director Timeline");
             directorTimeline.addDirectorShot(new DirectorShot("Shot", "Description", 0, 1000,
                                                    0, 0, [], []));
-            projectManager.data.scriptingProject.directorTimeline = directorTimeline;
+            projectManager.data = {
+                scriptingProject: {
+                    directorTimeline,
+                }
+            };
             client.on("current_director_shot", data => {
                 expect(data.currentShot).to.exist;
                 projectManager.data = tempData;
@@ -111,7 +115,12 @@ describe("Routes: ShotCaller Sockets", () => {
             const tempData = projectManager.data;
             // Mock director timeline data
             const directorTimeline = new DirectorTimeline("Director Timeline");
-            projectManager.data.scriptingProject.directorTimeline = directorTimeline;
+            projectManager.data = {
+                scriptingProject: {
+                    directorTimeline,
+                }
+            };
+
             client.on("current_director_shot", data => {
                 expect(data.currentShot).to.be.null;
                 projectManager.data = tempData;
@@ -127,7 +136,12 @@ describe("Routes: ShotCaller Sockets", () => {
             const tempData = projectManager.data;
             // Mock director timeline data
             const directorTimeline = new DirectorTimeline("Director Timeline");
-            projectManager.data.scriptingProject.directorTimeline = directorTimeline;
+            projectManager.data = {
+                scriptingProject: {
+                    directorTimeline,
+                }
+            };
+
             client.on("next_director_shot", data => {
                 expect(data.nextShot).to.be.null;
                 projectManager.data = tempData;
