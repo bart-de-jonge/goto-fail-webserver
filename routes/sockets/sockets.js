@@ -37,7 +37,9 @@ const listen = (server) => {
             logger.info(`Reset current count and load new max count: ${newMaxCount}`);
             currentCount = 0;
             namespaces.forEach(namespace => namespace.sendNextCount(currentCount));
-            maxCount = newMaxCount;
+            if (newMaxCount) {
+                maxCount = newMaxCount;
+            }
         });
     });
 

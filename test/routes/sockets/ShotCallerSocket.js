@@ -86,8 +86,9 @@ describe("Routes: ShotCaller Sockets", () => {
     after(function (done) {
         this.timeout(0);
         client.close();
-        server.close();
-        setImmediate(() => server.emit("close"));
-        done();
+        server.close(() => {
+            setImmediate(() => server.emit("close"));
+            done();
+        });
     });
 });
