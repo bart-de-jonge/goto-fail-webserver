@@ -1,4 +1,6 @@
 import ProjectManager from "../../objects/ProjectManager.js";
+import User from "../../objects/User.js";
+import CameraShot from "../../objects/CameraShot.js";
 import { expect } from "chai";
 import fs from "fs";
 
@@ -58,6 +60,52 @@ describe("ProjectManager Creation", () => {
             ProjectManager.waitForXML(projectManager => {
                 const users = projectManager.getUsersFromXML(xmlObject);
                 expect(users).to.not.be.empty;
+                done();
+            });
+        });
+
+        it("Can Parse A List of Users To XML", done => {
+            const user = new User(0, "John", [], 1);
+            ProjectManager.waitForXML(projectManager => {
+                const userXML = projectManager.usersToXML([user]);
+                expect(userXML[0].user).to.exist;
+                expect(userXML[0].user[0]).to.deep.equal(user.toXML());
+                done();
+            });
+        });
+
+        it("Can Return Min and Max Counts Of 0 Shots", done => {
+            ProjectManager.waitForXML(projectManager => {
+                const minMaxCount = projectManager.getMaxAndMinCount([]);
+                expect(minMaxCount.minCount).to.equal(0);
+                expect(minMaxCount.maxCount).to.equal(0);
+                done();
+            });
+        });
+
+        it("Can Return Min and Max Counts With Multiple Shots", done => {
+            ProjectManager.waitForXML(projectManager => {
+                const minMaxCount = projectManager.getMaxAndMinCount([
+                    new CameraShot(0, 1, "Shot 1", "Zoom in on director"),
+                    new CameraShot(12, 13, "Shot 2", "Gallery Pan"),
+                ]);
+                expect(minMaxCount.minCount).to.equal(0);
+                expect(minMaxCount.maxCount).to.equal(13);
+                done();
+            });
+        });
+
+        it("Can Handle Missing Camera Timelines", done => {
+            ProjectManager.waitForXML(projectManager => {
+                const cameraTimelines = projectManager.getCameraTimelinesFromXML([{}]);
+                expect(cameraTimelines).to.be.empty;
+                done();
+            });
+        });
+
+        it("Can Fetch Preset Updates", done => {
+            ProjectManager.waitForPresetUpdates(projectManager => {
+                expect(projectManager.initialized).to.be.true;
                 done();
             });
         });

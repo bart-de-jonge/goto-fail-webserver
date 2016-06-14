@@ -1,6 +1,8 @@
 import app from "../../../app.js";
 import socketApp from "../../../routes/sockets/sockets.js";
 import ProjectManager from "../../../objects/ProjectManager.js";
+import DirectorTimeline from "../../../objects/DirectorTimeline.js";
+import DirectorShot from "../../../objects/DirectorShot.js";
 import socketClient from "socket.io-client";
 import http from "http";
 import { expect } from "chai";
@@ -55,6 +57,7 @@ describe("Routes: ShotCaller Sockets", () => {
             client.on("current_director_shot", data => {
                 expect(data).to.have.property("currentShot");
                 projectManager.data = tempData;
+                client.removeListener("current_director_shot");
                 done();
             });
             client.emit("get_current_shot");
@@ -77,11 +80,63 @@ describe("Routes: ShotCaller Sockets", () => {
             projectManager.data = null;
             client.on("next_director_shot", data => {
                 expect(data).to.have.property("nextShot");
+                projectManager.data = tempData;
+                client.removeListener("next_director_shot");
                 done();
             });
             client.emit("get_next_shot");
         });
     });
+
+    it ("Should Be Able To Request Current Shot If Shot Is Present", done => {
+        ProjectManager.waitForXML(projectManager => {
+            const tempData = projectManager.data;
+            // Mock director timeline data
+            const directorTimeline = new DirectorTimeline("Director Timeline");
+            directorTimeline.addDirectorShot(new DirectorShot("Shot", "Description", 0, 1000,
+                                                   0, 0, [], []));
+            projectManager.data.scriptingProject.directorTimeline = directorTimeline;
+            client.on("current_director_shot", data => {
+                expect(data.currentShot).to.exist;
+                projectManager.data = tempData;
+                client.removeListener("current_director_shot");
+                done();
+            })
+            client.emit("get_current_shot");
+        });
+    });
+
+    it("Should Be Able To Request Current Shot If No Current Shot Present", done => {
+        ProjectManager.waitForXML(projectManager => {
+            const tempData = projectManager.data;
+            // Mock director timeline data
+            const directorTimeline = new DirectorTimeline("Director Timeline");
+            projectManager.data.scriptingProject.directorTimeline = directorTimeline;
+            client.on("current_director_shot", data => {
+                expect(data.currentShot).to.be.null;
+                projectManager.data = tempData;
+                client.removeListener("current_director_shot");
+                done();
+            })
+            client.emit("get_current_shot");
+        });
+    });
+
+    it("Should Be Able To Request Next Shot If No Next Shot Present", done => {
+        ProjectManager.waitForXML(projectManager => {
+            const tempData = projectManager.data;
+            // Mock director timeline data
+            const directorTimeline = new DirectorTimeline("Director Timeline");
+            projectManager.data.scriptingProject.directorTimeline = directorTimeline;
+            client.on("next_director_shot", data => {
+                expect(data.nextShot).to.be.null;
+                projectManager.data = tempData;
+                client.removeListener("next_director_shot");
+                done();
+            })
+            client.emit("get_next_shot");
+        });
+    })
 
     after(function (done) {
         this.timeout(0);

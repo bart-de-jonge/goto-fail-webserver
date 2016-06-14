@@ -64,4 +64,51 @@ describe("CameraShot", () => {
         done();
     });
 
+    it("Can Create CameraShot From XML (with empty instruments)", done => {
+        const xmlObject = {
+            instruments: [{
+            }],
+            beginCount: [0],
+            endCount: [1],
+            name: ["My Shot"],
+            description: ["Better Be Good"],
+            colliding: [false],
+            instance: [1],
+            presetId: [1]
+        };
+        const shot = CameraShot.fromXML(xmlObject);
+
+        expect(shot.beginCount).to.equal(0);
+        expect(shot.endCount).to.equal(1);
+        expect(shot.name).to.equal("My Shot");
+        expect(shot.description).to.equal("Better Be Good");
+        expect(shot.colliding).to.equal(false);
+        expect(shot.instance).to.equal(1);
+        expect(shot.presetId).to.equal(1);
+        expect(shot.instruments).to.be.empty;
+        done();
+    });
+
+    it("Can Create XML Formatted Object From CameraShot", done => {
+        const xmlObject = {
+            instruments: [{
+                instrument: [
+                    {
+                        name: ["Trombone"],
+                        description: ["It's Very Loud"],
+                    }
+                ]
+            }],
+            beginCount: [0],
+            endCount: [1],
+            name: ["My Shot"],
+            description: ["Better Be Good"],
+            colliding: [false],
+            instance: [1],
+            presetId: [1]
+        };
+        const shot = CameraShot.fromXML(xmlObject);
+        expect(shot.toXML()).to.deep.equal(xmlObject);
+        done();
+    });
 });
