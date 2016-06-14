@@ -11,7 +11,7 @@ const logger = log4js.getLogger();
 const getDirectorTimeline = callback => {
     ProjectManager.waitForXML((projectManager) => {
         if (projectManager.data) {
-            const directorTimeline = projectManager.data.directorTimeline;
+            const directorTimeline = projectManager.data.scriptingProject.directorTimeline;
             callback(directorTimeline);
         } else {
             callback(null);

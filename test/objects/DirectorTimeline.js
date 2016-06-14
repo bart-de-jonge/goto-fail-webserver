@@ -17,4 +17,40 @@ describe("DirectorTimeline", () => {
         expect(directorTimeline.getDirectorShots()).to.contain(directorShot);
         done();
     });
+
+    it("Can create a DirectorTimeline from XML without a DirectorShot", done => {
+        const xmlObject = {
+            description: ["I'm a director timeline"],
+            shotList: [],
+        };
+
+        const directorTimeline = DirectorTimeline.fromXML(xmlObject);
+        expect(directorTimeline.description).to.equal("I'm a director timeline");
+        expect(directorTimeline.directorShots).to.be.empty;
+        done();
+    });
+
+    it("Can create a DirectorTimeline from XML", done => {
+        const xmlObject = {
+            description: ["I'm a director timeline"],
+            shotList: [{
+                shot: [{
+                    name: ["Main Panning Shot"],
+                    description: ["Of Audience"],
+                    beginCount: [1],
+                    endCount: [3],
+                    frontShotPadding: [0.5],
+                    endShotPadding: [0.5],
+                    colliding: [0],
+                    camerashots: [[]],
+                    timelineIndices: [[]],
+                }],
+            }],
+        };
+
+        const directorTimeline = DirectorTimeline.fromXML(xmlObject);
+        expect(directorTimeline.description).to.equal("I'm a director timeline");
+        expect(directorTimeline.directorShots).to.not.be.empty;
+        done();
+    })
 });
