@@ -57,6 +57,12 @@
                 float: right;
             }
 
+            .bottom-size {
+                background-color: transparent;
+                height: 100%;
+                margin-top: 1px;
+            }
+
         </style>
 
         <paper-card on-tap="openTimelineToast"
@@ -71,11 +77,20 @@
                 <span>{{block_data.beginCount}} - {{block_data.endCount}}</span>
             </div>
             <div class="horizontal-separator"></div>
-            <div class="card-content" style="background-color: transparent; height: 100%">
+            <div class="card-content">
                 <paper-ripple></paper-ripple>
                 <iron-icon icon="icons:description"></iron-icon>
                 <div class="content-header">Description</div>
                 <span>{{block_data.description}}</span>
+            </div>
+            <div class="horizontal-separator"></div>
+            <div class="card-content bottom-size">
+                <paper-ripple></paper-ripple>
+                <iron-icon icon="image:music-note"></iron-icon>
+                <div class="content-header">Instruments</div>
+                <template is="dom-repeat" items="{{block_data.instruments}}">
+                    <div>{{item.name}}</div>
+                </template>
             </div>
         </paper-card>
 

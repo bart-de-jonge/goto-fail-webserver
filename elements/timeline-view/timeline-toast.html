@@ -19,7 +19,7 @@
         <style>
             #timelinetoast {
                 padding: 5px 20px;
-                height: 80px;
+                height: 120px;
                 margin: 10px;
                 margin-left: 35%;
                 box-shadow: 0px 3px 15px rgba(0,0,0,0.5);
@@ -57,6 +57,10 @@
                 height: 100%;
                 color: var(--secondary-color-500);
             }
+
+            .instrument {
+                padding-right: 20px;
+            }
         </style>
 
 
@@ -73,6 +77,13 @@
                 <div>
                     <span class="content-title">Description</span>
                     <span class="content-text">{{block_data.description}}</span>
+                </div>
+                <div></div>
+                <div>
+                    <span class="content-title">Instruments</span>
+                    <template is="dom-repeat" items="{{block_data.instruments}}">
+                        <span class="content-text instrument">{{item.name}}</span>
+                    </template>
                 </div>
                 <div></div>
             </span>

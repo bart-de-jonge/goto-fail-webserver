@@ -52,7 +52,7 @@ class ProjectManager {
     }
 
     writeXML(callback) {
-        const xml = deepCopy(this.data);
+        const xml = Object.assign({}, this.data);
         xml.scriptingProject.directorTimeline = this.data.scriptingProject.directorTimeline.toXML();
         xml.scriptingProject.users = this.usersToXML(this.data.scriptingProject.users);
         xml.scriptingProject["camera-centerarea"] = this.cameraTimelinesToXML(
@@ -81,7 +81,7 @@ class ProjectManager {
                     const directorTimelineXML = result.scriptingProject.directorTimeline[0];
                     this.data.scriptingProject.directorTimeline =
                         DirectorTimeline.fromXML(directorTimelineXML);
-
+                    
                     this.data.scriptingProject.users =
                         this.getUsersFromXML(result.scriptingProject.users);
 

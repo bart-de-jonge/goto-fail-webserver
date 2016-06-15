@@ -9,16 +9,16 @@ class Instrument {
 
     static fromXML(XMLObject) {
         return new Instrument(
-            XMLObject.instrument[0].name[0],
-            XMLObject.instrument[0].description[0]
+            XMLObject.name[0],
+            XMLObject.description[0]
         );
     }
 
     toXML() {
-        return { instrument: [{
+        return {
             description: [this.description],
             name: [this.name],
-        }] };
+        };
     }
 }
 
