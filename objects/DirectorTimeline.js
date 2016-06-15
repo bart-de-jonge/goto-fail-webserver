@@ -29,13 +29,10 @@ class DirectorTimeline {
                 directorTimeline.addDirectorShot(directorShot);
             });
         }
-        console.log("here");
-        console.log(directorTimeline.getDirectorShots());
         return directorTimeline;
     }
 
     toXML() {
-        console.log(`${this.getDirectorShots()} are the director shots`);
         const directorShotsXML = this.directorShots.map((shot) => shot.toXML());
         return {
             description: this.description,
