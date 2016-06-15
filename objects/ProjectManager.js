@@ -81,8 +81,7 @@ class ProjectManager {
                     const directorTimelineXML = result.scriptingProject.directorTimeline[0];
                     this.data.scriptingProject.directorTimeline =
                         DirectorTimeline.fromXML(directorTimelineXML);
-                    console.log(this.data.scriptingProject.directorTimeline);
-
+                    
                     this.data.scriptingProject.users =
                         this.getUsersFromXML(result.scriptingProject.users);
 
