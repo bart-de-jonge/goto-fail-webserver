@@ -14,8 +14,8 @@ const logger = log4js.getLogger();
 // Get timelines from xml
 const getMaxCount = callback => {
     ProjectManager.waitForXML((projectManager) => {
-        if (projectManager.data && projectManager.data.cameraTimelines) {
-            callback(projectManager.data.cameraTimelines.maxCount);
+        if (projectManager.data && projectManager.data.scriptingProject.cameraTimelines) {
+            callback(projectManager.data.scriptingProject.maxCount);
         } else {
             callback(null);
         }
@@ -37,12 +37,15 @@ const listen = (server) => {
             logger.info(`Reset current count and load new max count: ${newMaxCount}`);
             currentCount = 0;
             namespaces.forEach(namespace => namespace.sendNextCount(currentCount));
-            maxCount = newMaxCount;
+            if (newMaxCount) {
+                maxCount = newMaxCount;
+            }
         });
     });
 
     getMaxCount(newMaxCount => {
         if (newMaxCount) {
+            logger.info(`Load new max count: ${newMaxCount}`);
             maxCount = newMaxCount;
         }
     });
