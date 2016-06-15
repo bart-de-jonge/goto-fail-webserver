@@ -2,7 +2,6 @@ import fs from "fs";
 import xml2js from "xml2js";
 const parser = new xml2js.Parser();
 const builder = new xml2js.Builder();
-import deepCopy from "deepcopy";
 import CameraTimeline from "../objects/CameraTimeline";
 import DirectorTimeline from "../objects/DirectorTimeline.js";
 import User from "./User";
@@ -52,7 +51,7 @@ class ProjectManager {
     }
 
     writeXML(callback) {
-        const xml = deepCopy(this.data);
+        const xml = Object.assign({}, this.data);
         xml.scriptingProject.directorTimeline = this.data.scriptingProject.directorTimeline.toXML();
         xml.scriptingProject.users = this.usersToXML(this.data.scriptingProject.users);
         xml.scriptingProject["camera-centerarea"] = this.cameraTimelinesToXML(

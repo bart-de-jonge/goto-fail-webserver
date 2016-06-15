@@ -19,7 +19,7 @@
         <style>
             #timelinetoast {
                 padding: 5px 20px;
-                height: 80px;
+                height: 120px;
                 margin: 10px;
                 margin-left: 35%;
                 box-shadow: 0px 3px 15px rgba(0,0,0,0.5);
@@ -57,10 +57,14 @@
                 height: 100%;
                 color: var(--secondary-color-500);
             }
+
+            .instrument {
+                padding-right: 4px;
+            }
         </style>
 
 
-        <paper-toast on-tap="handleTap" duration="0" class="fit-bottom" id="timelinetoast">
+        <paper-toast on-tap="handleTap" duration="10000" class="fit-bottom" id="timelinetoast">
             <paper-ripple></paper-ripple>
 
             <span id="content">
@@ -75,10 +79,14 @@
                     <span class="content-text">{{block_data.description}}</span>
                 </div>
                 <div></div>
+                <div>
+                    <span class="content-title">Instruments</span>
+                    <template is="dom-repeat" items="{{block_data.instruments}}">
+                        <span class="content-text instrument">{{item.name}}</span>
+                    </template>
+                </div>
+                <div></div>
             </span>
-
-            <span><paper-button noink id="button">close</paper-button></span>
-
         </paper-toast>
 
     </template>
