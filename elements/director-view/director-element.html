@@ -6,6 +6,18 @@
     <template>
         <style include="iron-flex"></style>
         <style>
+            :host {
+                display: block;
+                margin: 0 24px;
+            }
+
+            timeline-header {
+                display: block;
+                z-index: 4;
+                position: relative;
+                margin: 0 24px;
+            }
+
             #scrolling-box {
                 background: red;
                 width: 100%;
@@ -13,6 +25,7 @@
                 position: absolute;
                 top: 62px;
                 z-index: 2;
+                margin-left: -24px;
             }
         </style>
 
@@ -21,9 +34,9 @@
             url="/director/director-timeline"
             handle-as="json"
             on-response="handleResponse"
-            id="ajax-director-timeline-data"></iron-ajax>
+                id="ajax-director-timeline-data"></iron-ajax>
 
-        <div class="layout horizontal">
+        <div>
             <span id="scrolling-box"></span>
             <timeline-header timeline_data="{{director_timeline_data}}"></timeline-header>
             <timeline-element timeline_data="{{director_timeline_data}}" class="flex"></timeline-element>
