@@ -1,0 +1,176 @@
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./timeline-view/timeline-element.html">
+<link rel="import" href="./timeline-view/timeline-header.html">
+
+<dom-module id="director-view">
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            #scrolling-box {
+                background: red;
+                width: 100%;
+                height: 3px;
+                position: absolute;
+                top: 62px;
+                z-index: 2;
+            }
+        </style>
+
+        <iron-ajax
+            auto
+            url="/director/director-timeline"
+            handle-as="json"
+            on-response="handleResponse"
+            id="ajax-director-timeline-data"></iron-ajax>
+
+        <div class="layout horizontal">
+            <span id="scrolling-box"></span>
+            <timeline-header timeline_data="{{director_timeline_data}}"></timeline-header>
+            <timeline-element timeline_data="{{director_timeline_data}}" class="flex"></timeline-element>
+        </div>
+    </template>
+
+    <script src="../bower_components/velocity/velocity.js"></script>
+    <script>
+        (function () {
+            const getMaxCount = (directorTimeline) => {
+                let maxCount = 0;
+                directorTimeline.directorShots.forEach(shot => {
+                    const shotEnd = parseFloat(shot.endCount);
+                    if (shotEnd > maxCount) {
+                        maxCount = shotEnd;
+                    }
+                })
+                return maxCount;
+            };
+            /*
+             * Add padding to the first block of the timeline
+             * and add it to the new timeline
+             */
+            const addFrontPadding = function addFrontPadding(timeline, newTimeline) {
+                if (timeline.directorShots[0].beginCount !== 0) {
+                    const newShot = {
+                        beginCount: "0",
+                        endCount: timeline.directorShots[0].beginCount,
+                        visible: "hidden",
+                    };
+                    newTimeline.shots.push(newShot);
+                }
+            };
+
+            /*
+             * Add padding blocks after each block.
+             */
+            const addTrailingPadding = function addTrailingPadding(timeline, newTimeline, maxCount) {
+                // Add padding after each consecutive block:
+                timeline.directorShots.forEach((shot, i) => {
+                    newTimeline.shots.push(shot);
+                    if (i < timeline.directorShots.length - 1) {
+                        // Not the last block
+                        const endCount = (timeline.directorShots[i + 1].beginCount * 4) / 4;
+                        const newShot = {
+                            beginCount: shot.endCount,
+                            endCount,
+                            visible: "hidden",
+                        };
+                        newTimeline.shots.push(newShot);
+                    } else {
+                        // The last block
+                        if (parseFloat(shot.endCount) !== maxCount) {
+                            // There is room leeft in timeline
+                            const newShot = {
+                                beginCount: shot.endCount,
+                                endCount: maxCount,
+                                visible: "hidden",
+                            };
+                            newTimeline.shots.push(newShot);
+                        }
+                    }
+                });
+            };
+
+
+            class directorView {
+                beforeRegister() {
+                    this.is = "director-view";
+
+                    this.properties = {
+                        director_timeline_data: Object,
+                        currentCount: {
+                            type: Number,
+                            value: 0,
+                            notify: true,
+                            observer: "_countChanged",
+                        },
+                    };
+
+                    this.prevTop = 22;
+                }
+
+                handleResponse(event) {
+                    const responseData = event.detail.response;
+
+                    const directorTimelineData = {};
+                    directorTimelineData.minCount = 0;
+                    directorTimelineData.maxCount = 0;
+                    directorTimelineData.name = "Director Timeline";
+                    directorTimelineData.shots = [];
+
+                    if (responseData.success) {
+                        const directorTimeline = responseData.directorTimeline;
+                        const maxCount = getMaxCount(directorTimeline);
+                        directorTimelineData.maxCount = maxCount;
+
+                        if (directorTimeline.directorShots.length > 0) {
+                            addFrontPadding(directorTimeline, directorTimelineData);
+                            addTrailingPadding(directorTimeline, directorTimelineData, maxCount);
+                        } else {
+                            const newShot = {
+                                beginCount: 0,
+                                endCount: maxCount,
+                                visible: "hidden",
+                            };
+                            directorTimelineData.shots.push(newShot);
+                        }
+
+                        directorTimelineData.shots.forEach(shot => {
+                            shot.pixelLength = (shot.endCount - shot.beginCount) * 40;
+                        })
+                    }
+
+                    this.director_timeline_data = directorTimelineData;
+                }
+
+                _countChanged(newCount) {
+                    if (newCount >= 0) {
+                        const timelineDiv = Polymer.dom(this.root).querySelector("div.director-view");
+                        const scrollLine = Polymer.dom(timelineDiv).querySelector("#scrolling-box");
+                        const newTop = 40 * newCount + this.prevTop;
+                        this.scrollDown(scrollLine, newTop);
+                    }
+                }
+
+                scrollDown(scrollLine, newTop) {
+                    Velocity(scrollLine, {
+                        top: newTop,
+                    },
+                        {
+                            duration: 0,
+                            easing: "linear",
+                        });
+
+                    Velocity(scrollLine,
+                            "scroll",
+                            {
+                                offset: -200,
+                                queue: false,
+                                duration: 0,
+                                easing: "linear",
+                            });
+                }
+            }
+
+            Polymer(directorView);
+        })();
+    </script>
+</dom-module>

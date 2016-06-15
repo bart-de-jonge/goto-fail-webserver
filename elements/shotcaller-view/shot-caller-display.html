@@ -27,7 +27,7 @@
                 };
             }
 
-            #button {
+            .count-button {
                 height: 100%;
                 margin-top: auto;
                 margin-bottom: auto;
@@ -54,9 +54,17 @@
         <div class="layout vertical">
             <paper-card heading="Score count" elevation="1">
                 <div class="card-content shadowed">
-                    <paper-button id="button" on-tap="handleAdvanceTap">
+                    <paper-button class="count-button" id="advanceButton" on-tap="handleAdvanceTap">
                         <iron-icon  icon="av:play-arrow"></iron-icon>
                         Advance count
+                    </paper-button>
+                    <paper-button id="backButton" class="count-button" on-tap="handleBackTap">
+                        <iron-icon  icon="av:skip-previous"></iron-icon>
+                        Step Back
+                    </paper-button>
+                    <paper-button id="resetButton" class="count-button" on-tap="handleResetTap">
+                        <iron-icon icon="av:replay"></iron-icon>
+                        Reset
                     </paper-button>
                     <span id="count">{{ currentCount }}</span>
                 </div>
@@ -69,6 +77,14 @@
                 <shot-caller-shot-card shot-type="Next" shot="{{ nextShot }}"></shot-caller-shot-card>
             </div>
         </div>
+
+        <paper-dialog id="confirmCountResetDialog" modal="true">
+            <h2>Are You Sure You Want To Reset The Current Count?</h2>
+            <div class="buttons">
+                <paper-button on-tap="dismissReset">Cancel</paper-button>
+                <paper-button on-tap="confirmReset">Reset</paper-button>
+            </div>
+        </paper-dialog>
 
     </template>
 
@@ -93,6 +109,25 @@
                 handleAdvanceTap() {
                     const advanceCountEvent = new Event("advanceCount");
                     document.dispatchEvent(advanceCountEvent);
+                }
+
+                handleBackTap() {
+                    const decreaseCountEvent = new Event("decreaseCount");
+                    document.dispatchEvent(decreaseCountEvent);
+                }
+
+                handleResetTap() {
+                    this.$.confirmCountResetDialog.open();
+                }
+
+                confirmReset() {
+                    this.dismissReset();
+                    const resetCountEvent = new Event("resetCount");
+                    document.dispatchEvent(resetCountEvent);
+                }
+
+                dismissReset() {
+                    this.$.confirmCountResetDialog.close();
                 }
 
                 _countChanged() {

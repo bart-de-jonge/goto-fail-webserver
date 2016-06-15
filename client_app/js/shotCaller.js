@@ -29,4 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
         socket.emit("get_current_shot", {});
         socket.emit("get_next_shot", {});
     });
+
+    document.addEventListener("resetCount", () => {
+        socket.emit("reset_count", {});
+        // After Reset Shots Must Be Updated
+        socket.emit("get_current_shot", {});
+        socket.emit("get_next_shot", {});
+    });
+
+    document.addEventListener("decreaseCount", () => {
+        socket.emit("decrease_count", {});
+    });
 });
