@@ -59,12 +59,12 @@
             }
 
             .instrument {
-                padding-right: 20px;
+                padding-right: 4px;
             }
         </style>
 
 
-        <paper-toast on-tap="handleTap" duration="0" class="fit-bottom" id="timelinetoast">
+        <paper-toast on-tap="handleTap" duration="10000" class="fit-bottom" id="timelinetoast">
             <paper-ripple></paper-ripple>
 
             <span id="content">
@@ -87,9 +87,6 @@
                 </div>
                 <div></div>
             </span>
-
-            <span><paper-button noink id="button">close</paper-button></span>
-
         </paper-toast>
 
     </template>
