@@ -57,6 +57,10 @@
                 height: 100%;
                 color: var(--secondary-color-500);
             }
+
+            .instrument {
+                padding-right: 20px;
+            }
         </style>
 
 
@@ -78,7 +82,7 @@
                 <div>
                     <span class="content-title">Instruments</span>
                     <template is="dom-repeat" items="{{block_data.instruments}}">
-                        <span class="content-text" style="padding-right: 20px;">{{item.name}}</span>
+                        <span class="content-text instrument">{{item.name}}</span>
                     </template>
                 </div>
                 <div></div>
