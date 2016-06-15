@@ -19,7 +19,8 @@ class CameraShot {
     static fromXML(XMLObject) {
         const instruments = [];
 
-        if (XMLObject.instruments && XMLObject.instruments[0] && XMLObject.instruments[0].instrument) {
+        if (XMLObject.instruments && XMLObject.instruments[0]
+                && XMLObject.instruments[0].instrument) {
             XMLObject.instruments[0].instrument.forEach((instrument) => {
                 if (instrument) {
                     instruments.push(Instrument.fromXML(instrument));

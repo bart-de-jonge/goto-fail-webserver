@@ -2,7 +2,6 @@ import fs from "fs";
 import xml2js from "xml2js";
 const parser = new xml2js.Parser();
 const builder = new xml2js.Builder();
-import deepCopy from "deepcopy";
 import CameraTimeline from "../objects/CameraTimeline";
 import DirectorTimeline from "../objects/DirectorTimeline.js";
 import User from "./User";
@@ -81,7 +80,7 @@ class ProjectManager {
                     const directorTimelineXML = result.scriptingProject.directorTimeline[0];
                     this.data.scriptingProject.directorTimeline =
                         DirectorTimeline.fromXML(directorTimelineXML);
-                    
+
                     this.data.scriptingProject.users =
                         this.getUsersFromXML(result.scriptingProject.users);
 
