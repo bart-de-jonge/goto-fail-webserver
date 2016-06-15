@@ -6,6 +6,7 @@ import socketio from "socket.io";
 import log4js from "log4js";
 import fs from "fs";
 import CameraOperatorSocket from "./CameraOperatorSocket";
+import DirectorSocket from "./DirectorSocket";
 import ShotCallerSocket from "./ShotCallerSocket";
 import ProjectManager from "../../objects/ProjectManager.js";
 
@@ -57,12 +58,23 @@ const listen = (server) => {
         }
     };
 
+    // Callback that allows more fine-grained manipulation of the count
+    const setCount = (newCount) => {
+        if (newCount < maxCount) {
+            currentCount = newCount;
+            namespaces.forEach((namespace) => namespace.sendNextCount(currentCount));
+        }
+    };
+
     // Set up different socket namespaces
     const operatorSocket = new CameraOperatorSocket(io, currentCount, sendCounts);
     namespaces.push(operatorSocket);
 
-    const shotCallerSocket = new ShotCallerSocket(io, currentCount, sendCounts);
+    const shotCallerSocket = new ShotCallerSocket(io, currentCount, sendCounts, setCount);
     namespaces.push(shotCallerSocket);
+
+    const directorSocket = new DirectorSocket(io, currentCount, sendCounts);
+    namespaces.push(directorSocket);
 
     logger.debug("Initialized socket.io connection.");
 };
