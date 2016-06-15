@@ -78,6 +78,14 @@
             </div>
         </div>
 
+        <paper-dialog id="confirmCountResetDialog" modal="true">
+            <h2>Are You Sure You Want To Reset The Current Count?</h2>
+            <div class="buttons">
+                <paper-button on-tap="dismissReset">Cancel</paper-button>
+                <paper-button on-tap="confirmReset">Reset</paper-button>
+            </div>
+        </paper-dialog>
+
     </template>
 
     <script>
@@ -109,8 +117,17 @@
                 }
 
                 handleResetTap() {
+                    this.$.confirmCountResetDialog.open();
+                }
+
+                confirmReset() {
+                    this.dismissReset();
                     const resetCountEvent = new Event("resetCount");
                     document.dispatchEvent(resetCountEvent);
+                }
+
+                dismissReset() {
+                    this.$.confirmCountResetDialog.close();
                 }
 
                 _countChanged() {
