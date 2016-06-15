@@ -19,9 +19,9 @@ class CameraShot {
     static fromXML(XMLObject) {
         const instruments = [];
 
-        if (XMLObject.instruments) {
-            XMLObject.instruments.forEach((instrument) => {
-                if (instrument.instrument) {
+        if (XMLObject.instruments && XMLObject.instruments[0] && XMLObject.instruments[0].instrument) {
+            XMLObject.instruments[0].instrument.forEach((instrument) => {
+                if (instrument) {
                     instruments.push(Instrument.fromXML(instrument));
                 }
             });
@@ -44,7 +44,7 @@ class CameraShot {
             colliding: [this.colliding],
             instance: [this.instance],
             presetId: [this.presetId],
-            instruments,
+            instruments: [{ instrument: instruments }],
         };
     }
 }
