@@ -18,7 +18,12 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(session({ secret: "averyrandomkeyfromgotofail" }));
+app.use(session({
+    secret: "averyrandomkeyfromgotofail",
+    cookie: {
+        path: "/",
+    },
+}));
 app.use(require("node-sass-middleware")({
     src: path.join(__dirname, "public"),
     dest: path.join(__dirname, "public"),

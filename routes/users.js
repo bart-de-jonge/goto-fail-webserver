@@ -15,6 +15,7 @@ router.post("/picked-user", (req, res) => {
 // Get users data
 router.get("/get-users", (req, res) => {
     ProjectManager.waitForXML((projectManager) => {
+        console.log(req.session.pickedUser);
         const data = projectManager.data;
         res.json({
             users: data.scriptingProject.users,

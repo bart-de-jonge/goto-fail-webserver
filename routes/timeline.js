@@ -37,6 +37,7 @@ router.get("/timeline-data", (req, res) => {
 
 // Get timeline data, but filtered (only some timelines)
 router.get("/timeline-filtered-data", (req, res) => {
+    console.log(req.session.pickedUser);
     getTimelines(req.session.pickedUser, true, (data, err) => {
         if (err) {
             res.json({
