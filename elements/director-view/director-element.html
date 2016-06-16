@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../timeline-view/timeline-element.html">
 <link rel="import" href="../timeline-view/timeline-header.html">
+<link rel="import" href="../timeline-view/scrolling-box.html">
 
 <dom-module id="director-element">
     <template>
@@ -24,16 +25,6 @@
                 position: relative;
                 margin: 0 24px;
             }
-
-            #disablescrolling-box {
-                background: red;
-                width: 100%;
-                height: 3px;
-                position: absolute;
-                top: 62px;
-                z-index: 2;
-                margin-left: -24px;
-            }
         </style>
 
         <iron-ajax
@@ -44,14 +35,13 @@
                 id="ajax-director-timeline-data"></iron-ajax>
 
         <div class="layout horizontal">
-            <span id="scrolling-box"></span>
+            <scrolling-box current-count="{{currentCount}}"></scrolling-box>
             <div class="horizontal-separator"></div>
             <timeline-element timeline_data="{{director_timeline_data}}" class="flex"></timeline-element>
             <div class="horizontal-separator"></div>
         </div>
     </template>
 
-    <script src="../../bower_components/velocity/velocity.js"></script>
     <script>
         (function () {
             const getMaxCount = (directorTimeline) => {
@@ -117,15 +107,8 @@
 
                     this.properties = {
                         director_timeline_data: Object,
-                        currentCount: {
-                            type: Number,
-                            value: 0,
-                            notify: true,
-                            observer: "_countChanged",
-                        },
+                        currentCount: Number
                     };
-
-                    this.prevTop = 22;
                 }
 
                 handleResponse(event) {
@@ -160,34 +143,6 @@
                     }
 
                     this.director_timeline_data = directorTimelineData;
-                }
-
-                _countChanged(newCount) {
-                    if (newCount >= 0) {
-                        const timelineDiv = Polymer.dom(this.root).querySelector("div.director-element");
-                        const scrollLine = Polymer.dom(timelineDiv).querySelector("#scrolling-box");
-                        const newTop = 40 * newCount + this.prevTop;
-                        this.scrollDown(scrollLine, newTop);
-                    }
-                }
-
-                scrollDown(scrollLine, newTop) {
-                    Velocity(scrollLine, {
-                        top: newTop,
-                    },
-                        {
-                            duration: 0,
-                            easing: "linear",
-                        });
-
-                    Velocity(scrollLine,
-                            "scroll",
-                            {
-                                offset: -200,
-                                queue: false,
-                                duration: 0,
-                                easing: "linear",
-                            });
                 }
             }
 
