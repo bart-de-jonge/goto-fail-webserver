@@ -12,6 +12,7 @@
 
 <dom-module id="director-view">
     <template>
+        <style include="iron-flex"></style>
         <style>
             paper-toolbar {
                 background-color: var(--main-color-500);
@@ -29,6 +30,22 @@
             timeline-header {
                 padding: 4px 0;
             }
+
+            .director-container {
+                min-height: 100%;
+                background-color: rgb(240,240,240);
+            }
+
+            .director-header {
+                padding: 0 24px;
+            }
+
+            .horizontal-separator {
+                background-color: black;
+                opacity: 0.1;
+                margin: 0px 4px;
+                width: 2px;
+            }
         </style>
 
         <paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking left-drawer id="drawer-panel">
@@ -42,10 +59,14 @@
                         <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
                         <h2 style="font-weight: lighter">Director view</h2>
                     </paper-toolbar>
-                    <timeline-header timeline_data="{{timeline_data}}"></timeline-header>
+                    <div class="layout horizontal director-header">
+                        <div class="horizontal-separator"></div>
+                        <timeline-header class="flex" timeline_data="{{timeline_data}}"></timeline-header>
+                        <div class="horizontal-separator"></div>
+                    </div>
                 </div>
 
-                <div style="background-color: rgb(240,240,240);">
+                <div class="director-container">
                     <director-element></director-element>
                 </div>
 

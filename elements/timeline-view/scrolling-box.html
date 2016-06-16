@@ -4,7 +4,7 @@
     <template>
         <style include="iron-flex"></style>
         <style>
-            /** :host {
+            #scrollingline {
                 font-family: "monospace";
                 margin: 0 -24px;
                 background: red;
@@ -17,22 +17,23 @@
     
             .count-box {
                 background: red;
+                margin: 0;
+                top: 0;
                 max-width: 28px;
                 height: 30px;
                 text-align: center;
                 font-weight: bold;
                 color: white;
-            } **/
+            }
         </style>
 
-        test
-        <!--<div id="scrolling-box">
+        <div id="scrollingline">
             <div class="layout vertical center-justified count-box">
-                test
                 {{currentCount}}
             </div>
-        </div>-->
+        </div>
     </template>
+    <script src="../../bower_components/velocity/velocity.js"></script>
     <script>
     (function() {
     'use strict';
@@ -40,15 +41,50 @@
         beforeRegister() {
             this.is = 'scrolling-box';
 
-            //this.properties = {
-            //    currentCount: Number
-            //};
+            this.properties = {
+                currentCount: {
+                    type: Number,
+                    value: 0,
+                    notify: true,
+                    observer: "_countChanged",
+                }
+            };
+
+        this.prevTop = 22;
         }
-        
-        attached() {
-            console.log("here: " + currentCount);
+    
+        _countChanged(newCount) {
+            if (newCount >= 0) {
+                // eslint-disable-next-line no-undef
+                const scrollLine = Polymer.dom(this.root).querySelector("#scrollingline");
+    
+                const newTop = 40 * newCount + this.prevTop;
+                console.log(newTop);
+                this.scrollDown(scrollLine, newTop);
+            }
+        }
+    
+        scrollDown(scrollLine, newTop) {
+            // eslint-disable-next-line no-undef
+            Velocity(scrollLine, { // eslint-disable-line new-cap
+                top: newTop,
+            },
+                {
+                    duration: 0,
+                    easing: "linear",
+                });
+            // eslint-disable-next-line no-undef
+            Velocity(scrollLine, // eslint-disable-line new-cap
+                "scroll",
+                {
+                    offset: -200,
+                    queue: false,
+                    duration: 0,
+                    easing: "linear",
+                });
         }
     }
     Polymer(scrollingBox);
     })();
+    </script>
 </dom-module>
