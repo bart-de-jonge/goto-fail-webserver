@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="timeline-element.html">
 <link rel="import" href="timeline-header.html">
+<link rel="import" href="scrolling-box.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 
 <dom-module id="timeline-grid">
@@ -21,7 +22,7 @@
                 width: 2px;
             }
 
-            .count-box {
+            .disablecount-box {
                 background: red;
                 max-width: 28px;
                 height: 30px;
@@ -30,7 +31,7 @@
                 color: white;
             }
 
-            #scrolling-box {
+            disablescrolling-box {
                 font-family: "monospace";
                 margin: 0 -24px;
                 background: red;
@@ -40,7 +41,6 @@
                 top: 62px;
                 z-index: 2;
             }
-
         </style>
         <iron-ajax
                 auto
@@ -50,11 +50,12 @@
                 id="ajax-timeline-data"></iron-ajax>
 
         <div class="layout horizontal">
-            <div id="scrolling-box">
+            <!-- <div id="scrolling-box">
                 <div class="layout vertical center-justified count-box">
                     {{currentCount}}
                 </div>
-            </div>
+            </div> -->
+            <scrolling-box id="scrolling-box" current-count="{{currentCount}}"></scrolling-box>
             <div class="horizontal-separator"></div>
             <template is="dom-repeat" items="{{timeline_data.cameraTimelines}}">
                 <timeline-element timeline_data="{{item}}" class="flex"></timeline-element>

@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<dom-module id="scrolling-box">
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            /** :host {
+                font-family: "monospace";
+                margin: 0 -24px;
+                background: red;
+                width: 100%;
+                height: 3px;
+                position: absolute;
+                top: 62px;
+                z-index: 2;
+            }
+    
+            .count-box {
+                background: red;
+                max-width: 28px;
+                height: 30px;
+                text-align: center;
+                font-weight: bold;
+                color: white;
+            } **/
+        </style>
+
+        test
+        <!--<div id="scrolling-box">
+            <div class="layout vertical center-justified count-box">
+                test
+                {{currentCount}}
+            </div>
+        </div>-->
+    </template>
+    <script>
+    (function() {
+    'use strict';
+    class scrollingBox {
+        beforeRegister() {
+            this.is = 'scrolling-box';
+
+            //this.properties = {
+            //    currentCount: Number
+            //};
+        }
+        
+        attached() {
+            console.log("here: " + currentCount);
+        }
+    }
+    Polymer(scrollingBox);
+    })();
+</dom-module>

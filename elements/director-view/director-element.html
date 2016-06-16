@@ -38,7 +38,6 @@
 
         <div>
             <span id="scrolling-box"></span>
-            <timeline-header timeline_data="{{director_timeline_data}}"></timeline-header>
             <timeline-element timeline_data="{{director_timeline_data}}" class="flex"></timeline-element>
         </div>
     </template>
@@ -156,7 +155,7 @@
 
                 _countChanged(newCount) {
                     if (newCount >= 0) {
-                        const timelineDiv = Polymer.dom(this.root).querySelector("div.director-view");
+                        const timelineDiv = Polymer.dom(this.root).querySelector("div.director-element");
                         const scrollLine = Polymer.dom(timelineDiv).querySelector("#scrolling-box");
                         const newTop = 40 * newCount + this.prevTop;
                         this.scrollDown(scrollLine, newTop);
