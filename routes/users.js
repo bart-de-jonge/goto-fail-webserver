@@ -6,16 +6,15 @@ const router = express.Router(); // eslint-disable-line new-cap
 // Set picked user
 router.post("/picked-user", (req, res) => {
     // eslint-disable-next-line
-    console.log(req.body.pickedUser);
     req.session.pickedUser = req.body.pickedUser;
-    console.log(req.session.pickedUser);
-    res.json({ success: true });
+    req.session.save(() => {
+        res.json({ success: true });
+    });
 });
 
 // Get users data
 router.get("/get-users", (req, res) => {
     ProjectManager.waitForXML((projectManager) => {
-        console.log(req.session.pickedUser);
         const data = projectManager.data;
         res.json({
             users: data.scriptingProject.users,

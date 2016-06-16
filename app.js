@@ -2,9 +2,11 @@ import express from "express";
 import path from "path";
 import favicon from "serve-favicon";
 import logger from "morgan";
-import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import session from "express-session";
+import SQLiteStore from "connect-sqlite3";
+
+const sqliteSessionStore = SQLiteStore(session);
 
 const app = express();
 
@@ -17,12 +19,14 @@ app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 app.use(session({
+    store: new sqliteSessionStore,
     secret: "averyrandomkeyfromgotofail",
-    cookie: {
-        path: "/",
-    },
+    name: "gotofail.sid",
+    sameSite: true,
+    saveUnitialized: true,
+    rolling: true,
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
 }));
 app.use(require("node-sass-middleware")({
     src: path.join(__dirname, "public"),
