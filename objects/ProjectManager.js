@@ -51,7 +51,7 @@ class ProjectManager {
     }
 
     writeXML(callback) {
-        const xml = Object.assign({}, this.data);
+        const xml = JSON.parse(JSON.stringify(this.data));
         xml.scriptingProject.directorTimeline = this.data.scriptingProject.directorTimeline.toXML();
         xml.scriptingProject.users = this.usersToXML(this.data.scriptingProject.users);
         xml.scriptingProject["camera-centerarea"] = this.cameraTimelinesToXML(

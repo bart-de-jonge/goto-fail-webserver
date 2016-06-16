@@ -6,7 +6,9 @@ const router = express.Router(); // eslint-disable-line new-cap
 // Set picked user
 router.post("/picked-user", (req, res) => {
     // eslint-disable-next-line
+    console.log(req.body.pickedUser);
     req.session.pickedUser = req.body.pickedUser;
+    console.log(req.session.pickedUser);
     res.json({ success: true });
 });
 

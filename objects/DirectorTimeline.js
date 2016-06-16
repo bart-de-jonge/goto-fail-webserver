@@ -39,6 +39,10 @@ class DirectorTimeline {
             shotList: { shot: directorShotsXML },
         };
     }
+
+    static fromJSON(object) {
+        return new DirectorTimeline(object.description);
+    }
 }
 
 export default DirectorTimeline;
