@@ -11,3 +11,4 @@ public/js/timeline.js
 coverage/
 *.sublime-project
 *.sublime-workspace
+sessions.db
