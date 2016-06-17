@@ -23,9 +23,10 @@ app.use(session({
     store: new sqliteSessionStore,
     secret: "averyrandomkeyfromgotofail",
     name: "gotofail.sid",
-    sameSite: true,
+    sameSite: false,
     saveUnitialized: true,
-    rolling: true,
+    rolling: false,
+    resave: false,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
 }));
 app.use(require("node-sass-middleware")({
