@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/iron-icons/av-icons.html">
 <link rel="import" href="shot-caller-shot-card.html">
@@ -78,10 +79,11 @@
             </div>
         </div>
 
-        <paper-dialog id="confirmCountResetDialog" modal="true">
-            <h2>Are You Sure You Want To Reset The Current Count?</h2>
+        <paper-dialog id="confirmCountResetDialog" with-backdrop>
+            <h2>Reset Current Count</h2>
+            <div>Are you sure you want to reset the current count?</div>
             <div class="buttons">
-                <paper-button on-tap="dismissReset">Cancel</paper-button>
+                <paper-button dialog-dismiss>Cancel</paper-button>
                 <paper-button on-tap="confirmReset">Reset</paper-button>
             </div>
         </paper-dialog>
@@ -121,12 +123,8 @@
                 }
 
                 confirmReset() {
-                    this.dismissReset();
                     const resetCountEvent = new Event("resetCount");
                     document.dispatchEvent(resetCountEvent);
-                }
-
-                dismissReset() {
                     this.$.confirmCountResetDialog.close();
                 }
 

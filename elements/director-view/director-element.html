@@ -1,0 +1,152 @@
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../timeline-view/timeline-element.html">
+<link rel="import" href="../timeline-view/timeline-header.html">
+<link rel="import" href="../timeline-view/scrolling-box.html">
+
+<dom-module id="director-element">
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            :host {
+                display: block;
+                margin: 0 24px;
+            }
+
+            .horizontal-separator {
+                background-color: black;
+                opacity: 0.1;
+                margin: 0px 4px;
+                width: 2px;
+            }
+
+            timeline-header {
+                display: block;
+                z-index: 4;
+                position: relative;
+                margin: 0 24px;
+            }
+        </style>
+
+        <iron-ajax
+            auto
+            url="/director/director-timeline"
+            handle-as="json"
+            on-response="handleResponse"
+                id="ajax-director-timeline-data"></iron-ajax>
+
+        <div class="layout horizontal">
+            <scrolling-box current-count="{{currentCount}}"></scrolling-box>
+            <div class="horizontal-separator"></div>
+            <timeline-element timeline_data="{{director_timeline_data}}" class="flex"></timeline-element>
+            <div class="horizontal-separator"></div>
+        </div>
+    </template>
+
+    <script>
+        (function () {
+            const getMaxCount = (directorTimeline) => {
+                let maxCount = 0;
+                directorTimeline.directorShots.forEach(shot => {
+                    const shotEnd = parseFloat(shot.endCount);
+                    if (shotEnd > maxCount) {
+                        maxCount = shotEnd;
+                    }
+                })
+                return maxCount;
+            };
+            /*
+             * Add padding to the first block of the timeline
+             * and add it to the new timeline
+             */
+            const addFrontPadding = function addFrontPadding(timeline, newTimeline) {
+                if (timeline.directorShots[0].beginCount !== 0) {
+                    const newShot = {
+                        beginCount: "0",
+                        endCount: timeline.directorShots[0].beginCount,
+                        visible: "hidden",
+                    };
+                    newTimeline.shots.push(newShot);
+                }
+            };
+
+            /*
+             * Add padding blocks after each block.
+             */
+            const addTrailingPadding = function addTrailingPadding(timeline, newTimeline, maxCount) {
+                // Add padding after each consecutive block:
+                timeline.directorShots.forEach((shot, i) => {
+                    newTimeline.shots.push(shot);
+                    if (i < timeline.directorShots.length - 1) {
+                        // Not the last block
+                        const endCount = (timeline.directorShots[i + 1].beginCount * 4) / 4;
+                        const newShot = {
+                            beginCount: shot.endCount,
+                            endCount,
+                            visible: "hidden",
+                        };
+                        newTimeline.shots.push(newShot);
+                    } else {
+                        // The last block
+                        if (parseFloat(shot.endCount) !== maxCount) {
+                            // There is room leeft in timeline
+                            const newShot = {
+                                beginCount: shot.endCount,
+                                endCount: maxCount,
+                                visible: "hidden",
+                            };
+                            newTimeline.shots.push(newShot);
+                        }
+                    }
+                });
+            };
+
+
+            class directorElement {
+                beforeRegister() {
+                    this.is = "director-element";
+
+                    this.properties = {
+                        director_timeline_data: Object,
+                        currentCount: Number
+                    };
+                }
+
+                handleResponse(event) {
+                    const responseData = event.detail.response;
+
+                    const directorTimelineData = {};
+                    directorTimelineData.minCount = 0;
+                    directorTimelineData.maxCount = 0;
+                    directorTimelineData.name = "Director Timeline";
+                    directorTimelineData.shots = [];
+
+                    if (responseData.success) {
+                        const directorTimeline = responseData.directorTimeline;
+                        const maxCount = getMaxCount(directorTimeline);
+                        directorTimelineData.maxCount = maxCount;
+
+                        if (directorTimeline.directorShots.length > 0) {
+                            addFrontPadding(directorTimeline, directorTimelineData);
+                            addTrailingPadding(directorTimeline, directorTimelineData, maxCount);
+                        } else {
+                            const newShot = {
+                                beginCount: 0,
+                                endCount: maxCount,
+                                visible: "hidden",
+                            };
+                            directorTimelineData.shots.push(newShot);
+                        }
+
+                        directorTimelineData.shots.forEach(shot => {
+                            shot.pixelLength = (shot.endCount - shot.beginCount) * 40;
+                        })
+                    }
+
+                    this.director_timeline_data = directorTimelineData;
+                }
+            }
+
+            Polymer(directorElement);
+        })();
+    </script>
+</dom-module>
