@@ -30,7 +30,7 @@ const addFrontPadding = function addFrontPadding(timeline, newTimeline) {
             endCount: timeline.cameraShots[0].beginCount,
             visible: "hidden",
         };
-        newTimeline.cameraShots.push(newShot);
+        newTimeline.shots.push(newShot);
     }
 };
 
@@ -40,7 +40,7 @@ const addFrontPadding = function addFrontPadding(timeline, newTimeline) {
 const addTrailingPadding = function addTrailingPadding(timeline, newTimeline, maxCount) {
     // Add padding after each consecutive block:
     timeline.cameraShots.forEach((shot, i) => {
-        newTimeline.cameraShots.push(shot);
+        newTimeline.shots.push(shot);
         if (i < timeline.cameraShots.length - 1) {
             // Not the last block
             const endCount = (timeline.cameraShots[i + 1].beginCount * 4) / 4;
@@ -49,7 +49,7 @@ const addTrailingPadding = function addTrailingPadding(timeline, newTimeline, ma
                 endCount,
                 visible: "hidden",
             };
-            newTimeline.cameraShots.push(newShot);
+            newTimeline.shots.push(newShot);
         } else {
             // The last block
             if (parseFloat(shot.endCount) !== maxCount) {
@@ -59,7 +59,7 @@ const addTrailingPadding = function addTrailingPadding(timeline, newTimeline, ma
                     endCount: maxCount,
                     visible: "hidden",
                 };
-                newTimeline.cameraShots.push(newShot);
+                newTimeline.shots.push(newShot);
             }
         }
     });
@@ -74,13 +74,8 @@ class timelineGrid {
             timeline_data: Object,
             currentCount: {
                 type: Number,
-                value: 0,
-                notify: true,
-                observer: "_countChanged",
             },
         };
-
-        this.prevTop = 22;
     }
 
     handleResponse(event) {
@@ -104,7 +99,7 @@ class timelineGrid {
             const newTimeline = {};
             newTimeline.name = timeline.name;
             newTimeline.description = timeline.description;
-            newTimeline.cameraShots = [];
+            newTimeline.shots = [];
             newData.cameraTimelines[index] = newTimeline;
 
             // Only do following if at least one block is present
@@ -119,11 +114,11 @@ class timelineGrid {
                     endCount: maxCount,
                     visible: "hidden",
                 };
-                newTimeline.cameraShots.push(newShot);
+                newTimeline.shots.push(newShot);
             }
 
             // Set length of blocks
-            newTimeline.cameraShots.forEach((shot) => {
+            newTimeline.shots.forEach((shot) => {
                 // 4 = number of blocks per count, 10 is height per block
                 // eslint-disable-next-line
                 shot.pixelLength = (shot.endCount - shot.beginCount) * 4 * 10;
@@ -132,39 +127,6 @@ class timelineGrid {
 
         // Set data to property
         this.timeline_data = newData;
-    }
-
-    _countChanged(newCount) {
-        if (newCount >= 0) {
-            // eslint-disable-next-line no-undef
-            const timeDiv = Polymer.dom(this.root).querySelector("div.timeline-grid");
-            // eslint-disable-next-line no-undef
-            const scrollLine = Polymer.dom(timeDiv).querySelector("#scrolling-box");
-
-            const newTop = 40 * newCount + this.prevTop;
-            this.scrollDown(scrollLine, newTop);
-        }
-    }
-
-    scrollDown(scrollLine, newTop) {
-        // eslint-disable-next-line no-undef
-        Velocity(scrollLine, { // eslint-disable-line new-cap
-            top: newTop,
-        },
-            {
-                duration: 0,
-                easing: "linear",
-            });
-        // eslint-disable-next-line no-undef
-        Velocity(scrollLine, // eslint-disable-line new-cap
-            "scroll",
-            {
-                offset: -200,
-                queue: false,
-                duration: 0,
-                easing: "linear",
-            });
-    // }
     }
 }
 // eslint-disable-next-line

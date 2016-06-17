@@ -30,7 +30,8 @@ describe("Routes: CameraOperator Sockets", () => {
         });
     });
 
-    it("Should Be Able To Advance The Count", done => {
+    it("Should Be Able To Advance The Count", function (done) {
+        this.timeout(4000);
         client.on("next_count", data => {
             expect(data.newCount).to.exist;
             done();
@@ -41,8 +42,9 @@ describe("Routes: CameraOperator Sockets", () => {
     after(function (done) {
         this.timeout(0);
         client.close();
-        server.close();
-        setImmediate(() => server.emit("close"));
-        done();
+        server.close(() => {
+            setImmediate(() => server.emit("close"));
+            done();
+        });
     });
 });

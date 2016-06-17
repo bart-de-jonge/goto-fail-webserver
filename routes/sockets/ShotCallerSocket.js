@@ -11,7 +11,7 @@ const logger = log4js.getLogger();
 const getDirectorTimeline = callback => {
     ProjectManager.waitForXML((projectManager) => {
         if (projectManager.data) {
-            const directorTimeline = projectManager.data.directorTimeline;
+            const directorTimeline = projectManager.data.scriptingProject.directorTimeline;
             callback(directorTimeline);
         } else {
             callback(null);
@@ -28,10 +28,12 @@ class ShotCallerSocket {
      * io: Socket.io object
      * currentCount: Current Count
      * advanceCountCallBack: Handle For Count Update
+     * setCountCallBack: Handle For Count Update
      */
-    constructor(io, currentCount, advanceCountCallBack) {
+    constructor(io, currentCount, advanceCountCallBack, setCountCallBack) {
         this.namespace = io.of("/shotCallers");
         this.advanceCountCallBack = advanceCountCallBack;
+        this.setCountCallBack = setCountCallBack;
         this.currentCount = currentCount;
 
         this.namespace.on("connection", (socket) => {
@@ -62,6 +64,16 @@ class ShotCallerSocket {
                         nextShot,
                     });
                 });
+            });
+
+            socket.on("reset_count", () => {
+                this.setCountCallBack(0);
+            });
+
+            socket.on("decrease_count", () => {
+                if (this.currentCount > 0) {
+                    this.setCountCallBack(this.currentCount - 1);
+                }
             });
         });
     }

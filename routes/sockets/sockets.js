@@ -6,6 +6,7 @@ import socketio from "socket.io";
 import log4js from "log4js";
 import fs from "fs";
 import CameraOperatorSocket from "./CameraOperatorSocket";
+import DirectorSocket from "./DirectorSocket";
 import ShotCallerSocket from "./ShotCallerSocket";
 import ProjectManager from "../../objects/ProjectManager.js";
 
@@ -14,8 +15,8 @@ const logger = log4js.getLogger();
 // Get timelines from xml
 const getMaxCount = callback => {
     ProjectManager.waitForXML((projectManager) => {
-        if (projectManager.data && projectManager.data.cameraTimelines) {
-            callback(projectManager.data.cameraTimelines.maxCount);
+        if (projectManager.data && projectManager.data.scriptingProject.cameraTimelines) {
+            callback(projectManager.data.scriptingProject.maxCount);
         } else {
             callback(null);
         }
@@ -37,12 +38,15 @@ const listen = (server) => {
             logger.info(`Reset current count and load new max count: ${newMaxCount}`);
             currentCount = 0;
             namespaces.forEach(namespace => namespace.sendNextCount(currentCount));
-            maxCount = newMaxCount;
+            if (newMaxCount) {
+                maxCount = newMaxCount;
+            }
         });
     });
 
     getMaxCount(newMaxCount => {
         if (newMaxCount) {
+            logger.info(`Load new max count: ${newMaxCount}`);
             maxCount = newMaxCount;
         }
     });
@@ -54,12 +58,23 @@ const listen = (server) => {
         }
     };
 
+    // Callback that allows more fine-grained manipulation of the count
+    const setCount = (newCount) => {
+        if (newCount < maxCount) {
+            currentCount = newCount;
+            namespaces.forEach((namespace) => namespace.sendNextCount(currentCount));
+        }
+    };
+
     // Set up different socket namespaces
     const operatorSocket = new CameraOperatorSocket(io, currentCount, sendCounts);
     namespaces.push(operatorSocket);
 
-    const shotCallerSocket = new ShotCallerSocket(io, currentCount, sendCounts);
+    const shotCallerSocket = new ShotCallerSocket(io, currentCount, sendCounts, setCount);
     namespaces.push(shotCallerSocket);
+
+    const directorSocket = new DirectorSocket(io, currentCount, sendCounts);
+    namespaces.push(directorSocket);
 
     logger.debug("Initialized socket.io connection.");
 };

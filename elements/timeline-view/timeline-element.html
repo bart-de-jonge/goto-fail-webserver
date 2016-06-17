@@ -5,19 +5,13 @@
 
         <style>
             :host {
-                margin-left: 1px;
-                margin-right: 1px;
-                margin: 24px 0px;
-                padding: 0px 4px;
-            }
-
-            table, tr {
-                height: 100%;
-                width: 100%;
+                display: block;
+                margin: 0 0;
+                padding: 24px 4px;
             }
         </style>
 
-        <template is="dom-repeat" items="{{timeline_data.cameraShots}}">
+        <template is="dom-repeat" items="{{timeline_data.shots}}">
             <div style="height:{{item.pixelLength}}px;">
                 <timeline-block block_data="{{item}}"></timeline-block>
                 </div>

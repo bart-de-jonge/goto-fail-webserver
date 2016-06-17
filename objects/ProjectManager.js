@@ -2,7 +2,6 @@ import fs from "fs";
 import xml2js from "xml2js";
 const parser = new xml2js.Parser();
 const builder = new xml2js.Builder();
-import deepCopy from "deepcopy";
 import CameraTimeline from "../objects/CameraTimeline";
 import DirectorTimeline from "../objects/DirectorTimeline.js";
 import User from "./User";
@@ -52,7 +51,7 @@ class ProjectManager {
     }
 
     writeXML(callback) {
-        const xml = deepCopy(this.data);
+        const xml = JSON.parse(JSON.stringify(this.data));
         xml.scriptingProject.directorTimeline = this.data.scriptingProject.directorTimeline.toXML();
         xml.scriptingProject.users = this.usersToXML(this.data.scriptingProject.users);
         xml.scriptingProject["camera-centerarea"] = this.cameraTimelinesToXML(
@@ -90,7 +89,22 @@ class ProjectManager {
                     this.data.scriptingProject.cameraTimelines = this.getCameraTimelinesFromXML(
                         result.scriptingProject["camera-centerarea"]);
                     delete this.data.scriptingProject["camera-centerarea"];
-                    callback();
+
+                    // Add Max and Min Counts Of This Scripting Project
+                    let flattenedShots = [];
+                    this.data.scriptingProject.cameraTimelines
+                        .map(timeline => timeline.cameraShots)
+                        .forEach(shots => {
+                            flattenedShots = flattenedShots.concat(shots);
+                        });
+
+                    const minMaxCount = this.getMaxAndMinCount(flattenedShots);
+                    this.data.scriptingProject.maxCount = minMaxCount.maxCount;
+                    this.data.scriptingProject.minCount = minMaxCount.minCount;
+
+                    if (callback) {
+                        callback();
+                    }
                 });
             }
         });
@@ -116,6 +130,26 @@ class ProjectManager {
             XMLObject[0].cameraTimeline.push(timeline.toXML());
         });
         return XMLObject;
+    }
+
+    // Get max and min counts of an array of shots
+    getMaxAndMinCount(flattenedCameraTimelines) {
+        // Calculate minimum and maximum counts
+        let minCount = 0;
+        let maxCount = 0;
+        if (flattenedCameraTimelines.length > 0) {
+            minCount = Number(flattenedCameraTimelines[0].beginCount);
+            maxCount = Number(flattenedCameraTimelines[0].endCount);
+            flattenedCameraTimelines.forEach(shot => {
+                if (shot.beginCount < minCount) {
+                    minCount = Number(shot.beginCount);
+                }
+                if (shot.endCount > maxCount) {
+                    maxCount = Number(shot.endCount);
+                }
+            });
+        }
+        return { minCount, maxCount };
     }
 
     getUsersFromXML(XMLObject) {
@@ -162,7 +196,9 @@ class ProjectManager {
     reloadProject(callback) {
         this.initialized = false;
         // Force a call to reload the file, then wait for loaded file
-        this.parseXML();
+        this.parseXML(() => {
+            this.initialized = true;
+        });
         ProjectManager.waitForXML(callback);
     }
 
