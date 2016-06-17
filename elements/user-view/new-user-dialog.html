@@ -13,7 +13,6 @@
 <link rel="import" href="../colors.html">
 
 <dom-module id="new-user-dialog">
-    // Template
     <template>
         <style include="iron-flex"></style>
         <style>
@@ -108,7 +107,7 @@
 
         </style>
 
-        <paper-dialog id="addUserDialog" modal="true">
+        <paper-dialog id="addUserDialog" with-backdrop>
             <div id="head">Add a new user</div>
 
             <paper-tabs on-click="paperTabsClicked" id="newUserTabs" selected="0">
@@ -175,6 +174,7 @@
 
                     Array.from(document.querySelectorAll("paper-toggle-button.newUserToggleButton[checked]")).forEach(function(toggle) {
                        pickedTimelines.push(toggle.value);
+                       toggle.checked = false;
                     });
 
                     const newUser = {id: id,
@@ -183,6 +183,7 @@
                                     jobType: jobType};
                     document.querySelector("gotofail-login").addUser(newUser);
                     this.$.addUserDialog.close();
+                    this.$.newUserInput.value = "";
                 }
             }
 
