@@ -14,18 +14,23 @@
     <template>
         <style include="iron-flex"></style>
         <style>
-
-            :host {
-                display: flex;
-                flex-direction: column;
-            }
-
             paper-toggle-button {
                 margin-top: 20px;
             }
 
             paper-button {
                 color: var(--secondary-color-500);
+            }
+
+            paper-card {
+                display: block;
+                background-color: white;
+                margin: 24px;
+                --paper-card-header-color: white;
+                --paper-card-header-text: {
+                    font-size: medium;
+                    background-color: var(--main-color-500);
+                };
             }
 
             #userTypeTabs {
@@ -92,33 +97,26 @@
                 content-type="application/json"
                 on-response="handlePickedUserResponse"></iron-ajax>
 
-        <paper-tabs on-click="paperTabsClicked" id="userTypeTabs">
-            <paper-tab>Camera operator</paper-tab>
-            <paper-tab>Shotcaller</paper-tab>
-            <paper-tab>Director</paper-tab>
-        </paper-tabs>
-
-        <div class="card-content shadowed">
-            <paper-input label="User name:" id="nameInput" on-input="nameInputChanged" disabled on-blur="onNameInputBlur" on-keypress="onNameInputKeypress"></paper-input>
-        </div>
-
-        <div class="horizontal-separator"></div>
-
-        <div class="card-content">
-            <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
-            <div id="toggles">
-                <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
-                        <gotofail-togglebutton number="{{index}}" name="{{item.name}}" disabled></gotofail-togglebutton>
-                </template>
+        <paper-card class="info" heading="Account information">
+            <paper-tabs on-click="paperTabsClicked" id="userTypeTabs">
+                <paper-tab>Camera operator</paper-tab>
+                <paper-tab>Shotcaller</paper-tab>
+                <paper-tab>Director</paper-tab>
+            </paper-tabs>
+    
+            <div class="card-content shadowed">
+                <paper-input label="Username:" id="nameInput" on-input="nameInputChanged" disabled on-blur="onNameInputBlur" on-keypress="onNameInputKeypress"></paper-input>
+                <div class="content-header" style="margin-bottom: 10px;"> Active camera timelines</div>
+                <div id="toggles">
+                    <template is="dom-repeat" items="{{timelines}}" id="toggleRepeat" observer="pickedTimelines">
+                            <gotofail-togglebutton number="{{index}}" name="{{item.name}}" disabled></gotofail-togglebutton>
+                    </template>
+                </div>
             </div>
-        </div>
-
-        <div style="flex: 1;"></div>
-        <div class="horizontal-separator"></div>
-
-        <div class="card-content">
-            <paper-button on-click="buttonClicked" id="continue_button" disabled>Continue</paper-button>
-        </div>
+            <div class="card-actions">
+                <paper-button on-click="buttonClicked" id="continue_button" disabled>Continue</paper-button>
+            </div>
+        </paper-card>
 
     </template>
 
