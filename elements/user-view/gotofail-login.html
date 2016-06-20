@@ -26,8 +26,6 @@
             paper-card {
                 background-color: white;
                 margin: 24px;
-                width: auto;
-                height: auto;
                 --paper-card-header-color: white;
                 --paper-card-header-text: {
                     font-size: medium;
@@ -40,7 +38,7 @@
                 margin-right: 0px;
             }
 
-            .info {
+            timeline-picker {
                 width: 70%;
             }
 
@@ -85,7 +83,7 @@
 
             .user-scroll {
                 display: block;
-                height: 300px;
+                min-height: 150px;
                 overflow-y: auto;
             }
         </style>
@@ -110,8 +108,8 @@
                 on-response="handleUpdateUsersResponse"></iron-ajax>
 
         <div class="layout horizontal">
-            <paper-card class="picker" heading="Please select your account">
-                <div class="card-content user-scroll">
+            <paper-card class="layout vertical picker flex" heading="Please select your account">
+                <div class="card-content flex user-scroll">
                     <x-element scroll-target="scrollable-element">
                     <paper-listbox id="listbox">
                         <template is="dom-repeat" items="{{users}}" id="usersRepeat">
@@ -129,9 +127,7 @@
                 </div>
             </paper-card>
 
-            <paper-card class="info" heading="Account information">
-                <timeline-picker id="picker" class="flex" pickedTimelines="{{cameras}}"></timeline-picker>
-            </paper-card>
+            <timeline-picker id="picker" class="flex-2" pickedTimelines="{{cameras}}"></timeline-picker>
         </div>
 
         <new-user-dialog id="addUserDialog" timelines="{{timelines}}"></new-user-dialog>
