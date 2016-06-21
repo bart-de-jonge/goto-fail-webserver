@@ -1,5 +1,7 @@
 import express from "express";
-import BenineHelper from "../objects/BenineHelper";9
+import BenineHelper from "../objects/BenineHelper";
+import CameraShot from "../objects/CameraShot";
+9
 const router = express.Router(); // eslint-disable-line new-cap
 
 // Get users data
@@ -14,6 +16,13 @@ router.get("/get-cameras", (req, res) => {
 router.get("/get-presets", (req, res) => {
     const benineHelper = new BenineHelper();
     benineHelper.getPresets((presets) => {
+        res.json({ presets });
+    });
+});
+
+router.get("/recallTest", (req, res) => {
+    const benineHelper = new BenineHelper();
+    benineHelper.recallShot(new CameraShot(0,1,"test","description",false,1,1,[]),    (presets) => {
         res.json({ presets });
     });
 });

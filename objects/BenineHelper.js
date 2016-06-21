@@ -17,6 +17,29 @@ class BenineHelperInstance {
         return benineHelperInstance;
     }
 
+    recallShot(cameraShot, callback) {
+        if (cameraShot.presetId) {
+            const reqOptions = {
+                host: serverAddress,
+                path: "/presets/recallpreset?presetid=" + cameraShot.presetId,
+                port: 8888,
+                method: "GET",
+            };
+            const req = http.get(reqOptions, (res) => {
+
+                const bodyChunks = [];
+                res.on("data", (chunk) => {
+                    bodyChunks.push(chunk);
+                }).on("end", () => {
+                    const body = JSON.parse(Buffer.concat(bodyChunks));
+                    if (body) {
+                        callback(body.succes);
+                    } else callback(false);
+                });
+            });
+        } else callback(false);
+    }
+
     getCameras(callback) {
         const reqOptions = {
             host: serverAddress,
