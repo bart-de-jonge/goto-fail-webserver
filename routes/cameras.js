@@ -49,6 +49,9 @@ router.get("/:id(\\d+)", (req, res) => {
         if (err) {
             buildMessageResponse(res, 500, "Unable to load cameras");
         } else {
+            console.log("\n\ndata");
+            console.log(data);
+            console.log("\n\ndata");
             camera = data.find(c => req.params.id === c.id);
             if (camera === undefined) {
                 buildMessageResponse(res, 404, "Camera not found.");
