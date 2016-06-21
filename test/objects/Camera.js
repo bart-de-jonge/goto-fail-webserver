@@ -23,7 +23,8 @@ describe("Camera", () => {
                     movementMargin: [ 2 ],
                 },
             ],
-            ip: [ "127.0.0.1" ]
+            ip: [ "127.0.0.1" ],
+            remoteCameraId: [5]
         }];
 
         const camera = Camera.fromXML(xml);
@@ -34,6 +35,7 @@ describe("Camera", () => {
         expect(camera.movementMargin).to.equal(1);
         expect(camera.cameraType).to.be.instanceOf(CameraType);
         expect(camera.ip).to.equal("127.0.0.1");
+        expect(camera.remoteCameraId).to.equal(5);
         done();
     })
 });
