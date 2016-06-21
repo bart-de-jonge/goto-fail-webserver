@@ -1,9 +1,11 @@
 import http from "http";
 import Preset from "./Preset";
+import log4js from "log4js";
 
 // Singleton Object
 let benineHelperInstance = null;
 const serverAddress = "localhost";
+const logger = log4js.getLogger();
 
 /*
  * Class for communication with the Benine API
@@ -26,12 +28,12 @@ class BenineHelperInstance {
         if (cameraShot.presetId) {
             const reqOptions = {
                 host: serverAddress,
-                path: "/presets/recallpreset?presetid=" + cameraShot.presetId,
+                path: `/presets/recallpreset?presetid=${cameraShot.presetId}`,
                 port: 8888,
                 method: "GET",
             };
-            const req = http.get(reqOptions, (res) => {
 
+            const req = http.get(reqOptions, (res) => {
                 const bodyChunks = [];
                 res.on("data", (chunk) => {
                     bodyChunks.push(chunk);
@@ -44,7 +46,7 @@ class BenineHelperInstance {
             });
 
             req.on("error", (e) => {
-                console.log(`ERROR: ${e.message}`);
+                logger.info(`ERROR: ${e.message}`);
             });
         } else callback(false);
     }
@@ -60,6 +62,7 @@ class BenineHelperInstance {
             port: 8888,
             method: "GET",
         };
+
         const req = http.get(reqOptions, (res) => {
             const bodyChunks = [];
             res.on("data", (chunk) => {
@@ -79,7 +82,7 @@ class BenineHelperInstance {
         });
 
         req.on("error", (e) => {
-            console.log(`ERROR: ${e.message}`);
+            logger.info(`ERROR: ${e.message}`);
         });
     }
 
@@ -94,6 +97,7 @@ class BenineHelperInstance {
             port: 8888,
             method: "GET",
         };
+
         const req = http.get(reqOptions, (res) => {
             const bodyChunks = [];
             res.on("data", (chunk) => {
@@ -105,7 +109,8 @@ class BenineHelperInstance {
 
                 if (body && body.presets) {
                     body.presets.forEach((preset) => {
-                        presets.push(new Preset(preset.id, preset.name, preset.image, preset.cameraid));
+                        presets.push(new Preset(
+                            preset.id, preset.name, preset.image, preset.cameraid));
                     });
                 }
                 callback(presets);
@@ -113,7 +118,7 @@ class BenineHelperInstance {
         });
 
         req.on("error", (e) => {
-            console.log(`ERROR: ${e.message}`);
+            logger.info(`ERROR: ${e.message}`);
         });
     }
 
@@ -123,10 +128,10 @@ class BenineHelperInstance {
      * @param callback - callback function
      */
     getPresetsForCamera(camera, callback) {
-        console.log(camera);
         if (camera && camera.remoteCameraId >= 0) {
             this.getPresets((presets) => {
-                const filteredPresets = presets.filter(preset => preset.cameraId == camera.remoteCameraId);
+                const filteredPresets = presets.filter(
+                    preset => preset.cameraId === Number(camera.remoteCameraId));
                 callback(filteredPresets);
             });
         } else {
