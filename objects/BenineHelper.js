@@ -77,7 +77,9 @@ class BenineHelperInstance {
         });
     }
 
-    // getPresetsForCamera(camera, )
+    getPresetsForCamera(camera, callback) {
+        if (camera && camera.prese)
+    }
 }
 
 export default BenineHelperInstance;
