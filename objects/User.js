@@ -12,9 +12,11 @@ class User {
 
     static fromXML(XMLObject, id) {
         const pickedTimelines = [];
-        XMLObject.chosenTimelines[0].chosenTimeline.forEach((numberString) => {
-            pickedTimelines.push(Number(numberString));
-        });
+        if (XMLObject.chosenTimelines && XMLObject.chosenTimelines[0] && XMLObject.chosenTimelines[0].chosenTimeline) {
+            XMLObject.chosenTimelines[0].chosenTimeline.forEach((numberString) => {
+                pickedTimelines.push(Number(numberString));
+            });
+        }
 
         return new User(id, XMLObject.name[0], pickedTimelines, Number(XMLObject.roleValue[0]));
     }
