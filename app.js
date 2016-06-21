@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import SQLiteStore from "connect-sqlite3";
 
-const sqliteSessionStore = SQLiteStore(session);
+const SqliteSessionStore = new SQLiteStore(session);
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-    store: new sqliteSessionStore,
+    store: new SqliteSessionStore,
     secret: "averyrandomkeyfromgotofail",
     name: "gotofail.sid",
     sameSite: false,

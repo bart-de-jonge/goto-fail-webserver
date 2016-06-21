@@ -5,7 +5,7 @@ import { expect } from "chai";
 describe("Camera", () => {
     it("Can Create Camera object", done => {
         const type = new CameraType("70D", "Canon", 2);
-        const camera = new Camera("Left of Center", "Used for panning shots", type, 1);
+        const camera = new Camera("Left of Center", "Used for panning shots", type, 1, -1);
         expect(camera).to.not.be.null;
         done();
     });
@@ -23,7 +23,8 @@ describe("Camera", () => {
                     movementMargin: [ 2 ],
                 },
             ],
-            ip: [ "127.0.0.1" ]
+            ip: [ "127.0.0.1" ],
+            remoteCameraId: [5]
         }];
 
         const camera = Camera.fromXML(xml);
@@ -34,6 +35,7 @@ describe("Camera", () => {
         expect(camera.movementMargin).to.equal(1);
         expect(camera.cameraType).to.be.instanceOf(CameraType);
         expect(camera.ip).to.equal("127.0.0.1");
+        expect(camera.remoteCameraId).to.equal(5);
         done();
     })
 });

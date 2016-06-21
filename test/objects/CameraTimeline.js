@@ -45,7 +45,8 @@ describe("CameraTimeline", () => {
                         movementMargin: [ 2 ],
                     },
                 ],
-                ip: [ "127.0.0.1" ]
+                ip: [ "127.0.0.1" ],
+                remoteCameraId: [5]
             }],
             instance: [0],
             shotList: [{}],
