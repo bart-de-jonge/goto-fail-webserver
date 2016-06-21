@@ -157,7 +157,6 @@ class ProjectManager {
             const usersXML = XMLObject[0].user;
             const users = [];
             if (typeof usersXML !== "undefined") {
-                console.log(usersXML);
                 usersXML.forEach((user, index) => {
                     users.push(User.fromXML(user, index));
                 });

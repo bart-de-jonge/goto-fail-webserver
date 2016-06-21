@@ -15,8 +15,7 @@ class Camera {
     }
 
     static fromXML(XMLObject) {
-        console.log(XMLObject);
-        const a =  new Camera(
+        return new Camera(
             XMLObject[0].name[0],
             XMLObject[0].description[0],
             CameraType.fromXML(XMLObject[0].cameraType),
@@ -25,8 +24,6 @@ class Camera {
             XMLObject[0].ip[0],
             XMLObject[0].remoteCameraId[0]
         );
-        console.log(a);
-        return a;
     }
 
     toXML() {
