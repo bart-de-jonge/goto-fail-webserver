@@ -78,7 +78,14 @@ class BenineHelperInstance {
     }
 
     getPresetsForCamera(camera, callback) {
-        if (camera && camera.prese)
+        if (camera && camera.remoteCameraId >= 0) {
+            this.getPresets((presets) => {
+                const filteredPresets = presets.filter(preset => preset.cameraId === camera.remoteCameraId);
+                callback(filteredPresets);
+            });
+        } else {
+            callback([]);
+        }
     }
 }
 

@@ -18,4 +18,12 @@ router.get("/get-presets", (req, res) => {
     });
 });
 
+// Get users data
+router.get("/get-presets-for-camera", (req, res) => {
+    const benineHelper = new BenineHelper();
+    benineHelper.getPresets((presets) => {
+        res.json({ presets });
+    });
+});
+
 module.exports = router;
