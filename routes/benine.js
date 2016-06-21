@@ -2,6 +2,7 @@ import express from "express";
 import BenineHelper from "../objects/BenineHelper";
 import CameraShot from "../objects/CameraShot";
 import Camera from "../objects/Camera";
+import ProjectManager from "../objects/ProjectManager";
 9
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -22,10 +23,17 @@ router.get("/get-presets", (req, res) => {
 });
 
 // Get presets data from benine for a certain camera
-router.get("/get-presets-for-camera", (req, res) => {
-    const benineHelper = new BenineHelper();
-    benineHelper.getPresetsForCamera(new Camera("", "", null, 0, 0, "", -1), (presets) => {
-        res.json({ presets });
+router.get("/get-presets/:id(\\d+)", (req, res) => {
+    ProjectManager.waitForXML((manager) => {
+        const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.id];
+        if (camera) {
+            const benineHelper = new BenineHelper();
+            benineHelper.getPresetsForCamera(camera, (presets) => {
+                res.json({presets});
+            });
+        } else {
+            res.json({ presets: [], message: "Please provide a camera"});
+        }
     });
 });
 
@@ -36,5 +44,7 @@ router.get("/recallTest", (req, res) => {
         res.json({ result });
     });
 });
+
+// router.post(" /")
 
 module.exports = router;
