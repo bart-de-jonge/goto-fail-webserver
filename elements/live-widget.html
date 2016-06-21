@@ -1,0 +1,89 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+
+<dom-module id="live-widget">
+    <template>
+        <style include="iron-flex"></style>
+
+        <style>
+            @-webkit-keyframes glowing {
+                0% {
+                    -webkit-box-shadow: 0 0 3px white;
+                }
+                50% {
+                    -webkit-box-shadow: 0 0 10px red;
+                }
+                100% {
+                    -webkit-box-shadow: 0 0 3px white;
+                }
+            }
+
+            @-moz-keyframes glowing {
+                0% {
+                    -moz-box-shadow: 0 0 3px white;
+                }
+                50% {
+                    -moz-box-shadow: 0 0 10px red;
+                }
+                100% {
+                    -moz-box-shadow: 0 0 3px white;
+                }
+            }
+
+            @-o-keyframes glowing {
+                0% {
+                    box-shadow: 0 0 3px white;
+                }
+                50% {
+                    box-shadow: 0 0 10px red;
+                }
+                100% {
+                    box-shadow: 0 0 3px white;
+                }
+            }
+
+            @keyframes glowing {
+                0% {
+                    box-shadow: 0 0 3px white;
+                }
+                50% {
+                    box-shadow: 0 0 10px red;
+                }
+                100% {
+                    box-shadow: 0 0 3px white;
+                }
+            }
+
+            #glowyCircle {
+                animation: glowing 1500ms infinite;
+            }
+        </style>
+
+        <template is="dom-if" if="{{ live }}">
+            <paper-card>
+                <iron-icon id="glowyCircle" icon="av:fiber-manual-record"></iron-icon>
+            </paper-card>
+        </template>
+    </template>
+    <script>
+        (function () {
+            class liveWidget {
+                beforeRegister() {
+                    this.is = "live-widget";
+
+                    this.properties = {
+                        live: {
+                            type: Boolean,
+                            value: true,
+                            notify: true,
+                        },
+                    };
+                }
+            }
+
+            Polymer(liveWidget);
+        })();
+    </script>
+</dom-module>
