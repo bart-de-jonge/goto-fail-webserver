@@ -13,7 +13,7 @@ router.get("/get-cameras", (req, res) => {
     });
 });
 
-// Get users data
+// Get presets data from benine
 router.get("/get-presets", (req, res) => {
     const benineHelper = new BenineHelper();
     benineHelper.getPresets((presets) => {
@@ -21,14 +21,15 @@ router.get("/get-presets", (req, res) => {
     });
 });
 
-// Get users data
+// Get presets data from benine for a certain camera
 router.get("/get-presets-for-camera", (req, res) => {
     const benineHelper = new BenineHelper();
-    benineHelper.getPresetsForCamera(new Camera("", "", null, 0, 0, "", 2), (presets) => {
+    benineHelper.getPresetsForCamera(new Camera("", "", null, 0, 0, "", -1), (presets) => {
         res.json({ presets });
     });
 });
 
+// Test route for recalling presets
 router.get("/recallTest", (req, res) => {
     const benineHelper = new BenineHelper();
     benineHelper.recallShot(new CameraShot(0,1,"test","description",false,1,1,[]),    (result) => {

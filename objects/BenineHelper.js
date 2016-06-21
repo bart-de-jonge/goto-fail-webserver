@@ -6,7 +6,7 @@ let benineHelperInstance = null;
 const serverAddress = "localhost";
 
 /*
- * Class for storing a Project
+ * Class for communication with the Benine API
  */
 class BenineHelperInstance {
 
@@ -17,6 +17,11 @@ class BenineHelperInstance {
         return benineHelperInstance;
     }
 
+    /**
+     * Recall a camerashots preset
+     * @param cameraShot - the camerashot
+     * @param callback - callback function
+     */
     recallShot(cameraShot, callback) {
         if (cameraShot.presetId) {
             const reqOptions = {
@@ -44,6 +49,10 @@ class BenineHelperInstance {
         } else callback(false);
     }
 
+    /**
+     * Get benine cameras
+     * @param callback - callback function
+     */
     getCameras(callback) {
         const reqOptions = {
             host: serverAddress,
@@ -74,6 +83,10 @@ class BenineHelperInstance {
         });
     }
 
+    /**
+     * Get benine presets.
+     * @param callback - callback function
+     */
     getPresets(callback) {
         const reqOptions = {
             host: serverAddress,
@@ -104,6 +117,11 @@ class BenineHelperInstance {
         });
     }
 
+    /**
+     * Get benine presets for one of our own camera's (coupling needed).
+     * @param camera - the camera
+     * @param callback - callback function
+     */
     getPresetsForCamera(camera, callback) {
         if (camera && camera.remoteCameraId >= 0) {
             this.getPresets((presets) => {
