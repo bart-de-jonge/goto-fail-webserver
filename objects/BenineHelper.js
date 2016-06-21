@@ -37,6 +37,10 @@ class BenineHelperInstance {
                     } else callback(false);
                 });
             });
+
+            req.on("error", (e) => {
+                console.log(`ERROR: ${e.message}`);
+            });
         } else callback(false);
     }
 
