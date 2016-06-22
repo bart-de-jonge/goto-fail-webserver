@@ -29,6 +29,20 @@ gulp.task("develop", ["bower", "compile"], () => {
     });
 });
 
+gulp.task("fast-develop", () => {
+    nodemon({
+        script: "server.js",
+        execMap: {
+            js: "node node_modules/babel-cli/bin/babel-node.js",
+        },
+        ignore: [
+            "node_modules/",
+            "public/",
+        ],
+        tasks: ["compile"],
+    });
+});
+
 gulp.task("compile", () => {
     gulp.src(paths.client_scripts)
         .pipe(babel({

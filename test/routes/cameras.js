@@ -23,16 +23,6 @@ describe("Routes: Cameras", () => {
                 .end(err => done(err));
         });
 
-        it("GET /cameras/:id", done => {
-            request.get("/cameras/0")
-                .expect(200)
-                .expect(res => {
-                    expect(res.body.succeeded).to.be.true;
-                    expect(res.body).to.have.property("object");
-                })
-                .end(err => done(err));
-        });
-
         it("GET /cameras/:id Unknown Camera", done => {
             request.get("/cameras/4444440404004040040404")
                 .expect(404)
