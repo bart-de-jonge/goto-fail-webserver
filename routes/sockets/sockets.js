@@ -46,10 +46,11 @@ const getCurrentShots = (currentCount, callback) => {
     });
 };
 
-const compareAndRecallShots = (previousShots, newShots, callback) => {
+const compareAndRecallShots = (previousShots, newShots, callback, forceRecall) => {
     const benineHelper = new BenineHelper();
     newShots.forEach((newShot, index) => {
-        if (newShot && previousShots[index] !== newShot) {
+        if (newShot &&
+            (forceRecall || previousShots[index] !== newShot)) {
             benineHelper.recallShot(newShot, success => {
                 if (success) {
                     logger.info(`Successfully recalled preset ${newShot.presetId}`);
@@ -77,9 +78,22 @@ const listen = (server) => {
 
     let currentShots = [];
 
-    getCurrentShots(currentCount, initialShots => {
-        currentShots = initialShots;
-    });
+    const updateCurrentShots = (forceRecall = false) => {
+        logger.info("Updating the shots");
+        getCurrentShots(currentCount, newShots => {
+            checkIfLive(live => {
+                if (live) {
+                    compareAndRecallShots(currentShots, newShots, () => {
+                        currentShots = newShots;
+                    }, forceRecall);
+                } else {
+                    currentShots = newShots;
+                }
+            });
+        });
+    };
+
+    updateCurrentShots();
 
     // Watch Project File For Changes
     fs.watch(`${__dirname}/../../project-scp-files/`, (event, filename) => {
@@ -88,9 +102,7 @@ const listen = (server) => {
             logger.info(`Reset current count and load new max count: ${newMaxCount}`);
             currentCount = 0;
 
-            getCurrentShots(currentCount, initialShots => {
-                currentShots = initialShots;
-            });
+            updateCurrentShots();
 
             namespaces.forEach(namespace => namespace.sendNextCount(currentCount));
             if (newMaxCount) {
@@ -105,20 +117,6 @@ const listen = (server) => {
             maxCount = newMaxCount;
         }
     });
-
-    const updateCurrentShots = () => {
-        getCurrentShots(currentCount, newShots => {
-            checkIfLive(live => {
-                if (live) {
-                    compareAndRecallShots(currentShots, newShots, () => {
-                        currentShots = newShots;
-                    });
-                } else {
-                    currentShots = newShots;
-                }
-            });
-        });
-    };
 
     const sendCounts = () => {
         if (currentCount < maxCount) {
@@ -141,6 +139,8 @@ const listen = (server) => {
     const setLive = (newLive) => {
         ProjectManager.waitForXML(projectManager => {
             projectManager.setLive(newLive);
+            // Recall Presets For Current Shots If It Went Live
+            updateCurrentShots(true);
             namespaces.forEach(namespace => namespace.setLive(newLive));
         });
     };
