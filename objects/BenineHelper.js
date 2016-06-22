@@ -5,6 +5,7 @@ import Preset from "./Preset";
 // Singleton Object
 let benineHelperInstance = null;
 const serverAddress = "localhost";
+const port = 8888;
 const logger = log4js.getLogger();
 
 /*
@@ -25,11 +26,11 @@ class BenineHelperInstance {
      * @param callback - callback function
      */
     recallShot(cameraShot, callback) {
-        if (cameraShot.presetId) {
+        if (cameraShot.presetId && cameraShot.presetId >= 0) {
             const reqOptions = {
                 host: serverAddress,
                 path: `/presets/recallpreset?presetid=${cameraShot.presetId}`,
-                port: 8888,
+                port,
                 method: "GET",
             };
 
@@ -59,7 +60,7 @@ class BenineHelperInstance {
         const reqOptions = {
             host: serverAddress,
             path: "/camera/",
-            port: 8888,
+            port,
             method: "GET",
         };
 
@@ -98,7 +99,7 @@ class BenineHelperInstance {
         const reqOptions = {
             host: serverAddress,
             path: "/presets/",
-            port: 8888,
+            port,
             method: "GET",
         };
 
@@ -113,8 +114,9 @@ class BenineHelperInstance {
 
                 if (body && body.presets) {
                     body.presets.forEach((preset) => {
+                        const imagePath = `http://${serverAddress}:${port}${preset.image}`;
                         presets.push(new Preset(
-                            preset.id, preset.name, preset.image, preset.cameraid));
+                            preset.id, preset.name, imagePath, preset.cameraid));
                     });
                 }
                 callback(presets);
