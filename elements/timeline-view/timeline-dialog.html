@@ -1,6 +1,5 @@
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
@@ -10,14 +9,46 @@
     <template>
         <style include="iron-flex iron-flex-alignment">
 
-        </style>
+            paper-dialog {
+                min-width: 400px;
+            }
 
-        <paper-dialog id="dialog" modal>
+        </style>
+        <iron-ajax
+                id="getPresets"
+                handle-as="json"
+                method = "GET"
+                content-type="application/json"
+                on-response="handleGetPresetsResponse"></iron-ajax>
+        <iron-ajax
+                id="setPreset"
+                handle-as="json"
+                method = "POST"
+                content-type="application/json"
+                on-response="handleSetPresetsResponse"></iron-ajax>
+
+        <paper-dialog id="dialog" with-backdrop>
             <h2>Title goes here.</h2>
-            <p>Text goes here. Lorem ipsum dolorem tetetet.</p>
+
+            <p>Header text goes here.</p>
+
+            <paper-dialog-scrollable>
+                <paper-menu id="menu" on-tap="onListItemTap" attr-for-selected="id">
+                    <template is="dom-repeat" items="{{presets}}" id="presetsRepeat"c>
+                        <paper-item id="{{item.id}}" preset={{item}} index="{{index}}">
+                            {{item.name}}
+                        </paper-item>
+                    </template>
+                </paper-menu>
+            </paper-dialog-scrollable>
+            <p id="presetView" hidden>
+                <div>ID: {{preset.id}}</div>
+                <div>Name: {{preset.name}}</div>
+            </p>
+
             <div id="buttons">
                 <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm>Accept</paper-button>
+                <paper-button on-tap="confirm_dialog">Accept</paper-button>
             </div>
         </paper-dialog>
 
@@ -30,11 +61,67 @@
             this.is = 'timeline-dialog';
 
             this.properties = {
-                block_data: Object
-
-
+                block_data: Object,
+                camera: Object,
+                preset: Object,
+                presets: Array
             };
         }
+
+        /**
+         * Open dialog and get content
+         */
+        showDialog() {
+            this.$.getPresets.url = "/benine/cameras/" + this.camera.id + "/presets";
+            this.$.getPresets.generateRequest();
+            this.$.dialog.open();
+        }
+
+        /**
+         * Respond to get event
+         */
+        handleGetPresetsResponse(event) {
+            this.presets = event.detail.response.presets;
+
+            const block_data = this.block_data;
+            const activePreset = this.presets.filter(function(preset) { return Number(preset.id) === Number(block_data.presetId) })[0]
+            if (block_data.presetId >= 0 && activePreset) {
+                this.$.menu.selected = block_data.presetId;
+                this.preset = activePreset;
+                this.$.presetView.hidden = false;
+            }
+        }
+
+        /**
+         * Confirm and close dialog
+         */
+        confirm_dialog() {
+            this.$.setPreset.url = "/benine/cameras/" + this.camera.id + "/shots/" + this.block_data.instance + "/set-preset-id";
+            this.$.setPreset.body = {presetId: this.preset.id};
+            this.$.setPreset.generateRequest();
+            this.$.dialog.close();
+            this.parentNode.showToast();
+        }
+
+        /**
+         * Respond to set event
+         */
+        handleSetPresetsResponse(event) {
+            if(event.detail.response.success) {
+                this.block_data.presetId = this.preset.id;
+            }
+        }
+
+        /**
+         * List item tapped, update selected preset
+         */
+        onListItemTap() {
+            if (document.querySelector("paper-item[focused]")) {
+                this.preset = document.querySelector("paper-item[focused]").preset;
+                this.$.presetView.hidden = false;
+            }
+        }
+
     }
     Polymer(timelineDialog);
     })();
