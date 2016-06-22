@@ -102,7 +102,6 @@ class timelineGrid {
             newTimeline.shots = [];
             newData.cameraTimelines[index] = newTimeline;
             newData.cameraTimelines[index].camera = timeline.camera;
-            console.log(timeline.camera);
             // Only do following if at least one block is present
             if (timeline.cameraShots.length > 0) {
                 // Add padding blocks
