@@ -26,11 +26,13 @@ class CameraTimeline {
 
     static fromXML(XMLObject) {
         // Get camera
-        const camera = XMLObject.camera ? Camera.fromXML(XMLObject.camera) : new Camera("", "", new CameraType("", "", -1), -1, -1, "", -1);
+        const camera = typeof XMLObject.camera !== "undefined" ? Camera.fromXML(XMLObject.camera)
+            : new Camera("", "", new CameraType("", "", -1), -1, -1, "", -1);
 
         // Make cameraTimeline
         const cameraTimeline = new CameraTimeline(
-            camera.name, camera.description, camera, XMLObject.instance[0] ? XMLObject.instance[0] : -1);
+            camera.name, camera.description, camera,
+            typeof XMLObject.instance[0] !== "undefined" ? XMLObject.instance[0] : -1);
 
         // Parse and add shots
         if (typeof XMLObject.shotList[0].shot !== "undefined") {

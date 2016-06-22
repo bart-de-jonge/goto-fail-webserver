@@ -10,9 +10,9 @@ class CameraType {
 
     static fromXML(XMLObject) {
         return new CameraType(
-            XMLObject[0].name[0] ? XMLObject[0].name[0] : "",
-            XMLObject[0].description[0] ? XMLObject[0].description[0] : "",
-            XMLObject[0].movementMargin[0] ? XMLObject[0].movementMargin[0] : 0
+            typeof XMLObject[0].name[0] !== "undefined" ? XMLObject[0].name[0] : "",
+            typeof XMLObject[0].description[0] !== "undefined" ? XMLObject[0].description[0] : "",
+            typeof XMLObject[0].movementMargin[0] !== "undefined" ? XMLObject[0].movementMargin[0] : 0
         );
     }
 

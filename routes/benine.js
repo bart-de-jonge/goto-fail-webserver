@@ -52,7 +52,8 @@ router.post("/cameras/:cameraId(\\d+)/shots/:shotId(\\d+)/set-preset-id", (req, 
         ProjectManager.waitForXML((manager) => {
             const timeline = manager.data.scriptingProject.cameraTimelines[req.params.cameraId];
             if (timeline) {
-                const shot = timeline.cameraShots.filter(shot => Number(shot.instance) === Number(req.params.shotId))[0];
+                const shot = timeline.cameraShots.filter(
+                    shot => Number(shot.instance) === Number(req.params.shotId))[0];
                 if (shot) {
                     shot.presetId = req.body.presetId;
                     ProjectManager.waitForWriteXML(() => {

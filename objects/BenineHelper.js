@@ -1,5 +1,6 @@
 import http from "http";
 import log4js from "log4js";
+import Preset from "./Preset";
 
 // Singleton Object
 let benineHelperInstance = null;

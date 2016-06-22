@@ -27,15 +27,15 @@ class DirectorShot {
     // Helper method for creating a DirectorShot from XML
     static fromXML(XMLObject) {
         return new DirectorShot(
-            XMLObject.name[0] ? XMLObject.name[0] : "",
-            XMLObject.description[0] ? XMLObject.description[0] : "",
-            XMLObject.beginCount[0] ? XMLObject.beginCount[0] : -1,
-            XMLObject.endCount[0] ? XMLObject.endCount[0] : -1,
-            XMLObject.frontShotPadding[0] ? XMLObject.frontShotPadding[0] : -1,
-            XMLObject.endShotPadding[0] ? XMLObject.endShotPadding[0] : -1,
-            XMLObject.colliding[0] ? XMLObject.colliding[0] : false,
-            XMLObject.cameraShots ? XMLObject.cameraShots : [],
-            XMLObject.timelineIndices[0] ? XMLObject.timelineIndices[0] : []);
+            typeof XMLObject.name[0] !== "undefined" ? XMLObject.name[0] : "",
+            typeof XMLObject.description[0] !== "undefined" ? XMLObject.description[0] : "",
+            typeof XMLObject.beginCount[0] !== "undefined" ? XMLObject.beginCount[0] : -1,
+            typeof XMLObject.endCount[0] !== "undefined" ? XMLObject.endCount[0] : -1,
+            typeof XMLObject.frontShotPadding[0] !== "undefined" ? XMLObject.frontShotPadding[0] : -1,
+            typeof XMLObject.endShotPadding[0] !== "undefined" ? XMLObject.endShotPadding[0] : -1,
+            typeof XMLObject.colliding[0] !== "undefined" ? XMLObject.colliding[0] : false,
+            typeof XMLObject.cameraShots !== "undefined" ? XMLObject.cameraShots : [],
+            typeof XMLObject.timelineIndices[0] !== "undefined" ? XMLObject.timelineIndices[0] : []);
     }
 
     // Helper method for transforming a DirectorShot to XML

@@ -21,7 +21,7 @@ class DirectorTimeline {
 
     static fromXML(XMLObject) {
         const directorTimeline = new DirectorTimeline(
-            XMLObject.description[0] ? XMLObject.description[0] : "");
+            typeof XMLObject.description[0] !== "undefined" ? XMLObject.description[0] : "");
 
         if (XMLObject.shotList[0]) {
             XMLObject.shotList[0].shot.forEach(shot => {

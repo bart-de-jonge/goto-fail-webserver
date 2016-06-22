@@ -21,9 +21,9 @@ class User {
 
         return new User(
             id,
-            XMLObject.name[0] ? XMLObject.name[0] : "",
+            typeof XMLObject.name[0] !== "undefined" ? XMLObject.name[0] : "",
             pickedTimelines,
-            XMLObject.roleValue[0] ? Number(XMLObject.roleValue[0]) : -1
+            typeof XMLObject.roleValue[0] !== "undefined" ? Number(XMLObject.roleValue[0]) : -1
         );
     }
 
