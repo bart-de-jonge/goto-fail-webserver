@@ -8,7 +8,8 @@ import fs from "fs";
 import CameraOperatorSocket from "./CameraOperatorSocket";
 import DirectorSocket from "./DirectorSocket";
 import ShotCallerSocket from "./ShotCallerSocket";
-import ProjectManager from "../../objects/ProjectManager.js";
+import ProjectManager from "../../objects/ProjectManager";
+import BenineHelper from "../../objects/BenineHelper";
 
 const logger = log4js.getLogger();
 
@@ -23,6 +24,49 @@ const getMaxCount = callback => {
     });
 };
 
+const getCurrentShots = (currentCount, callback) => {
+    ProjectManager.waitForXML(projectManager => {
+        if (projectManager.data && projectManager.data.scriptingProject.cameraTimelines) {
+            const cameraTimelines = projectManager.data.scriptingProject.cameraTimelines;
+            const currentShots = cameraTimelines.map(cameraTimeline => {
+                const matchingShots = cameraTimeline.getCameraShots()
+                    .filter(shot =>
+                        shot.endCount > currentCount && shot.beginCount <= currentCount
+                    );
+                if (matchingShots.length === 0) {
+                    return null;
+                }
+                return matchingShots[0];
+            });
+
+            callback(currentShots);
+        } else {
+            callback([]);
+        }
+    });
+};
+
+const compareAndRecallShots = (previousShots, newShots, callback) => {
+    const benineHelper = new BenineHelper();
+    newShots.forEach((newShot, index) => {
+        if (newShot && previousShots[index] !== newShot) {
+            benineHelper.recallShot(newShot, success => {
+                if (success) {
+                    logger.info(`Successfully recalled preset ${newShot.presetId}`);
+                }
+            });
+        }
+    });
+
+    callback();
+};
+
+const checkIfLive = callback => {
+    ProjectManager.waitForXML(projectManager => {
+        callback(projectManager.live);
+    });
+};
+
 const listen = (server) => {
     const io = socketio.listen(server);
 
@@ -31,12 +75,23 @@ const listen = (server) => {
 
     const namespaces = [];
 
+    let currentShots = [];
+
+    getCurrentShots(currentCount, initialShots => {
+        currentShots = initialShots;
+    });
+
     // Watch Project File For Changes
     fs.watch(`${__dirname}/../../project-scp-files/`, (event, filename) => {
         logger.info(`${event} operation on ${filename}`);
         getMaxCount(newMaxCount => {
             logger.info(`Reset current count and load new max count: ${newMaxCount}`);
             currentCount = 0;
+
+            getCurrentShots(currentCount, initialShots => {
+                currentShots = initialShots;
+            });
+
             namespaces.forEach(namespace => namespace.sendNextCount(currentCount));
             if (newMaxCount) {
                 maxCount = newMaxCount;
@@ -51,9 +106,24 @@ const listen = (server) => {
         }
     });
 
+    const updateCurrentShots = () => {
+        getCurrentShots(currentCount, newShots => {
+            checkIfLive(live => {
+                if (live) {
+                    compareAndRecallShots(currentShots, newShots, () => {
+                        currentShots = newShots;
+                    });
+                } else {
+                    currentShots = newShots;
+                }
+            });
+        });
+    };
+
     const sendCounts = () => {
         if (currentCount < maxCount) {
             currentCount = currentCount + 1;
+            updateCurrentShots();
             namespaces.forEach((namespace) => namespace.sendNextCount(currentCount));
         }
     };
@@ -62,6 +132,7 @@ const listen = (server) => {
     const setCount = (newCount) => {
         if (newCount < maxCount) {
             currentCount = newCount;
+            updateCurrentShots();
             namespaces.forEach((namespace) => namespace.sendNextCount(currentCount));
         }
     };
