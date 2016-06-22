@@ -23,9 +23,9 @@ router.get("/presets", (req, res) => {
 
 // Get presets data from benine for a certain camera
 // Note the id is for our camera, not benines.
-router.get("/cameras/:id(\\d+)/presets", (req, res) => {
+router.get("/cameras/:cameraId(\\d+)/presets", (req, res) => {
     ProjectManager.waitForXML((manager) => {
-        const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.id];
+        const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.cameraId];
         if (camera) {
             const benineHelper = new BenineHelper();
             benineHelper.getPresetsForCamera(camera, (presets) => {
@@ -46,10 +46,10 @@ router.get("/recallTest", (req, res) => {
         });
 });
 
-router.post("/cameras/:id(\\d+)/set-remote-camera-id", (req, res) => {
+router.post("/cameras/:cameraId(\\d+)/set-remote-camera-id", (req, res) => {
     if (req.body.remoteCameraId) {
         ProjectManager.waitForXML((manager) => {
-            const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.id];
+            const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.cameraId];
             if (camera) {
                 camera.presetId = req.body.presetId;
                 res.json({ success: true, message: "Preset id stored successfully!" });
@@ -60,10 +60,10 @@ router.post("/cameras/:id(\\d+)/set-remote-camera-id", (req, res) => {
     res.json({ success: false, message: "Please provide a remote camera id!" });
 });
 
-router.post("/cameras/:id(\\d+)/set-preset-id", (req, res) => {
+router.post("/cameras/:cameraId(\\d+)/set-preset-id", (req, res) => {
     if (req.body.presetId) {
         ProjectManager.waitForXML((manager) => {
-            const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.id];
+            const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.cameraId];
             if (camera) {
                 camera.remoteCameraId = req.body.remoteCameraId;
                 res.json({ success: true, message: "Remote camera id stored successfully!" });
@@ -91,17 +91,14 @@ router.get("/coupled", (req, res) => {
     });
 });
 
-router.get("/coupled/:id(\\d+)", (req, res) => {
+router.get("/coupled/:cameraId(\\d+)", (req, res) => {
     ProjectManager.waitForXML((manager) => {
         const cameraList = manager.data.scriptingProject.cameraList[0].camera;
         if (cameraList) {
-            let result = true;
-            cameraList.forEach((camera) => {
-                if (camera.remoteCameraId < 0) {
-                    result = false;
-                }
-            });
-            res.json({ success: true, coupled: result });
+            if (cameraList[req.params.cameraId]) {
+                res.json({ success: true, coupled: cameraList[req.params.cameraId] >= 0});
+            }
+            res.json({ success: false, message: "That's not a valid camera!" });
         } else {
             res.json({ success: false });
         }
