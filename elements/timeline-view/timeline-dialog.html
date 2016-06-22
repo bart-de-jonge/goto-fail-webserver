@@ -28,9 +28,9 @@
                 on-response="handleSetPresetsResponse"></iron-ajax>
 
         <paper-dialog id="dialog" with-backdrop>
-            <h2>Title goes here.</h2>
+            <h2>Preset selection</h2>
 
-            <p>Header text goes here.</p>
+            <p>Please select a preset to couple to this camera shot.</p>
 
             <paper-dialog-scrollable>
                 <paper-menu id="menu" on-tap="onListItemTap" attr-for-selected="id">
@@ -47,7 +47,7 @@
             </p>
 
             <div id="buttons">
-                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button on-tap="cancel_dialog">Cancel</paper-button>
                 <paper-button on-tap="confirm_dialog">Accept</paper-button>
             </div>
         </paper-dialog>
@@ -90,6 +90,14 @@
                 this.preset = activePreset;
                 this.$.presetView.hidden = false;
             }
+        }
+
+        /**
+         * Cancel and close dialog
+         */
+        cancel_dialog() {
+            this.$.dialog.close();
+            this.parentNode.showToast();
         }
 
         /**
