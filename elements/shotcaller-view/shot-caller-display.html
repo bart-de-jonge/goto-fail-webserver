@@ -32,7 +32,6 @@
                 height: 100%;
                 margin-top: auto;
                 margin-bottom: auto;
-                background-color: var(--paper-grey-200);
                 color: var(--secondary-color-500);
                 font-size: medium;
                 vertical-align: middle;
@@ -56,15 +55,15 @@
         <div class="layout vertical">
             <paper-card heading="Score count" elevation="1">
                 <div class="card-content shadowed">
-                    <paper-button id="advanceButton" on-tap="handleAdvanceTap">
+                    <paper-button raised id="advanceButton" on-tap="handleAdvanceTap">
                         <iron-icon  icon="av:play-arrow"></iron-icon>
                         Advance count
                     </paper-button>
-                    <paper-button id="backButton" on-tap="handleBackTap">
+                    <paper-button raised id="backButton" on-tap="handleBackTap">
                         <iron-icon  icon="av:skip-previous"></iron-icon>
                         Step Back
                     </paper-button>
-                    <paper-button id="resetButton" on-tap="handleResetTap">
+                    <paper-button raised id="resetButton" on-tap="handleResetTap">
                         <iron-icon icon="av:replay"></iron-icon>
                         Reset
                     </paper-button>
