@@ -85,7 +85,7 @@
             </paper-listbox>
             <div class="buttons">
                 <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button on-tap="saveRemoteCamera" dialog-confirm>Save</paper-button>
+                <paper-button on-tap="saveRemoteCamera">Save</paper-button>
             </div>
         </paper-dialog>
 
@@ -136,7 +136,11 @@
                 }
                 
                 onSetRemoteCamera(event) {
-                    console.log(event.detail.response);
+                    if (event.detail.response.success) {
+                        this.$.remoteCameraDialog.close();
+                    } else {
+                        console.log(event.detail.response);
+                    }
                 }
 
                 openDialog() {
