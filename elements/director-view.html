@@ -5,8 +5,8 @@
 <link rel="import" href="../bower_components/paper-toolbar/paper-toolbar.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html/head">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
 <link rel="import" href="gotofail-drawer.html">
 <link rel="import" href="director-view/director-element.html">
 <link rel="import" href="./live-widget.html">
@@ -47,6 +47,13 @@
                 margin: 0px 4px;
                 width: 2px;
             }
+
+            paper-button {
+                margin: 0 40px;
+                background-color: var(--secondary-color-500);
+                width: 180px;
+            }
+
         </style>
 
         <paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking left-drawer id="drawer-panel">
@@ -56,10 +63,13 @@
             <paper-header-panel main mode="waterfall" style="overflow: hidden;">
 
                 <div class="paper-header"style="background-color: rgb(240,240,240);">
-                    <paper-toolbar justify="left" id="head" style="height: 60px;">
+                    <paper-toolbar id="head" style="height: 60px;">
                         <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
-                        <h2 style="font-weight: lighter">Director</h2>
-                        <paper-button id="toggleLiveButton" raised on-tap="toggleLive">{{ liveString }}</paper-button>
+                        <span class="title">Director</span>
+                        <paper-button raised id="toggleLiveButton" on-tap="toggleLive">
+                            <iron-icon icon="{{liveIcon}}" style="margin-right: 10px;"></iron-icon>
+                            {{ liveString }}
+                        </paper-button>
                         <live-widget display-live="{{ isLive }}"></live-widget>
                     </paper-toolbar>
                     <div class="layout horizontal director-header">
@@ -102,6 +112,11 @@
                             type: String,
                             value: "Go Live",
                             computed: "computeLiveString(isLive)",
+                        },
+                        liveIcon: {
+                            type: String,
+                            value: "av:pause-circle-outline",
+                            computed: "computeLiveIcon(isLive)",
                         }
                     }
                 };
@@ -111,6 +126,13 @@
                         return "Stop Recording";
                     }
                     return "Go Live";
+                }
+
+                computeLiveIcon(live) {
+                    if (live) {
+                        return "av:pause-circle-outline";
+                    }
+                    return "av:play-circle-outline";
                 }
 
                 toggleLive() {
