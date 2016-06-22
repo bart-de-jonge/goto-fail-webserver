@@ -1,48 +1,68 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-icons/editor-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/hardware-icons.html">
 <link rel="import" href="timeline-dialog.html">
 <link rel="import" href="../colors.html">
 
 <dom-module id="timeline-toast">
     <template>
         <style include="iron-flex iron-flex-alignment">
-            :host {
-            }
 
             paper-toast {
-                box-shadow: 0px -3px 15px rgba(0,0,0,0.2);
+                box-shadow: 0px -3px 25px rgba(0,0,0,0.4);
                 background-color: white;
-                padding: 5px 20px;
-                min-height: 120px;
-                width: 100%;
+                padding: 0;
+                height: 160px;
+                margin-left: 13%;
+                margin-right: 13%;
+            }
+
+            .top {
+                background-color: var(--main-color-500);
+                height: 50px;
+                color: white;
+                font-size: medium;
+                padding-left: 20px;
+            }
+
+            .bottom {
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.4);
+                height: 110px;
             }
 
             .box-padding {
-                padding: 4px 4px;
+                padding: 16px 28px;
             }
 
-            .box-left {
-                padding-right: 20px;
-                border-right: solid 1px rgba(0,0,0,0.2);
-                margin-right: 40px;
+            .bordered {
+                border-right: solid 1px rgba(0,0,0,0.25);
             }
 
             .content-title {
                 margin-right: 16px;
-                font-size: medium;
+                font-size: small;
                 color: rgba(0,0,0,0.5);
             }
 
             .content-text {
-                font-size: medium;
+                font-size: small;
                 color: black;
             }
 
-            #button {
+            .add-button {
+                color: var(--main-color-500);
+            }
+
+            .select-button {
                 color: var(--secondary-color-500);
-                margin: auto 120px;
+            }
+
+            .remove-button {
+                color: red;
             }
 
             .instrument {
@@ -52,6 +72,14 @@
             paper-ripple {
                 color: black;
             }
+
+            paper-fab {
+                color: white;
+                --paper-fab-background: var(--secondary-color-500);
+                position: fixed;
+                bottom: 130px;
+                right: 30px;
+            }
         </style>
 
         <iron-ajax
@@ -60,41 +88,73 @@
                 method = "GET"
                 content-type="application/json"
                 on-response="handleGetPresetsResponse"></iron-ajax>
+        <iron-ajax
+                id="removePreset"
+                handle-as="json"
+                method = "POST"
+                content-type="application/json"
+                on-response="handleRemovePresetResponse"></iron-ajax>
 
-        <paper-toast on-tap="handleTap" duration="0" class="fit-bottom layout horizontal" id="toast">
+        <paper-toast duration="0" class="fit-bottom" id="toast">
 
-            <paper-ripple initial-opacity="0.1"></paper-ripple>
-
-            <div class="layout vertical justified flex box-padding box-left">
-                <div class="layout horizontal">
-                    <div class="content-title">Count</div>
-                    <div class="content-text flex">{{block_data.beginCount}} - {{block_data.endCount}}</div>
-                </div>
-                <div class="layout horizontal">
-                    <div class="content-title">Description</div>
-                    <div class="content-text flex">{{block_data.description}}</div>
-                </div>
-                <div class="layout horizontal">
-                    <div class="content-title">Instruments</div>
-                    <template is="dom-repeat" items="{{block_data.instruments}}">
-                        <span class="content-text instrument">{{item.name}}</span>
-                    </template>
-                </div>
+            <div class="top layout vertical center-justified">
+                {{block_data.name}}
             </div>
 
-            <div class="layout vertical around-justified flex box-padding">
-                <div class="layout horizontal">
-                    <div class="content-title">Preset name</div>
-                    <div class="content-text flex">{{preset.name}}</div>
-                </div>
-                <div class="layout horizontal">
-                    <div class="content-title">Preset ID</div>
-                    <div class="content-text flex">{{preset.id}}</div>
-                </div>
-            </div>
+            <paper-fab icon="icons:close" on-tap="hideToast"></paper-fab>
 
-            <div class="layout vertical center-justified flex box-padding">
-                    <paper-button on-tap="showDialog" id="button">Edit presets</paper-button>
+            <div class="bottom layout horizontal justified">
+                <div class="layout horizontal flex box-padding bordered">
+                    <div class="layout vertical justified flex">
+                        <div class="content-title">Count</div>
+                        <div class="content-title">Description</div>
+                        <div class="content-title">Instruments</div>
+                    </div>
+
+                    <div class="layout vertical justified flex">
+                        <div class="content-text flex">{{block_data.beginCount}} - {{block_data.endCount}}</div>
+                        <div class="content-text flex">{{block_data.description}}</div>
+                        <template is="dom-repeat" items="{{block_data.instruments}}" id="instruments_available">
+                            <span class="content-text instrument">{{item.name}}</span>
+                        </template>
+                        <div class="content-text" id="instruments_unavailable">None</div>
+                    </div>
+                </div>
+
+                <div class="layout horizontal flex box-padding bordered" id="presets_available">
+                    <div class="layout vertical around-justified flex">
+                        <div class="content-title">Preset name</div>
+                        <div class="content-title">Preset ID</div>
+                    </div>
+
+                    <div class="layout vertical around-justified flex">
+                        <div class="content-text">{{preset.name}}</div>
+                        <div class="content-text">{{preset.id}}</div>
+                    </div>
+                </div>
+
+                <div class="layout vertical flex center-justified box-padding bordered" id="presets_unavailable">
+                    <div class="content-text"><center>No preset selected</center></div>
+                    <!--Deprecated and I love it!-->
+                </div>
+
+                <div class="layout vertical flex center-justified box-padding" id="buttons_unavailable">
+                    <paper-button on-tap="showDialog" class="add-button">
+                        <iron-icon icon="icons:add"></iron-icon>
+                        Add preset
+                    </paper-button>
+                </div>
+
+                <div class="layout vertical flex justified box-padding" id="buttons_available">
+                    <paper-button on-tap="showDialog" class="select-button">
+                        <iron-icon icon="editor:mode-edit"></iron-icon>
+                        Edit preset
+                    </paper-button>
+                    <paper-button on-tap="removePreset" class="remove-button">
+                        <iron-icon icon="icons:delete"></iron-icon>
+                        Remove preset
+                    </paper-button>
+                </div>
             </div>
 
         </paper-toast>
@@ -128,6 +188,12 @@
             if (block_data.presetId >= 0 && activePreset) {
                 this.preset = activePreset;
             }
+
+            var showPreset = this.preset;
+            this.$.presets_available.hidden = !showPreset
+            this.$.presets_unavailable.hidden = showPreset;
+            this.$.buttons_available.hidden = !showPreset;
+            this.$.buttons_unavailable.hidden = showPreset;
         }
 
         /**
@@ -137,13 +203,17 @@
             this.$.getPresets.url = "/benine/cameras/" + this.camera.id + "/presets";
             this.$.getPresets.generateRequest();
             this.$.toast.open();
+
+            var showInstruments = this.block_data.instruments.size > 0;
+            this.$.instruments_available.hidden = !showInstruments;
+            this.$.instruments_unavailable.hidden = showInstruments;
         }
 
         /**
          * Close toast when tapped
          */
-        handleTap() {
-            this.$.toast.toggle();
+        hideToast() {
+            this.$.toast.hide();
         }
 
         /**
@@ -151,6 +221,33 @@
          */
         showDialog() {
             this.$.timelinedialog.showDialog();
+        }
+
+        /**
+         * Handle when Delete button is pressed
+         */
+        removePreset() {
+            this.$.removePreset.url = "/benine/cameras/" + this.camera.id + "/shots/" + this.block_data.instance + "/set-preset-id";
+            this.$.removePreset.body = {presetId: "-1"};
+            this.$.removePreset.generateRequest();
+        }
+
+        /**
+         * Respond to remove preset event
+         */
+        handleRemovePresetResponse(event) {
+            if(event.detail.response.success) {
+                this.$.toast.hide();
+                this.$.toast.show();
+
+                // just bloody force it
+                this.preset = null;
+                this.block_data.presetId = -1;
+                this.$.presets_available.hidden = true;
+                this.$.buttons_available.hidden = true;
+                this.$.presets_unavailable.hidden = false;
+                this.$.buttons_unavailable.hidden = false;
+            }
         }
     }
     Polymer(timelineToast);

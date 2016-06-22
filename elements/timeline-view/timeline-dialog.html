@@ -10,7 +10,11 @@
         <style include="iron-flex iron-flex-alignment">
 
             paper-dialog {
-                min-width: 400px;
+                min-width: 500px;
+            }
+
+            paper-button {
+                color: var(--secondary-color-500);
             }
 
         </style>
@@ -28,27 +32,36 @@
                 on-response="handleSetPresetsResponse"></iron-ajax>
 
         <paper-dialog id="dialog" with-backdrop>
-            <h2>Title goes here.</h2>
+            <h2>Please select a preset</h2>
 
-            <p>Header text goes here.</p>
-
-            <paper-dialog-scrollable>
+            <paper-dialog-scrollable id="presets_show">
                 <paper-menu id="menu" on-tap="onListItemTap" attr-for-selected="id">
                     <template is="dom-repeat" items="{{presets}}" id="presetsRepeat"c>
                         <paper-item id="{{item.id}}" preset={{item}} index="{{index}}">
+                            <paper-ripple></paper-ripple>
                             {{item.name}}
                         </paper-item>
                     </template>
                 </paper-menu>
             </paper-dialog-scrollable>
-            <p id="presetView" hidden>
+
+            <div id="presets_hide">
+                <p>
+                    There are no presets available for this camera.
+                </p>
+            </div>
+
+            <div id="presetView" hidden>
                 <div>ID: {{preset.id}}</div>
                 <div>Name: {{preset.name}}</div>
-            </p>
+            </div>
 
-            <div id="buttons">
-                <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button on-tap="confirm_dialog">Accept</paper-button>
+            <div class="buttons">
+                <p>
+                    <paper-button on-tap="cancel_dialog" id="close_button">Close</paper-button>
+                    <paper-button on-tap="cancel_dialog" id="cancel_button">Cancel</paper-button>
+                    <paper-button on-tap="confirm_dialog" id="accept_button">Accept</paper-button>
+                </p>
             </div>
         </paper-dialog>
 
@@ -90,6 +103,24 @@
                 this.preset = activePreset;
                 this.$.presetView.hidden = false;
             }
+
+            var hasPresets = this.presets.length > 0;
+            this.$.presets_show.hidden = !hasPresets;
+            this.$.presets_hide.hidden = hasPresets;
+            this.$.cancel_button.hidden = !hasPresets;
+            this.$.accept_button.hidden = !hasPresets;
+            this.$.close_button.hidden = hasPresets;
+        }
+
+        /**
+         * Cancel and close dialog
+         */
+        cancel_dialog() {
+            this.$.dialog.close();
+            this.$.menu.selected = null;
+            this.preset = null;
+            this.$.presetView.hidden = true;
+            this.parentNode.showToast();
         }
 
         /**
