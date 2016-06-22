@@ -1,0 +1,106 @@
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/av-icons.html">
+
+<dom-module id="live-widget">
+    <template>
+        <style include="iron-flex"></style>
+
+        <style>
+            @-webkit-keyframes glowing {
+                0% {
+                }
+                50% {
+                    background-color: red;
+                    -webkit-box-shadow: 0 0 10px red;
+                }
+                100% {
+                }
+            }
+
+            @-moz-keyframes glowing {
+                0% {
+                }
+                50% {
+                    background-color: red;
+                    -moz-box-shadow: 0 0 10px red;
+                }
+                100% {
+                }
+            }
+
+            @-o-keyframes glowing {
+                0% {
+                }
+                50% {
+                    background-color: red;
+                    box-shadow: 0 0 10px red;
+                }
+                100% {
+                }
+            }
+
+            @keyframes glowing {
+                0% {
+                }
+                50% {
+                    background-color: red;
+                    box-shadow: 0 0 10px red;
+                }
+                100% {
+                }
+            }
+
+            #glowyCircle {
+                animation: glowing 3s infinite;
+                border-radius: 50%;
+                float: left;
+                margin: 0.2em 0.5em;
+                background-color: #B00000;
+                vertical-align: middle;
+                width: 20px;
+                height: 20px;
+                padding: auto;
+            }
+
+            #liveCard {
+                margin-left: 1em;
+                background-color: #4B4B4B;
+                color: white;
+            }
+
+            #liveCard h2 {
+                float: left;
+                margin-left: 0.3em;
+            }
+
+        </style>
+
+        <paper-card id="liveCard" class="layout horizontal flex" hidden$="{{ !displayLive }}">
+            <div class="flex">
+                <h2>Live</h2>
+                <div id="glowyCircle"></div>
+            </div>
+        </paper-card>
+    </template>
+    <script>
+        (function () {
+            class liveWidget {
+                beforeRegister() {
+                    this.is = "live-widget";
+
+                    this.properties = {
+                        displayLive: {
+                            type: Boolean,
+                            value: false,
+                            notify: true,
+                        },
+                    };
+                }
+            }
+
+            Polymer(liveWidget);
+        })();
+    </script>
+</dom-module>

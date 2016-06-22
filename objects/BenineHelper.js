@@ -40,7 +40,7 @@ class BenineHelperInstance {
                 }).on("end", () => {
                     const body = JSON.parse(Buffer.concat(bodyChunks));
                     if (body) {
-                        callback(body.succes);
+                        callback(body.success);
                     } else callback(false);
                 });
             });
@@ -74,7 +74,11 @@ class BenineHelperInstance {
 
                 if (body && body.cameras) {
                     body.cameras.forEach((camera) => {
-                        cameras.push(camera.id);
+                        cameras.push({
+                            id: camera.id,
+                            address: camera.address,
+                            type: camera.type
+                        });
                     });
                 }
                 callback(cameras);
