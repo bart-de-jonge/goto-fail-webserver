@@ -1,5 +1,6 @@
 import Camera from "./Camera";
 import CameraShot from "../objects/CameraShot";
+import CameraType from "./CameraType";
 
 /*
  * Class for storing a CameraTimeline
@@ -25,11 +26,11 @@ class CameraTimeline {
 
     static fromXML(XMLObject) {
         // Get camera
-        const camera = Camera.fromXML(XMLObject.camera);
+        const camera = XMLObject.camera ? Camera.fromXML(XMLObject.camera) : new Camera("", "", new CameraType("", "", -1), -1, -1, "", -1);
 
         // Make cameraTimeline
         const cameraTimeline = new CameraTimeline(
-            camera.name, camera.description, camera, XMLObject.instance[0]);
+            camera.name, camera.description, camera, XMLObject.instance[0] ? XMLObject.instance[0] : -1);
 
         // Parse and add shots
         if (typeof XMLObject.shotList[0].shot !== "undefined") {

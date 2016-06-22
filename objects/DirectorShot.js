@@ -26,11 +26,16 @@ class DirectorShot {
 
     // Helper method for creating a DirectorShot from XML
     static fromXML(XMLObject) {
-        return new DirectorShot(XMLObject.name[0], XMLObject.description[0],
-                                XMLObject.beginCount[0], XMLObject.endCount[0],
-                                XMLObject.frontShotPadding[0], XMLObject.endShotPadding[0],
-                                XMLObject.colliding[0], XMLObject.cameraShots,
-                                XMLObject.timelineIndices[0]);
+        return new DirectorShot(
+            XMLObject.name[0] ? XMLObject.name[0] : "",
+            XMLObject.description[0] ? XMLObject.description[0] : "",
+            XMLObject.beginCount[0] ? XMLObject.beginCount[0] : -1,
+            XMLObject.endCount[0] ? XMLObject.endCount[0] : -1,
+            XMLObject.frontShotPadding[0] ? XMLObject.frontShotPadding[0] : -1,
+            XMLObject.endShotPadding[0] ? XMLObject.endShotPadding[0] : -1,
+            XMLObject.colliding[0] ? XMLObject.colliding[0] : false,
+            XMLObject.cameraShots ? XMLObject.cameraShots : [],
+            XMLObject.timelineIndices[0] ? XMLObject.timelineIndices[0] : []);
     }
 
     // Helper method for transforming a DirectorShot to XML

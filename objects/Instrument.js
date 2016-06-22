@@ -9,8 +9,8 @@ class Instrument {
 
     static fromXML(XMLObject) {
         return new Instrument(
-            XMLObject.name[0],
-            XMLObject.description[0]
+            XMLObject.name[0] ? XMLObject.name[0] : "",
+            XMLObject.description[0] ? XMLObject.description[0] : ""
         );
     }
 
