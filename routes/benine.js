@@ -6,7 +6,7 @@ import ProjectManager from "../objects/ProjectManager";
 const router = express.Router(); // eslint-disable-line new-cap
 
 // Get users data
-router.get("/get-cameras", (req, res) => {
+router.get("/cameras", (req, res) => {
     const benineHelper = new BenineHelper();
     benineHelper.getCameras((cameras) => {
         res.json({ cameras });
@@ -14,7 +14,7 @@ router.get("/get-cameras", (req, res) => {
 });
 
 // Get presets data from benine
-router.get("/get-presets", (req, res) => {
+router.get("/presets", (req, res) => {
     const benineHelper = new BenineHelper();
     benineHelper.getPresets((presets) => {
         res.json({ presets });
@@ -22,7 +22,8 @@ router.get("/get-presets", (req, res) => {
 });
 
 // Get presets data from benine for a certain camera
-router.get("/get-presets/:id(\\d+)", (req, res) => {
+// Note the id is for our camera, not benines.
+router.get("/cameras/:id(\\d+)/presets", (req, res) => {
     ProjectManager.waitForXML((manager) => {
         const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.id];
         if (camera) {
