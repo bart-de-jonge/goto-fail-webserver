@@ -48,10 +48,16 @@ router.get("/recallTest", (req, res) => {
 
 router.post("/cameras/:id(\\d+)/set-remote-camera-id", (req, res) => {
     if (req.body.remoteCameraId) {
-        res.json({ success: true });
-    } else {
-        res.json({ success: false, message: "please prove a remote camera id" });
+        ProjectManager.waitForXML((manager) => {
+            const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.id];
+            if (camera) {
+                camera.remoteCameraId = req.body.remoteCameraId;
+                res.json({ success: true, message: "Remote camera id stored successfully!" });
+            }
+            res.json({ success: false, message: "That's not a valid camera!" });
+        });
     }
-})
+    res.json({ success: false, message: "Please prove a remote camera id!" });
+});
 
 module.exports = router;
