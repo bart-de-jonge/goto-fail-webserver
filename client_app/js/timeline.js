@@ -12,4 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("advanceCount", () => {
         socket.emit("advance_count", {});
     });
+
+    socket.on("set_client_live", (data) => {
+        if (data.live) {
+            document.getElementsByTagName("live-widget")[0]
+                .setAttribute("display-live", data.live);
+        } else {
+            document.getElementsByTagName("live-widget")[0]
+                .removeAttribute("display-live");
+        }
+    });
 });
