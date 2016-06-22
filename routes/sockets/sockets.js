@@ -39,10 +39,18 @@ const getCurrentShots = (currentCount, callback) => {
             // and if none is current, it's current shot is null
             const currentShots = cameraTimelines.map(cameraTimeline => {
                 const matchingShots = cameraTimeline.getCameraShots()
-                    .filter(shot =>
-                        shot.endCount > currentCount && shot.beginCount <= currentCount
-                    );
+                    .filter(shot => { // eslint-disable-line arrow-body-style
+                        return shot.endCount > currentCount && shot.beginCount <= currentCount;
+                    });
                 if (matchingShots.length === 0) {
+                    // If no shot is current then get the next shot so that the recalling is current
+                    const nextShots = cameraTimeline.getCameraShots()
+                        .filter(shot => { // eslint-disable-line arrow-body-style
+                            return shot.beginCount > currentCount;
+                        });
+                    if (nextShots.length !== 0) {
+                        return nextShots[0];
+                    }
                     return null;
                 }
                 return matchingShots[0];

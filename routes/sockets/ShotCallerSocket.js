@@ -92,10 +92,13 @@ class ShotCallerSocket {
     // Find the current DirectorShot
     findCurrentShot(directorTimeline) {
         if (directorTimeline) {
-            const candidates = directorTimeline.getDirectorShots()
-                .filter((shot) =>
-                    shot.endCount > this.currentCount && shot.beginCount <= this.currentCount
-                );
+            logger.info(directorTimeline.getDirectorShots());
+            const candidates = directorTimeline.getDirectorShots().reverse()
+                .filter((shot) => { // eslint-disable-line arrow-body-style
+                    return shot.beginCount <= this.currentCount
+                        && shot.endCount > this.currentCount;
+                });
+            logger.info(candidates);
             if (candidates.length === 0) {
                 return null;
             }
@@ -108,9 +111,9 @@ class ShotCallerSocket {
     findNextShot(directorTimeline) {
         if (directorTimeline) {
             const nextShots = directorTimeline.getDirectorShots()
-                .filter((shot) =>
-                    shot.beginCount > this.currentCount
-               );
+                .filter((shot) => { // eslint-disable-line arrow-body-style
+                    return shot.beginCount > this.currentCount;
+                });
             if (nextShots.length !== 0) {
                 return nextShots[0];
             }
