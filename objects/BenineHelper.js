@@ -40,7 +40,7 @@ class BenineHelperInstance {
                 }).on("end", () => {
                     const body = JSON.parse(Buffer.concat(bodyChunks));
                     if (body) {
-                        callback(body.succes);
+                        callback(body.success);
                     } else callback(false);
                 });
             });

@@ -5,7 +5,6 @@ const builder = new xml2js.Builder();
 import CameraTimeline from "../objects/CameraTimeline";
 import DirectorTimeline from "../objects/DirectorTimeline.js";
 import User from "./User";
-import Preset from "./Preset";
 
 // Singleton Object
 let projectManagerInstance = null;
@@ -24,31 +23,13 @@ class ProjectManager {
             this.live = false;
             if (typeof this.data === "undefined") {
                 this.parseXML(() => {
-                    this.getPresets(() => {
-                        this.initialized = true;
-                    });
-                });
-            } else {
-                this.getPresets(() => {
                     this.initialized = true;
                 });
+            } else {
+                this.initialized = true;
             }
         }
         return projectManagerInstance;
-    }
-
-    getPresets(callback) {
-        this.presets = [];
-        // TODO get prestes from benine api
-
-        this.presets.push(new Preset(0, "Preset #1", "The first preset",
-            "localhost:1234/a/route/0", 0));
-        this.presets.push(new Preset(1, "Preset #2", "The second preset",
-            "localhost:1234/a/route/1", 0));
-        this.presets.push(new Preset(2, "Preset #3", "The third preset",
-            "localhost:1234/a/route/2", 1));
-
-        callback();
     }
 
     writeXML(callback) {
@@ -251,9 +232,7 @@ class ProjectManager {
                 setTimeout(presetWait, 10);
             } else {
                 if (existingProjectManager) {
-                    projectManager.getPresets(() => {
-                        callback(projectManager);
-                    });
+                    callback(projectManager);
                 }
             }
         }
