@@ -92,7 +92,6 @@ class timelineGrid {
         newData.maxCount = maxCount;
         newData.cameraTimelines = [];
 
-
         // Loop over all counts and pad with non-visible blocks where necessary
         responseData.cameraTimelines.forEach((timeline, index) => {
             // Setup timeline
