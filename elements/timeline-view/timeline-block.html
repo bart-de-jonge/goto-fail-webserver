@@ -65,7 +65,7 @@
 
         </style>
 
-        <paper-card on-tap="openTimelineToast"
+        <paper-card on-tap="openToast"
                     elevation="1"
                     heading="{{block_data.name}}"
                     style="visibility: {{block_data.visible}};">
@@ -94,6 +94,7 @@
             </div>
         </paper-card>
 
+        <timeline-toast id="timelinetoast"></timeline-toast>
     </template>
     <script>
     (function() {
@@ -103,13 +104,16 @@
             this.is = 'timeline-block';
 
             this.properties = {
-                block_data: Object
+                block_data: Object,
+                toast: Object
             };
+
         }
 
-        openTimelineToast(e) {
-            timelinetoast.open();
-            timelinetoastcontent.block_data = this.block_data;
+        openToast() {
+            //can this be done better? my JS is nonexistently rusty.
+            this.$.timelinetoast.block_data = this.block_data;
+            this.$.timelinetoast.$.toast.open();
         }
     }
     Polymer(timelineBlock);
