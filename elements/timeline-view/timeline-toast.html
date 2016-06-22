@@ -114,14 +114,14 @@
                     <div class="layout vertical justified flex">
                         <div class="content-text flex">{{block_data.beginCount}} - {{block_data.endCount}}</div>
                         <div class="content-text flex">{{block_data.description}}</div>
-                        <template is="dom-repeat" items="{{block_data.instruments}}" id="instruments_show">
+                        <template is="dom-repeat" items="{{block_data.instruments}}" id="instruments_available">
                             <span class="content-text instrument">{{item.name}}</span>
                         </template>
-                        <div class="content-text" id="instruments_hide">None</div>
+                        <div class="content-text" id="instruments_unavailable">None</div>
                     </div>
                 </div>
 
-                <div class="layout horizontal flex box-padding bordered" id="preset_show">
+                <div class="layout horizontal flex box-padding bordered" id="presets_available">
                     <div class="layout vertical around-justified flex">
                         <div class="content-title">Preset name</div>
                         <div class="content-title">Preset ID</div>
@@ -133,19 +133,19 @@
                     </div>
                 </div>
 
-                <div class="layout vertical flex center-justified box-padding bordered" id="preset_hide">
+                <div class="layout vertical flex center-justified box-padding bordered" id="presets_unavailable">
                     <div class="content-text"><center>No preset selected</center></div>
                     <!--Deprecated and I love it!-->
                 </div>
 
-                <div class="layout vertical flex center-justified box-padding" id="buttons_hide">
+                <div class="layout vertical flex center-justified box-padding" id="buttons_unavailable">
                     <paper-button on-tap="showDialog" class="add-button">
                         <iron-icon icon="icons:add"></iron-icon>
                         Add preset
                     </paper-button>
                 </div>
 
-                <div class="layout vertical flex justified box-padding" id="buttons_show">
+                <div class="layout vertical flex justified box-padding" id="buttons_available">
                     <paper-button on-tap="showDialog" class="select-button">
                         <iron-icon icon="editor:mode-edit"></iron-icon>
                         Edit preset
@@ -189,11 +189,11 @@
                 this.preset = activePreset;
             }
 
-            this.$.preset_show.hidden = !this.preset;
-            this.$.preset_hide.hidden = this.preset;
+            this.$.presets_available.hidden = !this.preset;
+            this.$.presets_unavailable.hidden = this.preset;
 
-            this.$.buttons_show.hidden = !this.preset;
-            this.$.buttons_hide.hidden = this.preset;
+            this.$.buttons_available.hidden = !this.preset;
+            this.$.buttons_unavailable.hidden = this.preset;
         }
 
         /**
@@ -204,8 +204,8 @@
             this.$.getPresets.generateRequest();
             this.$.toast.open();
 
-            this.$.instruments_show.hidden = this.block_data.instruments.size <= 0;
-            this.$.instruments_hide.hidden = this.block_data.instruments.size > 0;
+            this.$.instruments_available.hidden = this.block_data.instruments.size <= 0;
+            this.$.instruments_unavailable.hidden = this.block_data.instruments.size > 0;
         }
 
         /**
@@ -242,10 +242,10 @@
                 // just bloody force it
                 this.preset = null;
                 this.block_data.presetId = -1;
-                this.$.preset_show.hidden = true;
-                this.$.preset_hide.hidden = false;
-                this.$.buttons_show.hidden = true;
-                this.$.buttons_hide.hidden = false;
+                this.$.presets_available.hidden = true;
+                this.$.presets_unavailable.hidden = false;
+                this.$.buttons_available.hidden = true;
+                this.$.buttons_unavailable.hidden = false;
             }
         }
     }
