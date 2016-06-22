@@ -103,12 +103,13 @@
                 this.preset = activePreset;
                 this.$.presetView.hidden = false;
             }
-            this.$.presets_show.hidden = this.presets.length == 0;
-            this.$.presets_hide.hidden = this.presets.length > 0;
 
-            this.$.cancel_button.hidden = this.presets.length == 0;
-            this.$.accept_button.hidden = this.presets.length == 0;
-            this.$.close_button.hidden = this.presets.length > 0;
+            var hasPresets = this.presets.length > 0;
+            this.$.presets_show.hidden = !hasPresets;
+            this.$.presets_hide.hidden = hasPresets;
+            this.$.cancel_button.hidden = !hasPresets;
+            this.$.accept_button.hidden = !hasPresets;
+            this.$.close_button.hidden = hasPresets;
         }
 
         /**

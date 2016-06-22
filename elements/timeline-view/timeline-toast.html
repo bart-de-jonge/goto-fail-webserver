@@ -189,11 +189,11 @@
                 this.preset = activePreset;
             }
 
-            this.$.presets_available.hidden = !this.preset;
-            this.$.presets_unavailable.hidden = this.preset;
-
-            this.$.buttons_available.hidden = !this.preset;
-            this.$.buttons_unavailable.hidden = this.preset;
+            var showPreset = this.preset;
+            this.$.presets_available.hidden = !showPreset
+            this.$.presets_unavailable.hidden = showPreset;
+            this.$.buttons_available.hidden = !showPreset;
+            this.$.buttons_unavailable.hidden = showPreset;
         }
 
         /**
@@ -204,8 +204,9 @@
             this.$.getPresets.generateRequest();
             this.$.toast.open();
 
-            this.$.instruments_available.hidden = this.block_data.instruments.size <= 0;
-            this.$.instruments_unavailable.hidden = this.block_data.instruments.size > 0;
+            var showInstruments = this.block_data.instruments.size > 0;
+            this.$.instruments_available.hidden = !showInstruments;
+            this.$.instruments_unavailable.hidden = showInstruments;
         }
 
         /**
@@ -243,8 +244,8 @@
                 this.preset = null;
                 this.block_data.presetId = -1;
                 this.$.presets_available.hidden = true;
-                this.$.presets_unavailable.hidden = false;
                 this.$.buttons_available.hidden = true;
+                this.$.presets_unavailable.hidden = false;
                 this.$.buttons_unavailable.hidden = false;
             }
         }
