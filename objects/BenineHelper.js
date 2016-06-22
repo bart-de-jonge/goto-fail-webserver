@@ -78,7 +78,8 @@ class BenineHelperInstance {
                         cameras.push({
                             id: camera.id,
                             address: camera.address,
-                            type: camera.type,
+                            streamaddress: camera.streamaddress,
+                            type: camera.type
                         });
                     });
                 }

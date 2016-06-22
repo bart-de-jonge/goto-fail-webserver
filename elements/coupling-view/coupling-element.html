@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../colors.html">
 
 <dom-module id="coupling-element">
@@ -27,7 +28,19 @@
             .content {
                 padding: 16px;
             }
-       </style>
+        </style>
+
+        <iron-ajax
+            auto
+            url="/cameras"
+            handle-as="json"
+            on-response="onGetCameras"></iron-ajax>
+
+        <iron-ajax
+            auto
+            url="/benine/cameras"
+            handle-as="json"
+            on-response="onGetRemoteCameras"></iron-ajax>
 
         <paper-card heading="Couple timelines to cameras">
             <div class="content">
@@ -44,7 +57,17 @@
                     this.is = "coupling-element";
 
                     this.properties = {
+                        cameras: Array,
+                        remoteCameras: Array
                     };
+                }
+
+                onGetCameras(event) {
+                    console.log(event.detail.response.object);
+                }
+
+                onGetRemoteCameras(event) {
+                    console.log(event.detail.response.cameras);
                 }
 
             }
