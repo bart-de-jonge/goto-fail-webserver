@@ -1,0 +1,150 @@
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="couple-element">
+    <template>
+        <style include="iron-flex iron-flex-alignment"></style>
+        <style>
+            paper-card {
+                display: block;
+                background-color: white;
+                margin: 0 auto 32px;
+                width: 800px;
+            }
+            
+            paper-button {
+                color: var(--secondary-color-500);
+            }
+
+            .content {
+                padding: 16px;
+            }
+
+            h2 {
+                font-size: 24px;
+                font-weight: 400; 
+            }
+
+            span {
+                color: grey;
+            }
+            
+            .title {
+                margin: 0 0 16px;
+            }
+
+            .tag {
+                font-weight: 500;
+            }
+            
+            .address {
+                text-align: right;
+            }
+        </style>
+
+
+        <iron-ajax
+            id="ajaxSetRemoteCamera"
+            url="benine/cameras/{{camera.id}}/set-remote-camera-id"
+            method="POST"
+            handle-as="json"
+            content-type="application/json"
+            on-response="onSetRemoteCamera"></iron-ajax>
+
+        <paper-card>
+            <div class="content">
+                <div class="title">
+                    <h2>{{camera.name}}</h2>
+                    <span>{{camera.description}}</span>
+                </div>
+                <paper-item class="layout horizontal">
+                    <div class="tag">
+                        Current camera:
+                    </div>
+                    <div class="flex address">
+                        {{_getRemoteCameraAddress(camera.remoteCameraId)}}
+                    </div>
+                </paper-item>
+           </div>
+            <div class="card-actions layout horizontal end-justified">
+                <paper-button on-tap="openDialog" raised>edit</paper-button>
+            </div>
+        </paper-card>
+
+        <paper-dialog id="remoteCameraDialog" with-backdrop>
+            <h2>Set remote camera</h2>
+            <paper-listbox id="listbox" attr-for-selected="camera" selected="{{_getSelected(camera, remoteCameras)}}">
+                <template is="dom-repeat" items="{{remoteCameras}}">
+                    <paper-item camera="{{item}}">
+                        {{item.address}}
+                    </paper-item>
+                </template>
+            </paper-listbox>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button on-tap="saveRemoteCamera" dialog-confirm>Save</paper-button>
+            </div>
+        </paper-dialog>
+
+   </template>
+
+    <script>
+        (function () {
+            class coupleElement {
+                beforeRegister() {
+                    this.is = "couple-element";
+
+                    this.properties = {
+                        camera: Object,
+                        remoteCameras: {
+                            type: Object,
+                            value: function() {
+                                return [];
+                            }
+                        }
+                    };
+                }
+
+                _getRemoteCameraAddress(id) {
+                    console.log(id);
+                    if (id < 0) {
+                        return "Camera not yet coupled!";
+                    }
+                    const remoteCamera = this.remoteCameras.find((camera) => camera.id === id);
+                    if (remoteCamera) {
+                        return remoteCamera.address;
+                    }
+                    return "Camera not found!";
+                }
+
+                _getSelected(camera, remoteCameras) {
+                    if (!camera || camera.remoteCameraId === -1) {
+                        return undefined;
+                    }
+                    return remoteCameras.find((remoteCamera) => remoteCamera.id === camera.remoteCameraId);
+                }
+                
+                saveRemoteCamera() {
+                    this.set("camera.remoteCameraId", this.$.listbox.selected.id);
+                    this.$.ajaxSetRemoteCamera.body = {
+                        remoteCameraId: this.camera.remoteCameraId
+                    };
+                    this.$.ajaxSetRemoteCamera.generateRequest();
+                }
+                
+                onSetRemoteCamera(event) {
+                    console.log(event.detail.response);
+                }
+
+                openDialog() {
+                    this.$.remoteCameraDialog.open();
+                }
+            }
+
+            Polymer(coupleElement);
+        })();
+    </script>
+</dom-module>

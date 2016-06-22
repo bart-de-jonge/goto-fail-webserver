@@ -1,9 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../bower_components/paper-item/paper-item.html">
-<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="couple-element.html">
 <link rel="import" href="../colors.html">
 
 <dom-module id="coupling-element">
@@ -13,38 +11,6 @@
             :host {
                 padding: 32px;
                 display: block;
-            }
-
-            paper-card {
-                display: block;
-                background-color: white;
-                margin: 0 auto 32px;
-                width: 800px;
-            }
-            
-            paper-button {
-                color: var(--secondary-color-500);
-            }
-
-            .content {
-                padding: 16px;
-            }
-
-            h2 {
-                font-size: 24px;
-                font-weight: 400; 
-            }
-
-            span {
-                color: grey;
-            }
-            
-            .title {
-                margin: 0 0 16px;
-            }
-
-            .tag {
-                font-weight: 500;
             }
         </style>
 
@@ -61,31 +27,7 @@
             on-response="onGetRemoteCameras"></iron-ajax>
 
         <template is="dom-repeat" items="{{cameras}}">
-            <paper-card>
-                <div class="content">
-                    <div class="title">
-                        <h2>{{item.name}}</h2>
-                        <span>{{item.description}}</span>
-                    </div>
-                    <paper-item class="layout horizontal justified">
-                        <div class="tag">
-                            Current camera:
-                        </div>
-                        <div>
-                            {{_getRemoteCamera(item.id)}}
-                        </div>
-                    </paper-item>
-                    <!-- <template is="dom-repeat" items="{{remoteCameras}}">
-                        <div>
-                            {{item.id}}
-                            {{item.address}}
-                        </div>
-                    </template> -->
-                </div>
-                <div class="card-actions layout horizontal end-justified">
-                    <paper-button raised>edit</paper-button>
-                </div>
-            </paper-card>
+            <couple-element camera={{item}} remote-cameras="{{remoteCameras}}"></couple-element>
         </template>
 
    </template>
@@ -105,18 +47,6 @@
                             }
                         }
                     };
-                }
-
-                _getRemoteCamera(id) {
-                    if (id <= -1) {
-                        return "No remote camera specified";
-                    }
-                    const remoteCamera = this.remoteCameras.find((camera) => camera.id === id);
-                    console.log(remoteCamera);
-                    if (!remoteCamera)  {
-                        return "Remote camera not found!";
-                    }
-                    return remoteCamera.address;
                 }
 
                 onGetCameras(event) {
