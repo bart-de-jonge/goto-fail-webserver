@@ -4,19 +4,25 @@
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../colors.html">
+<link rel="import" href="../../elements/timeline-view/preset-thumbnail.html">
 
 <dom-module id="timeline-dialog">
     <template>
         <style include="iron-flex iron-flex-alignment">
 
             paper-dialog {
-                min-width: 500px;
+                width: 70%;
+                max-width: 800px;
             }
 
             paper-button {
                 color: var(--secondary-color-500);
             }
 
+            #preset_thumbnail_img {
+                width: 100%;
+                height: 100%;
+            }
         </style>
         <iron-ajax
                 id="getPresets"
@@ -34,8 +40,9 @@
         <paper-dialog id="dialog" with-backdrop>
             <h2>Please select a preset</h2>
 
-            <paper-dialog-scrollable id="presets_show">
-                <paper-menu id="menu" on-tap="onListItemTap" attr-for-selected="id">
+            <paper-dialog-scrollable>
+                <div class="layout horizontal" id="presets_show">
+                <paper-menu id="menu" on-tap="onListItemTap" attr-for-selected="id" class="flex">
                     <template is="dom-repeat" items="{{presets}}" id="presetsRepeat"c>
                         <paper-item id="{{item.id}}" preset={{item}} index="{{index}}">
                             <paper-ripple></paper-ripple>
@@ -43,6 +50,11 @@
                         </paper-item>
                     </template>
                 </paper-menu>
+                    <div class="flex">
+                        <preset-thumbnail id="preset_thumbnail_img" presetId="{{preset.id}}"></preset-thumbnail>
+
+                    </div>
+                </div>
             </paper-dialog-scrollable>
 
             <div id="presets_hide">
