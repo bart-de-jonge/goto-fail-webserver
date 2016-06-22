@@ -50,12 +50,10 @@
                 }
 
                 onGetCameras(event) {
-                    console.log(event.detail.response.object);
                     this.cameras = event.detail.response.object;
                 }
 
                 onGetRemoteCameras(event) {
-                    console.log(event.detail.response.cameras);
                     this.remoteCameras = event.detail.response.cameras;
                 }
 

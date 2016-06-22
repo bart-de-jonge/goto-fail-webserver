@@ -65,7 +65,7 @@
                         Current camera:
                     </div>
                     <div class="flex address">
-                        {{_getRemoteCameraAddress(camera.remoteCameraId)}}
+                        {{_getRemoteCameraAddress(camera.remoteCameraId, remoteCameras)}}
                     </div>
                 </paper-item>
            </div>
@@ -108,12 +108,11 @@
                     };
                 }
 
-                _getRemoteCameraAddress(id) {
-                    console.log(id);
+                _getRemoteCameraAddress(id, remoteCameras) {
                     if (id < 0) {
                         return "Camera not yet coupled!";
                     }
-                    const remoteCamera = this.remoteCameras.find((camera) => camera.id === id);
+                    const remoteCamera = remoteCameras.find((camera) => camera.id === id);
                     if (remoteCamera) {
                         return remoteCamera.address;
                     }
