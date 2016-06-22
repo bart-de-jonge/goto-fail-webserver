@@ -45,7 +45,7 @@ app.use("/elements", express.static(`${__dirname}/elements`));
 require("./routes/router").addRoutes(app);
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
+app.use((req, res) => {
     const err = new Error("Not Found");
     err.status = 404;
 

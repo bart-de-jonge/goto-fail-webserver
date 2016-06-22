@@ -9,8 +9,8 @@ class Instrument {
 
     static fromXML(XMLObject) {
         return new Instrument(
-            XMLObject.name[0],
-            XMLObject.description[0]
+            typeof XMLObject.name[0] !== "undefined" ? XMLObject.name[0] : "",
+            typeof XMLObject.description[0] !== "undefined" ? XMLObject.description[0] : ""
         );
     }
 

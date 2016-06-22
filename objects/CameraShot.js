@@ -28,10 +28,15 @@ class CameraShot {
             });
         }
 
-        return new CameraShot(XMLObject.beginCount[0],
-            XMLObject.endCount[0], XMLObject.name[0],
-            XMLObject.description[0], XMLObject.colliding[0],
-            XMLObject.instance[0], XMLObject.presetId[0],
+        return new CameraShot(
+
+            typeof XMLObject.beginCount[0] !== "undefined" ? XMLObject.beginCount[0] : -1,
+            typeof XMLObject.endCount[0] !== "undefined" ? XMLObject.endCount[0] : -1,
+            typeof XMLObject.name[0] !== "undefined" ? XMLObject.name[0] : "",
+            typeof XMLObject.description[0] !== "undefined" ? XMLObject.description[0] : "",
+            typeof XMLObject.colliding[0] !== "undefined" ? XMLObject.colliding[0] : false,
+            typeof XMLObject.instance[0] !== "undefined" ? XMLObject.instance[0] : -1,
+            typeof XMLObject.presetId[0] !== "undefined" ? XMLObject.presetId[0] : -1,
             instruments);
     }
 
