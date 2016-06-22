@@ -68,12 +68,18 @@
             };
         }
 
+        /**
+         * Open dialog and get content
+         */
         showDialog() {
             this.$.getPresets.url = "/benine/cameras/" + this.camera.id + "/presets";
             this.$.getPresets.generateRequest();
             this.$.dialog.open();
         }
 
+        /**
+         * Respond to get event
+         */
         handleGetPresetsResponse(event) {
             this.presets = event.detail.response.presets;
 
@@ -86,13 +92,20 @@
             }
         }
 
+        /**
+         * Confirm and close dialog
+         */
         confirm_dialog() {
             this.$.setPreset.url = "/benine/cameras/" + this.camera.id + "/shots/" + this.block_data.instance + "/set-preset-id";
             this.$.setPreset.body = {presetId: this.preset.id};
             this.$.setPreset.generateRequest();
             this.$.dialog.close();
+            this.parentNode.showToast();
         }
 
+        /**
+         * Respond to set event
+         */
         handleSetPresetsResponse(event) {
             if(event.detail.response.success) {
                 this.block_data.presetId = this.preset.id;

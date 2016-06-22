@@ -113,8 +113,7 @@
 
         openToast() {
             //can this be done better? my JS is nonexistently rusty.
-//            this.$.timelinetoast.block_data = this.block_data;
-            this.$.timelinetoast.$.toast.open();
+            this.$.timelinetoast.showToast();
         }
     }
     Polymer(timelineBlock);

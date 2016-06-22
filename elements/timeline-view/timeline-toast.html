@@ -54,6 +54,12 @@
             }
         </style>
 
+        <iron-ajax
+                id="getPresets"
+                handle-as="json"
+                method = "GET"
+                content-type="application/json"
+                on-response="handleGetPresetsResponse"></iron-ajax>
 
         <paper-toast on-tap="handleTap" duration="0" class="fit-bottom layout horizontal" id="toast">
 
@@ -79,11 +85,11 @@
             <div class="layout vertical around-justified flex box-padding">
                 <div class="layout horizontal">
                     <div class="content-title">Preset name</div>
-                    <div class="content-text flex">Test</div>
+                    <div class="content-text flex">{{preset.name}}</div>
                 </div>
                 <div class="layout horizontal">
                     <div class="content-title">Preset ID</div>
-                    <div class="content-text flex">Test</div>
+                    <div class="content-text flex">{{preset.id}}</div>
                 </div>
             </div>
 
@@ -106,13 +112,43 @@
             this.properties = {
                 block_data: Object,
                 camera: Object,
+                preset: Object,
+                presets: Array,
             };
         }
 
+        /**
+         * Respond to get event
+         */
+        handleGetPresetsResponse(event) {
+            this.presets = event.detail.response.presets;
+
+            const block_data = this.block_data;
+            const activePreset = this.presets.filter(function(preset) { return Number(preset.id) === Number(block_data.presetId) })[0]
+            if (block_data.presetId >= 0 && activePreset) {
+                this.preset = activePreset;
+            }
+        }
+
+        /**
+         * Shows the toast and gets content
+         */
+        showToast() {
+            this.$.getPresets.url = "/benine/cameras/" + this.camera.id + "/presets";
+            this.$.getPresets.generateRequest();
+            this.$.toast.open();
+        }
+
+        /**
+         * Close toast when tapped
+         */
         handleTap() {
             this.$.toast.toggle();
         }
 
+        /**
+         * Show dialog for editing presets
+         */
         showDialog() {
             this.$.timelinedialog.showDialog();
         }
