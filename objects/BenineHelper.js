@@ -26,7 +26,7 @@ class BenineHelperInstance {
      * @param callback - callback function
      */
     recallShot(cameraShot, callback) {
-        if (cameraShot.presetId) {
+        if (cameraShot.presetId && cameraShot.presetId >= 0) {
             const reqOptions = {
                 host: serverAddress,
                 path: `/presets/recallpreset?presetid=${cameraShot.presetId}`,
