@@ -31,11 +31,13 @@ class DirectorShot {
             typeof XMLObject.description[0] !== "undefined" ? XMLObject.description[0] : "",
             typeof XMLObject.beginCount[0] !== "undefined" ? XMLObject.beginCount[0] : -1,
             typeof XMLObject.endCount[0] !== "undefined" ? XMLObject.endCount[0] : -1,
-            typeof XMLObject.frontShotPadding[0] !== "undefined" ? XMLObject.frontShotPadding[0] : -1,
+            typeof XMLObject.frontShotPadding[0] !== "undefined"
+                ? XMLObject.frontShotPadding[0] : -1,
             typeof XMLObject.endShotPadding[0] !== "undefined" ? XMLObject.endShotPadding[0] : -1,
             typeof XMLObject.colliding[0] !== "undefined" ? XMLObject.colliding[0] : false,
             typeof XMLObject.cameraShots !== "undefined" ? XMLObject.cameraShots : [],
-            typeof XMLObject.timelineIndices[0] !== "undefined" ? XMLObject.timelineIndices[0] : []);
+            typeof XMLObject.timelineIndices[0] !== "undefined"
+                ? XMLObject.timelineIndices[0] : []);
     }
 
     // Helper method for transforming a DirectorShot to XML

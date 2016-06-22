@@ -18,12 +18,14 @@ class Camera {
         return new Camera(
             typeof XMLObject[0].name[0] !== "undefined" ? XMLObject[0].name[0] : "",
             typeof XMLObject[0].description[0] !== "undefined" ? XMLObject[0].description[0] : "",
-            typeof XMLObject[0].cameraType !== "undefined" ? CameraType.fromXML(XMLObject[0].cameraType)
-                : new CameraType("", "", 0),
-            typeof XMLObject[0].movementMargin[0] !== "undefined" ? XMLObject[0].movementMargin[0] : -1,
+            typeof XMLObject[0].cameraType !== "undefined"
+                ? CameraType.fromXML(XMLObject[0].cameraType) : new CameraType("", "", 0),
+            typeof XMLObject[0].movementMargin[0] !== "undefined"
+                ? XMLObject[0].movementMargin[0] : -1,
             typeof XMLObject[0].instance[0] !== "undefined" ? XMLObject[0].instance[0] : -1,
             typeof XMLObject[0].ip[0] !== "undefined" ? XMLObject[0].ip[0] : "",
-            typeof XMLObject[0].remoteCameraId[0] !== "undefined" ? XMLObject[0].remoteCameraId[0] : -1
+            typeof XMLObject[0].remoteCameraId[0] !== "undefined"
+                ? XMLObject[0].remoteCameraId[0] : -1
         );
     }
 
