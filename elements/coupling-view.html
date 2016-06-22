@@ -23,6 +23,11 @@
                     background-color: rgba(0,0,0,0.15);
                 };
             }
+
+            .coupling-container {
+                min-height: 100%;
+                background-color: rgb(240,240,240);
+            }
         </style>
 
         <paper-drawer-panel responsive-width="1480px" drawer-width="200px" peeking left-drawer id="drawer-panel">
@@ -36,14 +41,11 @@
                         <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
                         <span class="title">Coupling</span>
                     </paper-toolbar>
-                    <div class="layout horizontal director-header">
-                        <div class="horizontal-separator"></div>
-                        <timeline-header class="flex" timeline_data="{{timeline_data}}"></timeline-header>
-                        <div class="horizontal-separator"></div>
-                    </div>
                 </div>
 
-                <coupling-element></coupling-element>
+                <div class="coupling-container">
+                    <coupling-element></coupling-element>
+                </div>
 
             </paper-header-panel>
         </paper-drawer-panel>
