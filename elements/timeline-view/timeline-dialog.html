@@ -1,0 +1,42 @@
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
+<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../colors.html">
+
+<dom-module id="timeline-dialog">
+    <template>
+        <style include="iron-flex iron-flex-alignment">
+
+        </style>
+
+        <paper-dialog id="dialog" modal>
+            <h2>Title goes here.</h2>
+            <p>Text goes here. Lorem ipsum dolorem tetetet.</p>
+            <div id="buttons">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button dialog-confirm>Accept</paper-button>
+            </div>
+        </paper-dialog>
+
+    </template>
+    <script>
+    (function() {
+    'use strict';
+    class timelineDialog {
+        beforeRegister() {
+            this.is = 'timeline-dialog';
+
+            this.properties = {
+                block_data: Object
+
+
+            };
+        }
+    }
+    Polymer(timelineDialog);
+    })();
+    </script>
+</dom-module>
