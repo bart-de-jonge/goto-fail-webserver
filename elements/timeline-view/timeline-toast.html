@@ -13,7 +13,7 @@
         <style include="iron-flex iron-flex-alignment">
 
             paper-toast {
-                box-shadow: 0px -3px 20px rgba(0,0,0,0.3);
+                box-shadow: 0px -3px 25px rgba(0,0,0,0.4);
                 background-color: white;
                 padding: 0;
                 height: 160px;
@@ -26,7 +26,7 @@
                 height: 50px;
                 color: white;
                 font-size: medium;
-                padding-left: 40px;
+                padding-left: 20px;
             }
 
             .bottom {
@@ -77,8 +77,8 @@
                 color: white;
                 --paper-fab-background: var(--secondary-color-500);
                 position: fixed;
-                bottom: 85px;
-                left: -30px;
+                bottom: 130px;
+                right: 30px;
             }
         </style>
 
@@ -101,7 +101,7 @@
                 {{block_data.name}}
             </div>
 
-            <paper-fab icon="hardware:keyboard-arrow-down" on-tap="hideToast"></paper-fab>
+            <paper-fab icon="icons:close" on-tap="hideToast"></paper-fab>
 
             <div class="bottom layout horizontal justified">
                 <div class="layout horizontal flex box-padding bordered">
