@@ -14,6 +14,7 @@
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button-animations.html">
 <link rel="import" href="../colors.html">
+<link rel="import" href="../../elements/timeline-view/preset-thumbnail.html">
 
 <dom-module id="timeline-block">
     <template>
@@ -49,7 +50,7 @@
                     </div>
                 </div>
                 <div class="flex-2" id="preset_thumbnail">
-                    <iron-image sizing="contain" id="preset_thumbnail_img" src="http://localhost:8888/static/presets/preset_0.jpg"></iron-image>
+                    <preset-thumbnail id="preset_thumbnail_img" preset-id="{{block_data.presetId}}"></preset-thumbnail>
                         <!--<p>hoi</p>-->
                 </div>
             </div>
@@ -60,14 +61,14 @@
             #preset_thumbnail {
                 padding: 5px;
             }
-            .flex_class {
-                max-height: calc(100% - 59px);
-                height: calc(100% - 59px);
-            }
 
             #preset_thumbnail_img {
                 width: 100%;
                 height: 100%;
+            }
+            .flex_class {
+                max-height: calc(100% - 59px);
+                height: calc(100% - 59px);
             }
 
             paper-card {
@@ -132,7 +133,6 @@
                 toast: Object,
                 camera: Object,
             };
-
         }
 
         openToast() {

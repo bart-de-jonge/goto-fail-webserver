@@ -1,0 +1,55 @@
+<dom-module id="preset-thumbnail">
+    <template>
+        <style>
+
+            iron-image {
+                width: 100%;
+                height: 100%;
+            }
+
+        </style>
+
+        <iron-ajax
+                id="getPreset"
+                url=
+                handle-as="json"
+                method = "GET"
+                content-type="application/json"
+                on-response="handleGetPresetResponse"></iron-ajax>
+
+        <iron-image sizing="contain" id="iron_image" src="http://localhost:8888/static/presets/preset_0.jpg" hidden></iron-image>
+
+
+    </template>
+    <script>
+    (function() {
+    'use strict';
+    class presetThumbnail {
+        beforeRegister() {
+            this.is = 'preset-thumbnail';
+
+            this.properties = {
+                presetId: Number,
+                preset: Object,
+            };
+        }
+
+        ready() {
+            this.$.getPreset.url = "/benine/presets/" + Number(this.presetId);
+            this.$.getPreset.generateRequest();
+        }
+
+        /**
+         * Respond to get event
+         */
+        handleGetPresetResponse(event) {
+            this.preset = event.detail.response.preset;
+            if (this.preset) {
+                this.$.iron_image.hidden = false;
+            }
+        }
+    }
+    Polymer(presetThumbnail);
+    })();
+    </script>
+</dom-module>
