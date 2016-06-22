@@ -66,11 +66,11 @@
                     <paper-toolbar id="head" style="height: 60px;">
                         <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
                         <span class="title">Director</span>
+                        <live-widget display-live="{{ isLive }}"></live-widget>
                         <paper-button raised id="toggleLiveButton" on-tap="toggleLive">
                             <iron-icon icon="{{liveIcon}}" style="margin-right: 10px;"></iron-icon>
                             {{ liveString }}
                         </paper-button>
-                        <live-widget display-live="{{ isLive }}"></live-widget>
                     </paper-toolbar>
                     <div class="layout horizontal director-header">
                         <div class="horizontal-separator"></div>
