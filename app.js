@@ -48,7 +48,21 @@ require("./routes/router").addRoutes(app);
 app.use((req, res, next) => {
     const err = new Error("Not Found");
     err.status = 404;
-    next(err);
+
+    // respond with html page
+    if (req.accepts("html")) {
+        res.render("404", { url: req.url });
+        return;
+    }
+
+    // respond with json
+    if (req.accepts("json")) {
+        res.send({ error: "Not found" });
+        return;
+    }
+
+    // default to plain-text. send()
+    res.type("txt").send("Not found");
 });
 
 // error handlers
