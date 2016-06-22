@@ -91,7 +91,8 @@ class timelineGrid {
         newData.minCount = 0;
         newData.maxCount = maxCount;
         newData.cameraTimelines = [];
-        
+
+
         // Loop over all counts and pad with non-visible blocks where necessary
         responseData.cameraTimelines.forEach((timeline, index) => {
             // Setup timeline
@@ -100,7 +101,8 @@ class timelineGrid {
             newTimeline.description = timeline.description;
             newTimeline.shots = [];
             newData.cameraTimelines[index] = newTimeline;
-
+            newData.cameraTimelines[index].camera = timeline.camera;
+            console.log(timeline.camera);
             // Only do following if at least one block is present
             if (timeline.cameraShots.length > 0) {
                 // Add padding blocks

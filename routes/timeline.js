@@ -6,6 +6,7 @@ const router = new express.Router();
 const getTimelines = function getTimelines(user, filtered, callback) {
     ProjectManager.waitForXML((projectManager) => {
         const data = projectManager.data;
+        console.log(projectManager.data.scriptingProject.cameraTimelines);
         if (data) {
             if (filtered && typeof user !== "undefined") {
                 callback(projectManager.filterTimelines(
@@ -44,6 +45,7 @@ router.get("/timeline-filtered-data", (req, res) => {
                 message: "Please Upload A Project File Before Editing!",
             });
         } else {
+            console.log(data.scriptingProject.cameraTimelines[0]);
             res.json({
                 cameraTimelines: data.scriptingProject.cameraTimelines,
             });
