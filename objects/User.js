@@ -19,7 +19,12 @@ class User {
             });
         }
 
-        return new User(id, XMLObject.name[0], pickedTimelines, Number(XMLObject.roleValue[0]));
+        return new User(
+            id,
+            typeof XMLObject.name[0] !== "undefined" ? XMLObject.name[0] : "",
+            pickedTimelines,
+            typeof XMLObject.roleValue[0] !== "undefined" ? Number(XMLObject.roleValue[0]) : -1
+        );
     }
 
     toXML() {

@@ -1,6 +1,6 @@
 import http from "http";
-import Preset from "./Preset";
 import log4js from "log4js";
+import Preset from "./Preset";
 
 // Singleton Object
 let benineHelperInstance = null;
@@ -77,7 +77,7 @@ class BenineHelperInstance {
                         cameras.push({
                             id: camera.id,
                             address: camera.address,
-                            type: camera.type
+                            type: camera.type,
                         });
                     });
                 }
