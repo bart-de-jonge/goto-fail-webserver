@@ -76,7 +76,7 @@ class BenineHelperInstance {
                         cameras.push({
                             id: camera.id,
                             address: camera.address,
-                            type: camera.type
+                            type: camera.type,
                         });
                     });
                 }
