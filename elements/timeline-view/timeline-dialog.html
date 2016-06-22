@@ -21,8 +21,7 @@
                 content-type="application/json"
                 on-response="handleGetPresetsResponse"></iron-ajax>
         <iron-ajax
-                id="updateUsersPost"
-                url="/"
+                id="setPreset"
                 handle-as="json"
                 method = "POST"
                 content-type="application/json"
@@ -49,7 +48,7 @@
 
             <div id="buttons">
                 <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm>Accept</paper-button>
+                <paper-button on-tap="confirm_dialog">Accept</paper-button>
             </div>
         </paper-dialog>
 
@@ -87,8 +86,18 @@
             }
         }
 
-        handleSetPresetsResponse(event) {
+        confirm_dialog() {
+            this.$.setPreset.url = "/benine/cameras/" + this.camera.id + "/shots/" + this.block_data.instance + "/set-preset-id";
+            this.$.setPreset.body = {presetId: this.preset.id};
+            this.$.setPreset.generateRequest();
+            this.$.dialog.close();
+        }
 
+        handleSetPresetsResponse(event) {
+            if(event.detail.response.success) {
+                this.block_data.presetId = this.preset.id;
+            }
+            console.log(event.detail.response);
         }
 
         /**
