@@ -25,7 +25,8 @@ router.get("/presets", (req, res) => {
 router.get("/presets/:presetId(\\d+)", (req, res) => {
     const benineHelper = new BenineHelper();
     benineHelper.getPresets((presets) => {
-        const preset = presets.filter(preset => Number(req.params.presetId) === Number(preset.id))[0];
+        const preset = presets.filter(preset =>
+        Number(req.params.presetId) === Number(preset.id))[0];
         res.json({ preset });
     });
 });

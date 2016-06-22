@@ -30,7 +30,7 @@ class BenineHelperInstance {
             const reqOptions = {
                 host: serverAddress,
                 path: `/presets/recallpreset?presetid=${cameraShot.presetId}`,
-                port: port,
+                port,
                 method: "GET",
             };
 
@@ -60,7 +60,7 @@ class BenineHelperInstance {
         const reqOptions = {
             host: serverAddress,
             path: "/camera/",
-            port: port,
+            port,
             method: "GET",
         };
 
@@ -99,7 +99,7 @@ class BenineHelperInstance {
         const reqOptions = {
             host: serverAddress,
             path: "/presets/",
-            port: port,
+            port,
             method: "GET",
         };
 
