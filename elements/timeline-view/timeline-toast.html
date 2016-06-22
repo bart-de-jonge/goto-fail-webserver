@@ -1,19 +1,8 @@
-<link rel="import" href="../../bower_components/paper-material/paper-material.html">
-<link rel="import" href="../../bower_components/paper-card/paper-card.html">
-<link rel="import" href="../../bower_components/paper-button/paper-button.html">
-<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html">
-<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../../bower_components/iron-icons/device-icons.html">
-<link rel="import" href="../../bower_components/iron-icons/image-icons.html">
-<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button.html">
-<link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
-<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button-animations.html">
+<link rel="import" href="timeline-dialog.html">
 <link rel="import" href="../colors.html">
 
 <dom-module id="timeline-toast">
@@ -99,10 +88,12 @@
             </div>
 
             <div class="layout vertical center-justified flex box-padding">
-                    <paper-button id="button">Edit presets</paper-button>
+                    <paper-button on-tap="showDialog" id="button">Edit presets</paper-button>
             </div>
 
         </paper-toast>
+
+        <timeline-dialog id="timelinedialog"></timeline-dialog>
 
     </template>
     <script>
@@ -119,6 +110,10 @@
 
         handleTap() {
             this.$.toast.toggle();
+        }
+
+        showDialog() {
+            this.$.timelinedialog.$.dialog.open();
         }
     }
     Polymer(timelineToast);
