@@ -74,7 +74,11 @@ class BenineHelperInstance {
 
                 if (body && body.cameras) {
                     body.cameras.forEach((camera) => {
-                        cameras.push(camera.id);
+                        cameras.push({
+                            id: camera.id,
+                            address: camera.address,
+                            type: camera.type
+                        });
                     });
                 }
                 callback(cameras);

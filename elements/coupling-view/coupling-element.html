@@ -1,0 +1,55 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../colors.html">
+
+<dom-module id="coupling-element">
+    <template>
+        <style include="iron-flex"></style>
+        <style>
+            :host {
+                padding: 32px;
+                display: block;
+            }
+
+            paper-card {
+                display: block;
+                background-color: white;
+                margin: 0 auto;
+                max-width: 800px;
+                --paper-card-header-color: white;
+                --paper-card-header-text: {
+                    font-size: medium;
+                    background-color: var(--main-color-500);
+                };
+            }
+
+            .content {
+                padding: 16px;
+            }
+       </style>
+
+        <paper-card heading="Couple timelines to cameras">
+            <div class="content">
+                content
+            </div>
+        </paper-card>
+
+   </template>
+
+    <script>
+        (function () {
+            class couplingElement {
+                beforeRegister() {
+                    this.is = "coupling-element";
+
+                    this.properties = {
+                    };
+                }
+
+            }
+
+            Polymer(couplingElement);
+        })();
+    </script>
+</dom-module>

@@ -7,6 +7,7 @@ import shotCaller from "./shot-caller";
 import director from "./director";
 import cameraControl from "./camera-control";
 import benine from "./benine";
+import coupling from "./coupling";
 
 // Module used to attach all routes to the correct urls
 module.exports.addRoutes = (app) => {
@@ -19,4 +20,5 @@ module.exports.addRoutes = (app) => {
     app.use("/director", director);
     app.use("/cameras", cameras);
     app.use("/benine", benine);
+    app.use("/coupling", coupling);
 };
