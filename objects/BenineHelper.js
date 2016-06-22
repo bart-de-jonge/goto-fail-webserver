@@ -114,7 +114,7 @@ class BenineHelperInstance {
 
                 if (body && body.presets) {
                     body.presets.forEach((preset) => {
-                        const imagePath = `${serverAddress}:${port}${preset.image}`;
+                        const imagePath = `http://${serverAddress}:${port}${preset.image}`;
                         presets.push(new Preset(
                             preset.id, preset.name, imagePath, preset.cameraid));
                     });
