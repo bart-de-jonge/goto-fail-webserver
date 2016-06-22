@@ -63,10 +63,19 @@
                 width: 100%;
                 height: 1px;
                 min-height: 1px;
-                max-height: 1px;
+                max-height: 2px;
                 background-color: black;
                 opacity: 0.1;
-                margin: 3px 0;
+                margin: 100px 0;
+            }
+
+            .separator-top {
+                border-top: 1px solid rgba(0,0,0,0.1);
+                padding-top: 12px;
+            }
+
+            .separator-bottom {
+                padding-bottom: 12px;
             }
 
             .filler-vertical {
@@ -89,10 +98,7 @@
 
             <paper-listbox style="background-color: transparent; padding-top: 0;">
 
-                <div class="separator-horizontal" style="margin-top: 0;"></div>
-                <div class="filler-vertical"></div>
-
-                <a href="/" tabindex="-1" style="text-decoration:none"> <paper-item  class="item-style">
+                <a href="/" tabindex="-1" style="text-decoration:none"> <paper-item  class="item-style separator-top">
                     <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="icons:account-circle"></iron-icon>
                     <span class="text-style">User selection</span>
@@ -104,26 +110,28 @@
                     <span class="text-style">Upload Project</span>
                 </paper-item> </a>
 
-                <div class="filler-vertical"></div>
-                <div class="separator-horizontal"></div>
-                <div class="filler-vertical"></div>
-
                 <a href="/timeline" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
                     <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="image:camera"></iron-icon>
                     <span class="text-style">Timeline view</span>
                 </paper-item> </a>
 
-                <a href="/shot-caller" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
+                <a href="/shot-caller" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style separator-bottom">
                     <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="image:timer"></iron-icon>
                     <span class="text-style">Shot calling view</span>
                 </paper-item> </a>
 
-                <a href="/director" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style">
+                <a href="/director" tabindex="-1" style="text-decoration:none"> <paper-item class="item-style separator-top separator-bottom">
                     <paper-ripple></paper-ripple>
                     <iron-icon class="icon-style" icon="image:camera-alt"></iron-icon>
                     <span class="text-style">Director view</span>
+                </paper-item> </a>
+
+                <a tabindex="-1" style="text-decoration:none"> <paper-item class="item-style separator-top">
+                    <paper-ripple></paper-ripple>
+                    <iron-icon class="icon-style" icon="image:linked-camera"></iron-icon>
+                    <span class="text-style">Benine application</span>
                 </paper-item> </a>
 
             </paper-listbox>

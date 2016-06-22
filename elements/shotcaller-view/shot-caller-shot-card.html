@@ -72,14 +72,21 @@
                 </div>
                 <div class="horizontal-separator"></div>
                 <div class="card-content">
-                <iron-icon icon="device:access-time"></iron-icon>
+                    <iron-icon icon="device:access-time"></iron-icon>
                     <div class="content-header">Count</div>
                     <span>
                         <p>Begins at: {{ shot.beginCount }}</p>
                         <p>Ends at: {{ shot.endCount }}</p>
                     </span>
                 </div>
-
+                <div class="horizontal-separator"></div>
+                <div class="card-content">
+                    <iron-icon icon="image:music-note"></iron-icon>
+                    <div class="content-header">Instruments</div>
+                    <template is="dom-repeat" items="{{shot.instruments}}">
+                        <div>{{item.name}}</div>
+                    </template>
+                </div>
             </span>
 
             <div hidden$="{{shot}}" class="card-content shadowed">
