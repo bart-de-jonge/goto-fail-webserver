@@ -54,7 +54,7 @@ router.post("/cameras/:cameraId(\\d+)/set-remote-camera-id", (req, res) => {
                 camera.presetId = req.body.presetId;
                 res.json({ success: true, message: "Preset id stored successfully!" });
             } else {
-                res.json({success: false, message: "That's not a valid camera!"});
+                res.json({ success: false, message: "That's not a valid camera!" });
             }
         });
     }
@@ -69,7 +69,7 @@ router.post("/cameras/:cameraId(\\d+)/set-preset-id", (req, res) => {
                 camera.remoteCameraId = req.body.remoteCameraId;
                 res.json({ success: true, message: "Remote camera id stored successfully!" });
             } else {
-                res.json({success: false, message: "That's not a valid camera!"});
+                res.json({ success: false, message: "That's not a valid camera!" });
             }
         });
     }

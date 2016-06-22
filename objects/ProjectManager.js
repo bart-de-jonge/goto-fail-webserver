@@ -5,7 +5,6 @@ const builder = new xml2js.Builder();
 import CameraTimeline from "../objects/CameraTimeline";
 import DirectorTimeline from "../objects/DirectorTimeline.js";
 import User from "./User";
-import Preset from "./Preset";
 
 // Singleton Object
 let projectManagerInstance = null;
