@@ -9,6 +9,7 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html/head">
 <link rel="import" href="gotofail-drawer.html">
 <link rel="import" href="director-view/director-element.html">
+<link rel="import" href="./live-widget.html">
 
 <dom-module id="director-view">
     <template>
@@ -58,6 +59,8 @@
                     <paper-toolbar justify="left" id="head" style="height: 60px;">
                         <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
                         <h2 style="font-weight: lighter">Director view</h2>
+                        <paper-button id="toggleLiveButton" raised on-tap="toggleLive">{{ liveString }}</paper-button>
+                        <live-widget display-live="{{ isLive }}"></live-widget>
                     </paper-toolbar>
                     <div class="layout horizontal director-header">
                         <div class="horizontal-separator"></div>
@@ -81,6 +84,11 @@
                     this.is = 'director-view';
                     
                     this.properties = {
+                        isLive: {
+                            type: Boolean,
+                            notify: true,
+                            value: false
+                        },
                         timeline_data: {
                             type: Object,
                             value: function() {
@@ -89,10 +97,33 @@
                                     description: "The timeline of the director",
                                 }
                             }
+                        },
+                        liveString: {
+                            type: String,
+                            value: "Go Live",
+                            computed: "computeLiveString(isLive)",
                         }
                     }
                 };
+
+                computeLiveString(live) {
+                    if (live) {
+                        return "Stop Recording";
+                    }
+                    return "Go Live";
+                }
+
+                toggleLive() {
+                    const detail = {
+                        live: !this.isLive,
+                    };
+                    const toggleLiveEvent = new CustomEvent("toggleLive", {
+                            detail,
+                        });
+                    document.dispatchEvent(toggleLiveEvent);
+                }
             }
+
             Polymer(directorView);
         })();
     </script> 

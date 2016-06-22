@@ -17,6 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
             .setAttribute("next-shot", JSON.stringify(data.nextShot));
     });
 
+    socket.on("set_client_live", (data) => {
+        if (data.live) {
+            document.getElementsByTagName("live-widget")[0]
+                .setAttribute("display-live", data.live);
+        } else {
+            document.getElementsByTagName("live-widget")[0]
+                .removeAttribute("display-live");
+        }
+    });
+
     // Request Current & Previous Shots
     socket.emit("get_current_shot");
     socket.emit("get_next_shot");

@@ -20,11 +20,13 @@ class CameraOperatorSocket {
         this.namespace = io.of("/cameraOperators");
         this.advanceCountCallBack = advanceCountCallBack;
         this.currentCount = currentCount;
+        this.live = false;
 
         this.namespace.on("connection", (socket) => {
             logger.info("New Camera Operator Connection");
             // Initialize With Current Server Count
             this.sendNextCount(this.currentCount);
+            this.setLive(this.live);
             socket.on("advance_count", () => {
                 this.advanceCountCallBack();
             });
@@ -37,6 +39,14 @@ class CameraOperatorSocket {
         this.currentCount = newCount;
         this.namespace.emit("next_count", {
             newCount,
+        });
+    }
+
+    // Send the updated live value
+    setLive(live) {
+        this.live = live;
+        this.namespace.emit("set_client_live", {
+            live,
         });
     }
 }

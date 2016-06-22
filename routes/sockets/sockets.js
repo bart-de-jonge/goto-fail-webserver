@@ -66,6 +66,14 @@ const listen = (server) => {
         }
     };
 
+    // Callback that sets whether or not the project is live
+    const setLive = (newLive) => {
+        ProjectManager.waitForXML(projectManager => {
+            projectManager.setLive(newLive);
+            namespaces.forEach(namespace => namespace.setLive(newLive));
+        });
+    };
+
     // Set up different socket namespaces
     const operatorSocket = new CameraOperatorSocket(io, currentCount, sendCounts);
     namespaces.push(operatorSocket);
@@ -73,7 +81,7 @@ const listen = (server) => {
     const shotCallerSocket = new ShotCallerSocket(io, currentCount, sendCounts, setCount);
     namespaces.push(shotCallerSocket);
 
-    const directorSocket = new DirectorSocket(io, currentCount, sendCounts);
+    const directorSocket = new DirectorSocket(io, currentCount, sendCounts, setLive);
     namespaces.push(directorSocket);
 
     logger.debug("Initialized socket.io connection.");

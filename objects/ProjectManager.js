@@ -21,6 +21,7 @@ class ProjectManager {
             projectManagerInstance = this;
 
             this.initialized = false;
+            this.live = false;
             if (typeof this.data === "undefined") {
                 this.parseXML(() => {
                     this.getPresets(() => {
@@ -188,6 +189,13 @@ class ProjectManager {
             }
         });
         return resultingData;
+    }
+
+    /*
+     * Set whether or not the project is live
+     */
+    setLive(newLive) {
+        this.live = newLive;
     }
 
     /*

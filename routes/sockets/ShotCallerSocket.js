@@ -35,11 +35,13 @@ class ShotCallerSocket {
         this.advanceCountCallBack = advanceCountCallBack;
         this.setCountCallBack = setCountCallBack;
         this.currentCount = currentCount;
+        this.live = false;
 
         this.namespace.on("connection", (socket) => {
             logger.info("New Shot Caller Connection");
             // Initialize with Current Server Count
             this.sendNextCount(this.currentCount);
+            this.setLive(this.live);
 
             socket.on("advance_count", () => {
                 this.advanceCountCallBack();
@@ -114,6 +116,14 @@ class ShotCallerSocket {
             }
         }
         return null;
+    }
+
+    // Send the updated live value
+    setLive(live) {
+        this.live = live;
+        this.namespace.emit("set_client_live", {
+            live,
+        });
     }
 }
 

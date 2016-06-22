@@ -10,62 +10,79 @@
         <style>
             @-webkit-keyframes glowing {
                 0% {
-                    -webkit-box-shadow: 0 0 3px white;
                 }
                 50% {
+                    background-color: red;
                     -webkit-box-shadow: 0 0 10px red;
                 }
                 100% {
-                    -webkit-box-shadow: 0 0 3px white;
                 }
             }
 
             @-moz-keyframes glowing {
                 0% {
-                    -moz-box-shadow: 0 0 3px white;
                 }
                 50% {
+                    background-color: red;
                     -moz-box-shadow: 0 0 10px red;
                 }
                 100% {
-                    -moz-box-shadow: 0 0 3px white;
                 }
             }
 
             @-o-keyframes glowing {
                 0% {
-                    box-shadow: 0 0 3px white;
                 }
                 50% {
+                    background-color: red;
                     box-shadow: 0 0 10px red;
                 }
                 100% {
-                    box-shadow: 0 0 3px white;
                 }
             }
 
             @keyframes glowing {
                 0% {
-                    box-shadow: 0 0 3px white;
                 }
                 50% {
+                    background-color: red;
                     box-shadow: 0 0 10px red;
                 }
                 100% {
-                    box-shadow: 0 0 3px white;
                 }
             }
 
             #glowyCircle {
-                animation: glowing 1500ms infinite;
+                animation: glowing 3s infinite;
+                border-radius: 50%;
+                float: left;
+                margin: 0.2em 0.5em;
+                background-color: #B00000;
+                vertical-align: middle;
+                width: 20px;
+                height: 20px;
+                padding: auto;
             }
+
+            #liveCard {
+                margin-left: 1em;
+                background-color: #4B4B4B;
+                color: white;
+            }
+
+            #liveCard h2 {
+                float: left;
+                margin-left: 0.3em;
+            }
+
         </style>
 
-        <template is="dom-if" if="{{ live }}">
-            <paper-card>
-                <iron-icon id="glowyCircle" icon="av:fiber-manual-record"></iron-icon>
-            </paper-card>
-        </template>
+        <paper-card id="liveCard" class="layout horizontal flex" hidden$="{{ !displayLive }}">
+            <div class="flex">
+                <h2>Live</h2>
+                <div id="glowyCircle"></div>
+            </div>
+        </paper-card>
     </template>
     <script>
         (function () {
@@ -74,9 +91,9 @@
                     this.is = "live-widget";
 
                     this.properties = {
-                        live: {
+                        displayLive: {
                             type: Boolean,
-                            value: true,
+                            value: false,
                             notify: true,
                         },
                     };
