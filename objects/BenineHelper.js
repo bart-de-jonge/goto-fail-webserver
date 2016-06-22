@@ -1,5 +1,4 @@
 import http from "http";
-import Preset from "./Preset";
 import log4js from "log4js";
 
 // Singleton Object
