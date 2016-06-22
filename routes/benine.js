@@ -46,4 +46,12 @@ router.get("/recallTest", (req, res) => {
         });
 });
 
+router.post("/cameras/:id(\\d+)/set-remote-camera-id", (req, res) => {
+    if (req.body.remoteCameraId) {
+        res.json({ success: true });
+    } else {
+        res.json({ success: false, message: "please prove a remote camera id" });
+    }
+})
+
 module.exports = router;
