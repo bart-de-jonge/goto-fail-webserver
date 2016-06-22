@@ -53,8 +53,9 @@ router.post("/cameras/:cameraId(\\d+)/set-remote-camera-id", (req, res) => {
             if (camera) {
                 camera.presetId = req.body.presetId;
                 res.json({ success: true, message: "Preset id stored successfully!" });
+            } else {
+                res.json({success: false, message: "That's not a valid camera!"});
             }
-            res.json({ success: false, message: "That's not a valid camera!" });
         });
     }
     res.json({ success: false, message: "Please provide a remote camera id!" });
@@ -67,8 +68,9 @@ router.post("/cameras/:cameraId(\\d+)/set-preset-id", (req, res) => {
             if (camera) {
                 camera.remoteCameraId = req.body.remoteCameraId;
                 res.json({ success: true, message: "Remote camera id stored successfully!" });
+            } else {
+                res.json({success: false, message: "That's not a valid camera!"});
             }
-            res.json({ success: false, message: "That's not a valid camera!" });
         });
     }
     res.json({ success: false, message: "Please provide a preset id!" });
@@ -91,14 +93,16 @@ router.get("/coupled", (req, res) => {
     });
 });
 
-router.get("/coupled/:cameraId(\\d+)", (req, res) => {
+router.get("/cameras/:cameraId(\\d+)/coupled", (req, res) => {
     ProjectManager.waitForXML((manager) => {
         const cameraList = manager.data.scriptingProject.cameraList[0].camera;
-        if (cameraList) {
+        if (cameraList && req.params.cameraId) {
             if (cameraList[req.params.cameraId]) {
-                res.json({ success: true, coupled: cameraList[req.params.cameraId] >= 0});
+                const result = cameraList[req.params.cameraId] >= 0;
+                res.json({ success: true, coupled: result });
+            } else {
+                res.json({ success: false, message: "That's not a valid camera!" });
             }
-            res.json({ success: false, message: "That's not a valid camera!" });
         } else {
             res.json({ success: false });
         }
