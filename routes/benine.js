@@ -21,6 +21,16 @@ router.get("/presets", (req, res) => {
     });
 });
 
+// Get presets data from benine
+router.get("/presets/:presetId(\\d+)", (req, res) => {
+    const benineHelper = new BenineHelper();
+    benineHelper.getPresets((presets) => {
+        const preset = presets.filter(preset =>
+        Number(req.params.presetId) === Number(preset.id))[0];
+        res.json({ preset });
+    });
+});
+
 // Get presets data from benine for a certain camera
 // Note the id is for our camera, not benines.
 router.get("/cameras/:cameraId(\\d+)/presets", (req, res) => {
@@ -78,6 +88,8 @@ router.post("/cameras/:cameraId(\\d+)/set-remote-camera-id", (req, res) => {
             const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.cameraId];
             if (camera) {
                 camera.remoteCameraId = req.body.remoteCameraId;
+                manager.data.scriptingProject.cameraTimelines[req.params.cameraId]
+                    .camera.remoteCameraId = req.body.remoteCameraId;
                 ProjectManager.waitForWriteXML(() => {
                     res.json({ success: true, message: "Remote camera id stored successfully!" });
                 });

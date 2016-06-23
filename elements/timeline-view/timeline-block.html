@@ -10,13 +10,66 @@
 <link rel="import" href="../../bower_components/paper-menu/paper-menu.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button-animations.html">
 <link rel="import" href="../colors.html">
+<link rel="import" href="../../elements/timeline-view/preset-thumbnail.html">
 
 <dom-module id="timeline-block">
     <template>
 
-        <style>
+        <paper-card on-tap="openToast"
+                    elevation="1"
+                    heading="{{block_data.name}}"
+                    style="visibility: {{block_data.visible}};">
+            <paper-ripple></paper-ripple>
+            <div class="layout horizontal flex_class card-content-deep">
+                <div class="flex-2">
+                    <div class="card-content">
+                        <paper-ripple></paper-ripple>
+                        <iron-icon icon="device:access-time"></iron-icon>
+                        <div class="content-header">Count</div>
+                        <span>{{block_data.beginCount}} - {{block_data.endCount}}</span>
+                    </div>
+                    <div class="horizontal-separator"></div>
+                    <div class="card-content">
+                        <paper-ripple></paper-ripple>
+                        <iron-icon icon="icons:description"></iron-icon>
+                        <div class="content-header">Description</div>
+                        <span>{{block_data.description}}</span>
+                    </div>
+                    <div class="horizontal-separator"></div>
+                    <div class="card-content bottom-size">
+                        <paper-ripple></paper-ripple>
+                        <iron-icon icon="image:music-note"></iron-icon>
+                        <div class="content-header">Instruments</div>
+                        <template is="dom-repeat" items="{{block_data.instruments}}">
+                            <div>{{item.name}}</div>
+                        </template>
+                    </div>
+                </div>
+                <div class="flex-2" id="preset_thumbnail">
+                    <preset-thumbnail id="preset_thumbnail_img" preset-id="{{block_data.presetId}}"></preset-thumbnail>
+                </div>
+            </div>
+        </paper-card>
+
+        <style include="iron-flex iron-flex-alignment iron-flex-factors">
+
+            #preset_thumbnail {
+                padding: 5px;
+            }
+
+            #preset_thumbnail_img {
+                width: 100%;
+                height: 100%;
+            }
+            .flex_class {
+                max-height: calc(100% - 59px);
+                height: calc(100% - 59px);
+            }
+
             paper-card {
                 height: 100%;
                 width: 100%;
@@ -59,40 +112,10 @@
 
             .bottom-size {
                 background-color: transparent;
-                height: 100%;
                 margin-top: 1px;
             }
 
         </style>
-
-        <paper-card on-tap="openToast"
-                    elevation="1"
-                    heading="{{block_data.name}}"
-                    style="visibility: {{block_data.visible}};">
-            <paper-ripple></paper-ripple>
-            <div class="card-content card-content-deep">
-                <paper-ripple></paper-ripple>
-                <iron-icon icon="device:access-time"></iron-icon>
-                <div class="content-header">Count</div>
-                <span>{{block_data.beginCount}} - {{block_data.endCount}}</span>
-            </div>
-            <div class="horizontal-separator"></div>
-            <div class="card-content">
-                <paper-ripple></paper-ripple>
-                <iron-icon icon="icons:description"></iron-icon>
-                <div class="content-header">Description</div>
-                <span>{{block_data.description}}</span>
-            </div>
-            <div class="horizontal-separator"></div>
-            <div class="card-content bottom-size">
-                <paper-ripple></paper-ripple>
-                <iron-icon icon="image:music-note"></iron-icon>
-                <div class="content-header">Instruments</div>
-                <template is="dom-repeat" items="{{block_data.instruments}}">
-                    <div>{{item.name}}</div>
-                </template>
-            </div>
-        </paper-card>
 
         <timeline-toast id="timelinetoast" block_data="{{block_data}}" camera="{{camera}}"></timeline-toast>
     </template>
@@ -108,7 +131,6 @@
                 toast: Object,
                 camera: Object,
             };
-
         }
 
         openToast() {

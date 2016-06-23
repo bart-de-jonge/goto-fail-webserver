@@ -1,39 +1,34 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="couple-element.html">
 <link rel="import" href="../colors.html">
 
 <dom-module id="coupling-element">
     <template>
-        <style include="iron-flex"></style>
+        <style include="iron-flex iron-flex-alignment"></style>
         <style>
             :host {
                 padding: 32px;
                 display: block;
             }
+        </style>
 
-            paper-card {
-                display: block;
-                background-color: white;
-                margin: 0 auto;
-                max-width: 800px;
-                --paper-card-header-color: white;
-                --paper-card-header-text: {
-                    font-size: medium;
-                    background-color: var(--main-color-500);
-                };
-            }
+        <iron-ajax
+            auto
+            url="/cameras"
+            handle-as="json"
+            on-response="onGetCameras"></iron-ajax>
 
-            .content {
-                padding: 16px;
-            }
-       </style>
+        <iron-ajax
+            auto
+            url="/benine/cameras"
+            handle-as="json"
+            on-response="onGetRemoteCameras"></iron-ajax>
 
-        <paper-card heading="Couple timelines to cameras">
-            <div class="content">
-                content
-            </div>
-        </paper-card>
+        <template is="dom-repeat" items="{{cameras}}">
+            <couple-element camera={{item}} remote-cameras="{{remoteCameras}}"></couple-element>
+        </template>
 
    </template>
 
@@ -44,7 +39,22 @@
                     this.is = "coupling-element";
 
                     this.properties = {
+                        cameras: Array,
+                        remoteCameras: {
+                            type: Object,
+                            value: function() {
+                                return [];
+                            }
+                        }
                     };
+                }
+
+                onGetCameras(event) {
+                    this.cameras = event.detail.response.object;
+                }
+
+                onGetRemoteCameras(event) {
+                    this.remoteCameras = event.detail.response.cameras;
                 }
 
             }
