@@ -20,6 +20,10 @@
                 color: var(--secondary-color-500);
             }
 
+            paper-listbox {
+                cursor: pointer;
+            }
+
             .content {
                 padding: 16px;
             }
@@ -69,8 +73,16 @@
                     <span class="light">{{camera.description}}</span>
                 </div>
                 <paper-item class="layout horizontal">
-                    <span class="tag">Current camera:</span>
+                    <span class="tag">ID:</span>
+                    <span class="flex text">{{camera.remoteCameraId}}</span>
+                </paper-item>
+                <paper-item class="layout horizontal">
+                    <span class="tag">Address:</span>
                     <span class="flex text">{{_getRemoteCameraAddress(camera.remoteCameraId, remoteCameras)}}</span>
+                </paper-item>
+                <paper-item class="layout horizontal">
+                    <span class="tag">Type:</span>
+                    <span class="flex text">{{_getRemoteCamera(camera, remoteCameras, "type")}}</span>
                 </paper-item>
            </div>
             <div class="card-actions layout horizontal end-justified">
@@ -134,8 +146,18 @@
                     return remoteCameras.find((remoteCamera) => remoteCamera.id === camera.remoteCameraId);
                 }
 
+                _getRemoteCamera(camera, remoteCameras, value) {
+                    const remoteCamera = remoteCameras.find((remoteCamera) => remoteCamera.id === camera.remoteCameraId);
+                    if (remoteCamera) {
+                        return remoteCamera[value];
+                    } else {
+                        return;
+                    }
+                }
+
                 saveRemoteCamera() {
                     this.set("camera.remoteCameraId", this.$.listbox.selected.id);
+                    this.set("remoteCamera", this.$.listbox.selected);
                     this.$.ajaxSetRemoteCamera.body = {
                         remoteCameraId: this.camera.remoteCameraId
                     };
