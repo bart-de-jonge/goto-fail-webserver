@@ -207,6 +207,11 @@
             this.$.preset_thumbnail.hidden = !showPreset;
         }
 
+        setPresetId(id) {
+            this.block_data.presetId = id;
+            this.showToast();
+            this.parentNode.setPresetId(id);
+        }
         /**
          * Shows the toast and gets content
          */
@@ -258,6 +263,9 @@
                 this.$.buttons_available.hidden = true;
                 this.$.presets_unavailable.hidden = false;
                 this.$.buttons_unavailable.hidden = false;
+                this.$.preset_thumbnail.hidden = true;
+
+                this.parentNode.setPresetId(-1);
             }
         }
     }

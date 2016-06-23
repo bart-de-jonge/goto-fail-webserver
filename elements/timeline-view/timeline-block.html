@@ -140,6 +140,15 @@
             //can this be done better? my JS is nonexistently rusty.
             this.$.timelinetoast.showToast();
         }
+
+        setPresetId(id) {
+            this.block_data.presetId = id;
+            this.$.preset_thumbnail_img.setPresetId(id);
+        }
+
+//        updateBlock(addImage) {
+//            console.log("update");
+//        }
     }
     Polymer(timelineBlock);
     })();

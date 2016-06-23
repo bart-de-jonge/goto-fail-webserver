@@ -151,7 +151,7 @@
             this.$.setPreset.body = {presetId: this.preset.id};
             this.$.setPreset.generateRequest();
             this.$.dialog.close();
-            this.parentNode.showToast();
+            this.parentNode.setPresetId(this.preset.id);
         }
 
         /**
