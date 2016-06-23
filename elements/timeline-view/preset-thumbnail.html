@@ -1,3 +1,5 @@
+<link rel="import" href="../../elements/timeline-view/timeline-block.html">
+
 <dom-module id="preset-thumbnail">
     <template>
         <style>
@@ -31,13 +33,35 @@
             this.properties = {
                 presetId: Number,
                 preset: Object,
+                getFromServer: Number,
+                camera: Object,
             };
         }
 
         ready() {
-            this.$.getPreset.url = "/benine/presets/" + Number(this.presetId);
-            this.$.getPreset.generateRequest();
+            if (this.getFromServer) {
+                this.$.getPreset.url = "/benine/cameras/" + this.camera.id + "/presets/" + Number(this.presetId);
+                this.$.getPreset.generateRequest();
+            } else {
+                this.$.iron_image.hidden = false;
+            }
         }
+
+        setPresetId(id) {
+            this.presetId = id;
+            this.update();
+        }
+
+        update() {
+            this.$.iron_image.hidden = true;
+            if (this.getFromServer) {
+                this.$.getPreset.url = "/benine/cameras/" + this.camera.id + "/presets/" + Number(this.presetId);
+                this.$.getPreset.generateRequest();
+            } else {
+                this.$.iron_image.hidden = false;
+            }
+        }
+
 
         /**
          * Respond to get event

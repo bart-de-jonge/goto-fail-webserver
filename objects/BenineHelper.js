@@ -4,7 +4,7 @@ import Preset from "./Preset";
 
 // Singleton Object
 let benineHelperInstance = null;
-const serverAddress = "localhost";
+const serverAddress = "192.168.0.12";
 const port = 8888;
 const logger = log4js.getLogger();
 
@@ -79,7 +79,7 @@ class BenineHelperInstance {
                             id: camera.id,
                             address: camera.address,
                             streamaddress: camera.streamaddress,
-                            type: camera.type
+                            type: camera.type,
                         });
                     });
                 }
