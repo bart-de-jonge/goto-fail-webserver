@@ -15,6 +15,11 @@
                 display: block;
             }
 
+            .main-box {
+                max-width: 800px;
+                margin: auto;
+            }
+
             paper-card {
                 background-color: white;
                 margin: 24px;
@@ -52,7 +57,7 @@
             }
         </style>
 
-        <div class="layout vertical">
+        <div class="layout vertical main-box">
             <paper-card heading="Score count" elevation="1">
                 <div class="card-content shadowed">
                     <paper-button raised id="advanceButton" on-tap="handleAdvanceTap">
