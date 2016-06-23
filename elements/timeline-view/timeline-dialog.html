@@ -53,6 +53,14 @@
                 color: white;
                 font-size: medium;
                 padding-left: 20px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+
+            .shadowed {
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.4);
+                padding: 8px;
+                margin-top: 0px;
             }
 
         </style>
@@ -72,21 +80,21 @@
         <paper-dialog id="dialog" with-backdrop>
             <h2 class="top">Please select a preset</h2>
 
-            <div class="layout horizontal" id="presets_show">
-            <paper-dialog-scrollable class="flex">
-                <paper-menu id="menu" on-tap="onListItemTap" attr-for-selected="id">
-                    <template is="dom-repeat" items="{{presets}}" id="presetsRepeat"c>
-                        <paper-item id="{{item.id}}" preset={{item}} index="{{index}}">
-                            <paper-ripple></paper-ripple>
-                            {{item.name}}
-                        </paper-item>
-                    </template>
-                </paper-menu>
-            </paper-dialog-scrollable>
+            <div class="layout horizontal shadowed" id="presets_show">
+                <paper-dialog-scrollable class="flex">
+                    <paper-menu id="menu" on-tap="onListItemTap" attr-for-selected="id">
+                        <template is="dom-repeat" items="{{presets}}" id="presetsRepeat"c>
+                            <paper-item id="{{item.id}}" preset={{item}} index="{{index}}">
+                                <paper-ripple></paper-ripple>
+                                {{item.name}}
+                            </paper-item>
+                        </template>
+                    </paper-menu>
+                </paper-dialog-scrollable>
                 <div class="flex-2">
                     <div id="preset_thumbnail_img">
-                    <preset-thumbnail preset="{{preset}}" get-from-server="0" camera="{{camera}}"></preset-thumbnail>
-</div>
+                        <preset-thumbnail preset="{{preset}}" get-from-server="0" camera="{{camera}}"></preset-thumbnail>
+                    </div>
                     <div id="presetView" class="layout horizontal" hidden>
                         <div class="flex-2" id="preset_title">Current Preset:</div>
                         <div class="flex preset_text">ID:<br>Name:</div>
