@@ -52,6 +52,10 @@
                 height: 50px;
                 color: white;
                 font-size: medium;
+                vertical-align: middle;
+                line-height: 50px;
+                padding-top: auto;
+                padding-bottom: auto;
                 padding-left: 20px;
                 margin-top: 0px;
                 margin-bottom: 0px;
@@ -78,7 +82,7 @@
                 on-response="handleSetPresetsResponse"></iron-ajax>
 
         <paper-dialog id="dialog" with-backdrop>
-            <h2 class="top">Please select a preset</h2>
+            <div class="top">Please select a preset</div>
 
             <div class="layout horizontal shadowed" id="presets_show">
                 <paper-dialog-scrollable class="flex">
