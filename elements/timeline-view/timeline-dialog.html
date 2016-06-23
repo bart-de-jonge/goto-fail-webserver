@@ -8,7 +8,7 @@
 
 <dom-module id="timeline-dialog">
     <template>
-        <style include="iron-flex iron-flex-alignment">
+        <style include="iron-flex iron-flex-alignment iron-flex-factors">
 
             paper-dialog {
                 width: 70%;
@@ -19,10 +19,54 @@
                 color: var(--secondary-color-500);
             }
 
-            #preset_thumbnail_img {
+            paper-dialog-scrollable {
+                min-height: 400px;
+            }
+
+             #preset_thumbnail_img {
                 width: 100%;
                 height: 100%;
+                 max-height: 330px;
             }
+
+            paper-item:hover {
+                cursor: pointer;
+            }
+
+            #presets_show {
+                overflow: hidden;
+            }
+
+            #preset_title {
+                font-weight: bold;
+                font-size: 1.2em;
+                line-height: 2.5em;
+            }
+
+            .preset_text {
+                line-height: 1.5em;
+            }
+
+            .top {
+                background-color: var(--main-color-500);
+                height: 50px;
+                color: white;
+                font-size: medium;
+                vertical-align: middle;
+                line-height: 50px;
+                padding-top: auto;
+                padding-bottom: auto;
+                padding-left: 20px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+            }
+
+            .shadowed {
+                box-shadow: inset  0  4px 4px -4px rgba(0,0,0,0.4);
+                padding: 8px;
+                margin-top: 0px;
+            }
+
         </style>
         <iron-ajax
                 id="getPresets"
@@ -38,34 +82,35 @@
                 on-response="handleSetPresetsResponse"></iron-ajax>
 
         <paper-dialog id="dialog" with-backdrop>
-            <h2>Please select a preset</h2>
+            <div class="top">Please select a preset</div>
 
-            <paper-dialog-scrollable>
-                <div class="layout horizontal" id="presets_show">
-                <paper-menu id="menu" on-tap="onListItemTap" attr-for-selected="id" class="flex">
-                    <template is="dom-repeat" items="{{presets}}" id="presetsRepeat"c>
-                        <paper-item id="{{item.id}}" preset={{item}} index="{{index}}">
-                            <paper-ripple></paper-ripple>
-                            {{item.name}}
-                        </paper-item>
-                    </template>
-                </paper-menu>
-                    <div class="flex">
-                        <preset-thumbnail id="preset_thumbnail_img" presetId="{{preset.id}}"></preset-thumbnail>
-
+            <div class="layout horizontal shadowed" id="presets_show">
+                <paper-dialog-scrollable class="flex">
+                    <paper-menu id="menu" on-tap="onListItemTap" attr-for-selected="id">
+                        <template is="dom-repeat" items="{{presets}}" id="presetsRepeat"c>
+                            <paper-item id="{{item.id}}" preset={{item}} index="{{index}}">
+                                <paper-ripple></paper-ripple>
+                                {{item.name}}
+                            </paper-item>
+                        </template>
+                    </paper-menu>
+                </paper-dialog-scrollable>
+                <div class="flex-2">
+                    <div id="preset_thumbnail_img">
+                        <preset-thumbnail preset="{{preset}}" get-from-server="0" camera="{{camera}}"></preset-thumbnail>
+                    </div>
+                    <div id="presetView" class="layout horizontal" hidden>
+                        <div class="flex-2" id="preset_title">Current Preset:</div>
+                        <div class="flex preset_text">ID:<br>Name:</div>
+                        <div class="flex-2 preset_text">{{preset.id}}<br>{{preset.name}}</div>
                     </div>
                 </div>
-            </paper-dialog-scrollable>
+            </div>
 
             <div id="presets_hide">
                 <p>
                     There are no presets available for this camera.
                 </p>
-            </div>
-
-            <div id="presetView" hidden>
-                <div>ID: {{preset.id}}</div>
-                <div>Name: {{preset.name}}</div>
             </div>
 
             <div class="buttons">
@@ -143,7 +188,7 @@
             this.$.setPreset.body = {presetId: this.preset.id};
             this.$.setPreset.generateRequest();
             this.$.dialog.close();
-            this.parentNode.showToast();
+            this.parentNode.setPresetId(this.preset.id);
         }
 
         /**

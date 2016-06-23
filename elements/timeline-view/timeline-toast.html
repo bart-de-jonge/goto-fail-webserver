@@ -144,7 +144,7 @@
                     <!--Deprecated and I love it!-->
                 </div>
 
-                <div class="layout vertical flex center-justified box-padding bordered" id="preset_thumbnail">
+                <div class="layout vertical flex center-justified box-padding bordered" id="preset_thumbnail" hidden>
                         <iron-image sizing="contain" id="preset_thumbnail_img" src="{{preset.thumbnailRoute}}"></iron-image>
                 </div>
 
@@ -155,7 +155,7 @@
                     </paper-button>
                 </div>
 
-                <div class="layout vertical flex justified box-padding" id="buttons_available">
+                <div class="layout vertical flex justified box-padding" id="buttons_available" hidden>
                     <paper-button on-tap="showDialog" class="select-button">
                         <iron-icon icon="editor:mode-edit"></iron-icon>
                         Edit preset
@@ -199,6 +199,8 @@
                 this.preset = activePreset;
             }
 
+            console.log(here);
+            console.log(this.preset);
             var showPreset = this.preset;
             this.$.presets_available.hidden = !showPreset;
             this.$.presets_unavailable.hidden = showPreset;
@@ -207,6 +209,11 @@
             this.$.preset_thumbnail.hidden = !showPreset;
         }
 
+        setPresetId(id) {
+            this.block_data.presetId = id;
+            this.showToast();
+            this.parentNode.setPresetId(id);
+        }
         /**
          * Shows the toast and gets content
          */
@@ -258,6 +265,9 @@
                 this.$.buttons_available.hidden = true;
                 this.$.presets_unavailable.hidden = false;
                 this.$.buttons_unavailable.hidden = false;
+                this.$.preset_thumbnail.hidden = true;
+
+                this.parentNode.setPresetId(-1);
             }
         }
     }

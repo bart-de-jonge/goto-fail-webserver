@@ -12,8 +12,7 @@
 <link rel="import" href="../../bower_components/paper-ripple/paper-ripple.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
-<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button-animations.html">
-<link rel="import" href="../colors.html">
+<link rel="import" href="../../bower_components/paper-menu-button/paper-menu-button-animations.html"
 <link rel="import" href="../../elements/timeline-view/preset-thumbnail.html">
 
 <dom-module id="timeline-block">
@@ -25,7 +24,7 @@
                     style="visibility: {{block_data.visible}};">
             <paper-ripple></paper-ripple>
             <div class="layout horizontal flex_class card-content-deep">
-                <div class="flex-2">
+                <div class="flex">
                     <div class="card-content">
                         <paper-ripple></paper-ripple>
                         <iron-icon icon="device:access-time"></iron-icon>
@@ -49,8 +48,8 @@
                         </template>
                     </div>
                 </div>
-                <div class="flex-2" id="preset_thumbnail">
-                    <preset-thumbnail id="preset_thumbnail_img" preset-id="{{block_data.presetId}}"></preset-thumbnail>
+                <div class="flex" id="preset_thumbnail">
+                    <preset-thumbnail class="flex-2" id="preset_thumbnail_img" preset-id="{{block_data.presetId}}" get-from-server="1" camera="{{camera}}"></preset-thumbnail>
                 </div>
             </div>
         </paper-card>
@@ -58,7 +57,9 @@
         <style include="iron-flex iron-flex-alignment iron-flex-factors">
 
             #preset_thumbnail {
-                padding: 5px;
+                padding: 5px 10px;
+                border-left: 1px solid;
+                border-color: rgba(0, 0, 0, 0.1);
             }
 
             #preset_thumbnail_img {
@@ -133,9 +134,28 @@
             };
         }
 
+        ready() {
+            if (this.block_data.presetId < 0) {
+                this.$.preset_thumbnail.hidden = true;
+            } else {
+                this.$.preset_thumbnail.hidden = false;
+            }
+        }
+
         openToast() {
             //can this be done better? my JS is nonexistently rusty.
             this.$.timelinetoast.showToast();
+        }
+
+        setPresetId(id) {
+            this.block_data.presetId = id;
+            this.$.preset_thumbnail_img.setPresetId(id);
+
+            if (id < 0) {
+                this.$.preset_thumbnail.hidden = true;
+            } else {
+                this.$.preset_thumbnail.hidden = false;
+            }
         }
     }
     Polymer(timelineBlock);
