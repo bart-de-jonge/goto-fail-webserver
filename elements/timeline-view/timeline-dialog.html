@@ -20,16 +20,39 @@
             }
 
             paper-dialog-scrollable {
-                min-height: 300px;
+                min-height: 400px;
             }
 
              #preset_thumbnail_img {
                 width: 100%;
                 height: 100%;
+                 max-height: 330px;
             }
 
             paper-item:hover {
                 cursor: pointer;
+            }
+
+            #presets_show {
+                overflow: hidden;
+            }
+
+            #preset_title {
+                font-weight: bold;
+                font-size: 1.2em;
+                line-height: 2.5em;
+            }
+
+            .preset_text {
+                line-height: 1.5em;
+            }
+
+            .top {
+                background-color: var(--main-color-500);
+                height: 50px;
+                color: white;
+                font-size: medium;
+                padding-left: 20px;
             }
 
         </style>
@@ -47,7 +70,7 @@
                 on-response="handleSetPresetsResponse"></iron-ajax>
 
         <paper-dialog id="dialog" with-backdrop>
-            <h2>Please select a preset</h2>
+            <h2 class="top">Please select a preset</h2>
 
             <div class="layout horizontal" id="presets_show">
             <paper-dialog-scrollable class="flex">
@@ -61,7 +84,14 @@
                 </paper-menu>
             </paper-dialog-scrollable>
                 <div class="flex-2">
-                    <preset-thumbnail id="preset_thumbnail_img" preset="{{preset}}" get-from-server="0" camera="{{camera}}"></preset-thumbnail>
+                    <div id="preset_thumbnail_img">
+                    <preset-thumbnail preset="{{preset}}" get-from-server="0" camera="{{camera}}"></preset-thumbnail>
+</div>
+                    <div id="presetView" class="layout horizontal" hidden>
+                        <div class="flex-2" id="preset_title">Current Preset:</div>
+                        <div class="flex preset_text">ID:<br>Name:</div>
+                        <div class="flex-2 preset_text">{{preset.id}}<br>{{preset.name}}</div>
+                    </div>
                 </div>
             </div>
 
@@ -69,11 +99,6 @@
                 <p>
                     There are no presets available for this camera.
                 </p>
-            </div>
-
-            <div id="presetView" hidden>
-                <div>ID: {{preset.id}}</div>
-                <div>Name: {{preset.name}}</div>
             </div>
 
             <div class="buttons">
