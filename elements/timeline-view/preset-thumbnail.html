@@ -31,12 +31,17 @@
             this.properties = {
                 presetId: Number,
                 preset: Object,
+                getFromServer: Number,
             };
         }
 
         ready() {
-            this.$.getPreset.url = "/benine/presets/" + Number(this.presetId);
-            this.$.getPreset.generateRequest();
+            if (this.getFromServer) {
+                this.$.getPreset.url = "/benine/presets/" + Number(this.presetId);
+                this.$.getPreset.generateRequest();
+            } else {
+                this.$.iron_image.hidden = false;
+            }
         }
 
         /**
