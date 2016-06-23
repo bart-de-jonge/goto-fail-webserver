@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="flex-2" id="preset_thumbnail">
-                    <preset-thumbnail id="preset_thumbnail_img" preset-id="{{block_data.presetId}}" get-from-server="1"></preset-thumbnail>
+                    <preset-thumbnail id="preset_thumbnail_img" preset-id="{{block_data.presetId}}" get-from-server="1" camera="{{camera}}"></preset-thumbnail>
                 </div>
             </div>
         </paper-card>
@@ -130,6 +130,10 @@
                 toast: Object,
                 camera: Object,
             };
+        }
+
+        ready() {
+            console.log(this.block_data.presetId);
         }
 
         openToast() {

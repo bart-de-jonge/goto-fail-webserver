@@ -27,6 +27,11 @@
                 width: 100%;
                 height: 100%;
             }
+
+            paper-item:hover {
+                cursor: pointer;
+            }
+
         </style>
         <iron-ajax
                 id="getPresets"
@@ -56,7 +61,7 @@
                 </paper-menu>
             </paper-dialog-scrollable>
                 <div class="flex-2">
-                    <preset-thumbnail id="preset_thumbnail_img" preset="{{preset}}" get-from-server="0"></preset-thumbnail>
+                    <preset-thumbnail id="preset_thumbnail_img" preset="{{preset}}" get-from-server="0" camera="{{camera}}"></preset-thumbnail>
                 </div>
             </div>
 

@@ -47,6 +47,24 @@ router.get("/cameras/:cameraId(\\d+)/presets", (req, res) => {
     });
 });
 
+// Get presets data from benine for a certain camera
+// Note the id is for our camera, not benines.
+router.get("/cameras/:cameraId(\\d+)/presets/:presetId(\\d+)", (req, res) => {
+    ProjectManager.waitForXML((manager) => {
+        const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.cameraId];
+        if (camera) {
+            const benineHelper = new BenineHelper();
+            benineHelper.getPresetsForCamera(camera, (presets) => {
+                const preset = presets.filter(preset =>
+                Number(req.params.presetId) === Number(preset.id))[0];
+                res.json({ preset });
+            });
+        } else {
+            res.json({ preset: {}, message: "Please provide a camera" });
+        }
+    });
+});
+
 // Test route for recalling presets
 router.get("/recallTest", (req, res) => {
     const benineHelper = new BenineHelper();

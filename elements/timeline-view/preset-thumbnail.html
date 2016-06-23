@@ -32,12 +32,13 @@
                 presetId: Number,
                 preset: Object,
                 getFromServer: Number,
+                camera: Object,
             };
         }
 
         ready() {
             if (this.getFromServer) {
-                this.$.getPreset.url = "/benine/presets/" + Number(this.presetId);
+                this.$.getPreset.url = "/benine/cameras/" + this.camera.id + "/presets/" + Number(this.presetId);
                 this.$.getPreset.generateRequest();
             } else {
                 this.$.iron_image.hidden = false;
@@ -50,6 +51,7 @@
         handleGetPresetResponse(event) {
             this.preset = event.detail.response.preset;
             if (this.preset) {
+                console.log(this.preset);
                 this.$.iron_image.hidden = false;
             }
         }
