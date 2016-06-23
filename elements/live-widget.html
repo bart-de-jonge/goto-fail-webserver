@@ -96,8 +96,15 @@
                             type: Boolean,
                             value: false,
                             notify: true,
+                            observer: "liveUpdated",
                         },
                     };
+                }
+
+                liveUpdated(newLive) {
+                    this.fire("liveChanged", {
+                        live: newLive,
+                    });
                 }
             }
 
