@@ -1,3 +1,5 @@
+<link rel="import" href="../../elements/timeline-view/timeline-block.html">
+
 <dom-module id="preset-thumbnail">
     <template>
         <style>
@@ -53,7 +55,6 @@
         update() {
             this.$.iron_image.hidden = true;
             if (this.getFromServer) {
-                console.log("hoi");
                 this.$.getPreset.url = "/benine/cameras/" + this.camera.id + "/presets/" + Number(this.presetId);
                 this.$.getPreset.generateRequest();
             } else {
@@ -68,8 +69,6 @@
         handleGetPresetResponse(event) {
             this.preset = event.detail.response.preset;
             if (this.preset) {
-                console.log("hoi");
-                console.log(this.preset);
                 this.$.iron_image.hidden = false;
             }
         }
