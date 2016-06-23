@@ -23,7 +23,7 @@
 
             paper-drawer-panel {
                 --paper-drawer-panel-scrim: {
-                    margin-top: 60px !important;
+                    margin-top: 64px !important;
                     background-color: rgba(0,0,0,0.15);
                 };
             }
@@ -39,6 +39,8 @@
 
             .director-header {
                 padding: 0 24px;
+                width: 800px;
+                margin: auto;
             }
 
             .horizontal-separator {
@@ -67,7 +69,7 @@
             <paper-header-panel main mode="waterfall" style="overflow: hidden;">
 
                 <div class="paper-header"style="background-color: rgb(240,240,240);">
-                    <paper-toolbar id="head" style="height: 60px;">
+                    <paper-toolbar id="head">
                         <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
                         <span class="title">Director</span>
                         <live-widget display-live="{{ isLive }}"></live-widget>
