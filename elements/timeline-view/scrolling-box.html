@@ -27,7 +27,7 @@
             }
         </style>
 
-        <div id="scrollingline">
+        <div id="scrollingline" hidden$="{{ !live }}">
             <div class="layout vertical center-justified count-box">
                 {{currentCount}}
             </div>
@@ -47,10 +47,14 @@
                     value: 0,
                     notify: true,
                     observer: "_countChanged",
-                }
+                },
+                live: {
+                    type: Boolean,
+                    value: false,
+                },
             };
 
-        this.prevTop = 22;
+            this.prevTop = 22;
         }
     
         _countChanged(newCount) {
@@ -72,15 +76,26 @@
                     duration: 0,
                     easing: "linear",
                 });
+
+            const drawer = document.getElementsByTagName("paper-drawer-panel");
+            let containerElement = drawer[0];
+
             // eslint-disable-next-line no-undef
             Velocity(scrollLine, // eslint-disable-line new-cap
                 "scroll",
                 {
+                    container: containerElement,
                     offset: -200,
                     queue: false,
                     duration: 0,
                     easing: "linear",
                 });
+        }
+
+        ready() {
+            addEventListener("liveChanged", e => {
+                this.live = e.detail.live;
+            });
         }
     }
     Polymer(scrollingBox);
