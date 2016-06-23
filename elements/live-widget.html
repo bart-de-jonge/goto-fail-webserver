@@ -68,7 +68,8 @@
                 margin-left: 1em;
                 background-color: #4B4B4B;
                 color: white;
-                padding: 6px;
+                padding: 9px;
+                margin-right: 12px;
             }
 
             #liveCard h2 {
@@ -96,8 +97,15 @@
                             type: Boolean,
                             value: false,
                             notify: true,
+                            observer: "liveUpdated",
                         },
                     };
+                }
+
+                liveUpdated(newLive) {
+                    this.fire("liveChanged", {
+                        live: newLive,
+                    });
                 }
             }
 
