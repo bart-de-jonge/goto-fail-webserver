@@ -59,6 +59,10 @@
             .remote {
                 padding: 16px;
             }
+
+            .selected {
+                background-color: var(--paper-grey-300);
+            }
         </style>
 
 
@@ -96,7 +100,7 @@
 
         <paper-dialog id="remoteCameraDialog" with-backdrop>
             <h2>Set remote camera</h2>
-            <paper-listbox id="listbox" attr-for-selected="camera" selected="{{_getSelected(camera, remoteCameras)}}">
+            <paper-listbox id="listbox" attr-for-selected="camera" selected-class="selected" selected="{{_getSelected(camera, remoteCameras)}}">
                 <template is="dom-repeat" items="{{remoteCameras}}">
                     <paper-item class="layout horizontal remote" camera="{{item}}">
                         <div class="id">{{item.id}}</div>
