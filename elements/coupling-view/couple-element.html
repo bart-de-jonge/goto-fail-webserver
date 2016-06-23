@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-item-body/paper-item-body.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
@@ -28,7 +29,7 @@
                 font-weight: 400; 
             }
 
-            span {
+            .light {
                 color: grey;
             }
             
@@ -39,9 +40,16 @@
             .tag {
                 font-weight: 500;
             }
+            .id {
+                padding: 0 16px 0 0;
+            }
             
-            .address {
+            .text {
                 text-align: right;
+            }
+
+            .remote {
+                padding: 16px;
             }
         </style>
 
@@ -58,15 +66,11 @@
             <div class="content">
                 <div class="title">
                     <h2>{{camera.name}}</h2>
-                    <span>{{camera.description}}</span>
+                    <span class="light">{{camera.description}}</span>
                 </div>
                 <paper-item class="layout horizontal">
-                    <div class="tag">
-                        Current camera:
-                    </div>
-                    <div class="flex address">
-                        {{_getRemoteCameraAddress(camera.remoteCameraId, remoteCameras)}}
-                    </div>
+                    <span class="tag">Current camera:</span>
+                    <span class="flex text">{{_getRemoteCameraAddress(camera.remoteCameraId, remoteCameras)}}</span>
                 </paper-item>
            </div>
             <div class="card-actions layout horizontal end-justified">
@@ -78,8 +82,12 @@
             <h2>Set remote camera</h2>
             <paper-listbox id="listbox" attr-for-selected="camera" selected="{{_getSelected(camera, remoteCameras)}}">
                 <template is="dom-repeat" items="{{remoteCameras}}">
-                    <paper-item camera="{{item}}">
-                        {{item.address}}
+                    <paper-item class="layout horizontal remote" camera="{{item}}">
+                        <div class="id">{{item.id}}</div>
+                        <paper-item-body class="flex" two-line>
+                            <div>{{item.address}}</div>
+                            <div class="light">{{item.type}}</div>
+                        </paper-item-body>
                     </paper-item>
                 </template>
             </paper-listbox>
@@ -125,7 +133,7 @@
                     }
                     return remoteCameras.find((remoteCamera) => remoteCamera.id === camera.remoteCameraId);
                 }
-                
+
                 saveRemoteCamera() {
                     this.set("camera.remoteCameraId", this.$.listbox.selected.id);
                     this.$.ajaxSetRemoteCamera.body = {
