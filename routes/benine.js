@@ -35,7 +35,8 @@ router.get("/presets/:presetId(\\d+)", (req, res) => {
 // Note the id is for our camera, not benines.
 router.get("/cameras/:cameraId(\\d+)/presets", (req, res) => {
     ProjectManager.waitForXML((manager) => {
-        const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.cameraId];
+        const camera = manager.data.scriptingProject.cameraList[0].camera.filter(
+            camera => Number(camera.instance) === Number(req.params.cameraId))[0];
         if (camera) {
             const benineHelper = new BenineHelper();
             benineHelper.getPresetsForCamera(camera, (presets) => {
@@ -51,7 +52,8 @@ router.get("/cameras/:cameraId(\\d+)/presets", (req, res) => {
 // Note the id is for our camera, not benines.
 router.get("/cameras/:cameraId(\\d+)/presets/:presetId(\\d+)", (req, res) => {
     ProjectManager.waitForXML((manager) => {
-        const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.cameraId];
+        const camera = manager.data.scriptingProject.cameraList[0].camera.filter(
+            camera => Number(camera.instance) === Number(req.params.cameraId))[0];
         if (camera) {
             const benineHelper = new BenineHelper();
             benineHelper.getPresetsForCamera(camera, (presets) => {
@@ -78,7 +80,8 @@ router.get("/recallTest", (req, res) => {
 router.post("/cameras/:cameraId(\\d+)/shots/:shotId(\\d+)/set-preset-id", (req, res) => {
     if (req.body.presetId && req.params.cameraId && req.params.shotId) {
         ProjectManager.waitForXML((manager) => {
-            const timeline = manager.data.scriptingProject.cameraTimelines[req.params.cameraId];
+            const timeline = manager.data.scriptingProject.cameraTimelines.filter(timeline =>
+            Number(timeline.instance) === Number(req.params.cameraId))[0];
             if (timeline) {
                 const shot = timeline.cameraShots.filter(
                     shot => Number(shot.instance) === Number(req.params.shotId))[0];
@@ -103,12 +106,14 @@ router.post("/cameras/:cameraId(\\d+)/shots/:shotId(\\d+)/set-preset-id", (req, 
 router.post("/cameras/:cameraId(\\d+)/set-remote-camera-id", (req, res) => {
     if (req.body.remoteCameraId) {
         ProjectManager.waitForXML((manager) => {
-            const camera = manager.data.scriptingProject.cameraList[0].camera[req.params.cameraId];
+            const camera = manager.data.scriptingProject.cameraList[0].camera.filter(
+                camera => Number(camera.instance) === Number(req.params.cameraId))[0];
             if (camera) {
                 camera.remoteCameraId = req.body.remoteCameraId;
                 // eslint-disable-next-line
-                manager.data.scriptingProject.cameraTimelines[req.params.cameraId]
-                    .camera.remoteCameraId = req.body.remoteCameraId;
+                const timeline = manager.data.scriptingProject.cameraTimelines.filter(timeline =>
+                Number(timeline.instance) === Number(req.params.cameraId))[0];
+                timeline.camera.remoteCameraId = req.body.remoteCameraId;
                 ProjectManager.waitForWriteXML(() => {
                     res.json({ success: true, message: "Remote camera id stored successfully!" });
                 });
@@ -144,8 +149,9 @@ router.get("/cameras/:cameraId(\\d+)/coupled", (req, res) => {
     ProjectManager.waitForXML((manager) => {
         const cameraList = manager.data.scriptingProject.cameraList[0].camera;
         if (cameraList && req.params.cameraId) {
-            if (cameraList[req.params.cameraId]) {
-                const result = cameraList[req.params.cameraId] >= 0;
+            const camera = cameraList.filter(camera => Number(camera.instance) === Number(req.params.cameraId))[0];
+            if (camera) {
+                const result = camera >= 0;
                 res.json({ success: true, coupled: result });
             } else {
                 res.json({ success: false, message: "That's not a valid camera!" });
