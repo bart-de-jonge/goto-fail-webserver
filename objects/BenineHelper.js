@@ -4,7 +4,8 @@ import Preset from "./Preset";
 
 // Singleton Object
 let benineHelperInstance = null;
-const serverAddress = "192.168.0.12";
+// const serverAddress = "192.168.0.12";
+const serverAddress = "localhost";
 const port = 8888;
 const logger = log4js.getLogger();
 
